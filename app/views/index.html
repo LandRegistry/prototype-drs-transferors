@@ -1,14 +1,43 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-			DRS Transferors
-		</h1>
 
+		<h1 class="govuk-heading-l">
+			Transferor details prototype
+		</h1>
 		<p class="govuk-body">
-			TBC
+			Welcome to the prototype for user testing the redesign of the Transferor section on DRS. This prototype is developed to simulate a specific user journey, focusing on reviewing and amending transferor details. Please be aware that some links and functionalities outside of this specific journey may not be operational.
+		</p>
+		<p class="govuk-body">
+		  <a href="/user-testing-script" class="govuk-link" rel="noreferrer noopener" target="_blank">
+		  	User testing script (opens in new tab)
+		  </a>
 		</p>
 
+		<ul class="govuk-list ">
+			<li>
+		  		<a href="/s1/tl-1-start" class="govuk-link" rel="noreferrer noopener" target="_self">
+		  			Scenario 1
+				</a>
+			</li>
+			<li>
+		  		<a href="/s2/tl-2-start" class="govuk-link" rel="noreferrer noopener" target="_self">
+		  			Scenario 2
+				</a>
+			</li>
+			<li>
+		  		<a href="/s3/tl-3-start" class="govuk-link" rel="noreferrer noopener" target="_self">
+		  			Scenario 3
+				</a>
+			</li>
+		</ul>
 
-		</div>{% endblock %}
-	</div>
+	</div> <!-- ./govuk-grid-column-two-thirds -->
+</div> <!-- ./govuk-grid-row -->
+
+{% endblock %}

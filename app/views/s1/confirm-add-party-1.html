@@ -1,0 +1,85 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+	Confirm addition of a party – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukBackLink({
+		text: "Back",
+		href: "javascript:window.history.back()"
+	}) }}
+{% endblock %}
+
+{% block content %}
+	{% set transferorName = data['transferor1Name'] | default('Sophie Green') %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+				<span class="govuk-caption-l">
+					Transfer for value
+				</span>
+				Confirm addition of a party
+			</h1>
+			<p class="govuk-body">
+				You will have to add the person acting on behalf of this transferor and tell us the capacity they are acting in. You will do this on the next page.
+			</p>
+		</div>
+		<div class="govuk-grid-column-one-third">
+			<!-- Empty for alignment -->
+		</div>
+	</div>
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			{{ govukSummaryList({
+				card: {
+					title: {
+						text: "Transferor 1"
+					},
+					actions: {
+						items: []
+					}
+				},
+				rows: [
+					{
+						key: { text: "Transferor type" },
+						value: { html: "Private individual" }
+					},
+					{
+						key: { text: "Transferor name" },
+						value: { html: transferorName },
+						actions: {
+							items: []
+						}
+					},
+					{
+						key: { text: "Capacity" },
+						value: { html: "Registered proprietor" }
+					},
+					{
+						key: { text: "Power of attorney" },
+						value: { html: "Not in place" },
+						actions: {}
+					}
+				]
+			}) }}
+
+			<form method="get" action="/s1/add-transferor-party-1.html">
+
+				<div class="govuk-button-group">
+					<button type="submit" class="govuk-button" data-module="govuk-button">
+						Confirm
+					</button>
+					<input type="hidden" name="reinstatedTransferor" value="1">
+					<a class="govuk-link" href="/s1/review-transferor-details-tor-1">Cancel</a>
+				</div>
+				
+			</form>
+		</div> <!-- ./govuk-grid-column-two-thirds -->
+	</div> <!-- ./govuk-grid-row -->
+
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+			
+		</div> <!-- /.govuk-grid-column-full -->
+	</div> <!-- /.govuk-grid-row -->
+
+
+
+
+
+
+
+	<div class="govuk-grid-column-two-thirds">
+      {{ govukButton({
+        text: "Confirm",
+        href: "/s1/review-transferor-details-tor-1?remainingTransferor=1", 
+      }) }}
+      <a class="govuk-link" href="/s1/review-transferor-details-tor-2">Cancel</a>
+    </div>
+
+
+
+
+
+<form method="get" action="/s1/review-transferor-details-tor-1">
+
+  <button type="submit" class="govuk-button">
+    Confirm
+  </button>
+
+  <input type="hidden" name="remainingTransferor" value="1">
+
+</form>
+
+<a href="/s1/review-transferor-details-tor-2" class="govuk-link">
+  Cancel
+</a>

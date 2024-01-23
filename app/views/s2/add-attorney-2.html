@@ -1,0 +1,69 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Add an attorney – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-l">
+          Transfer for value
+        </span>
+        Add an attorney
+      </h1>
+
+      {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+      {{ govukInsetText({
+        text: "Only add attorneys who are signing for donors."
+      }) }}
+
+      <h3 class="govuk-heading-m">
+        For donor
+      </h3>
+      <p class="govuk-body">{{ data['transferor2Name'] }}</p>
+
+      <h3 class="govuk-heading-m">Enter new attorney name</h3>
+      <form action="/s2/add-attorney-name-2" method="post">
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+        {{ govukInput({
+          classes: "govuk-input--width-20",
+          id: "forenames",
+          name: "forenames",
+          label: {
+            text: "Forenames"
+          }
+        }) }}
+        {{ govukInput({
+          classes: "govuk-input--width-20",
+          id: "surname",
+          name: "surname",
+          label: {
+            text: "Surname"
+          }
+        }) }}
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue",
+            type: "submit"
+          }) }}
+          <a class="govuk-link" href="/s2/review-transferor-details-mat-2">Cancel</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <!-- Additional content or leave blank -->
+    </div>
+  </div>
+{% endblock %}

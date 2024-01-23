@@ -1,0 +1,64 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Select capacity – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+				<span class="govuk-caption-l">
+					Transfer for value
+				</span>
+				Select capacity
+			</h1>
+			<p class="govuk-body govuk-!-margin-bottom-7">
+				Select the capacity the transferor is acting in. You’ll need to lodge evidence of the capacity to act and check whether ID evidence will be required.
+			</p>
+            <form action="/save-capacity-2" method="post">
+			<!-- radios here -->
+			{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+            {{ govukRadios({
+                name: "capacity",
+                items: [
+                    {
+                        value: "Registered proprietor",
+                        text: "registered proprietor"
+                    },
+                    {
+                        value: "Additional trustee",
+                        text: "additional trustee"
+                    }
+                ]
+            }) }}
+
+            {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+			
+			
+			{% from "govuk/components/button/macro.njk" import govukButton %}
+
+			{{ govukButton({
+                text: "Continue",
+                type: "submit"
+              }) }}
+
+            </form>
+
+		</div> <!-- ./govuk-grid-column-two-thirds -->
+
+		<div class="govuk-grid-column-one-third">
+		</div> <!-- ./govuk-grid-column-one-third -->
+	</div> <!-- ./row -->
+
+{% endblock %}

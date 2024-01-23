@@ -1,0 +1,45 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+	Reinstate transferor – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukBackLink({
+		text: "Back",
+		href: "javascript:window.history.back()"
+	}) }}
+{% endblock %}
+
+{% block content %}
+	{% set transferorName = data['transferor2Name'] | default('Emily Pankhurst') %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+				<span class="govuk-caption-l">
+					Transfer for value
+				</span>
+				Reinstate a transferor
+			</h1>
+			<p class="govuk-body">
+				Confirm you want to reinstate <strong>{{ transferorName }}</strong> as a transferor?
+			</p>
+			<br>
+			<form method="get" action="/s1/review-transferor-details-tor-2">
+
+				<div class="govuk-button-group">
+					<button type="submit" class="govuk-button" data-module="govuk-button">
+						Confirm
+					</button>
+					<input type="hidden" name="reinstatedTransferor" value="2">
+					<a class="govuk-link" href="/s1/review-transferor-details-tor-1">Cancel</a>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+
+	
+
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Add a transferor – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-l">
+          Transfer for value
+        </span>
+        Add a transferor
+      </h1>
+      <p class="govuk-body govuk-!-margin-bottom-7">
+        You are adding a trustee. Select the transferor type and enter the trustee’s name.
+      </p>
+      <form action="/save-trustee" method="post">
+        {% from "govuk/components/radios/macro.njk" import govukRadios %}
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+
+        {% set privateIndividualHtml %}
+          <div class="govuk-hint">Name must be exactly as it appears on documents lodged with this application.</div>
+          {{ govukInput({
+            id: "forenames",
+            name: "forenames",
+            label: {
+              text: "Forenames"
+            }
+          }) }}
+          {{ govukInput({
+            id: "surname",
+            name: "surname",
+            label: {
+              text: "Surname"
+            }
+          }) }}
+        {% endset %}
+
+      {% set ukCompanyHtml %}
+        <!-- <div class="govuk-hint">TBC</div> -->
+        {{ govukInput({
+          id: "uk-company",
+          name: "ukCompany",
+          label: {
+            text: "Company name"
+          }
+        }) }}
+      {% endset %}
+
+      {% set overseasCompanyHtml %}
+        <!-- <div class="govuk-hint">TBC</div> -->
+        {{ govukInput({
+          id: "overseas-company",
+          name: "overseasCompany",
+          label: {
+            text: "Company name"
+          }
+        }) }}
+      {% endset %}
+
+      {% set otherOrganisationHtml %}
+        <!-- <div class="govuk-hint">TBC</div> -->
+        {{ govukInput({
+          id: "other-organisation",
+          name: "otherOrganisation",
+          label: {
+            text: "Organisation"
+          }
+        }) }}
+      {% endset %}
+
+      {{ govukRadios({
+      name: "entityType",
+      fieldset: {
+        legend: {
+          text: "Select transferor type",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--m"
+        }
+      },
+      items: [
+        {
+          value: "private-individual",
+          text: "Private individual",
+          conditional: {
+            html: privateIndividualHtml
+          }
+        },
+        {
+          value: "uk-company",
+          text: "UK company or LLP",
+          conditional: {
+            html: ukCompanyHtml
+          }
+        },
+        {
+          value: "overseas-company",
+          text: "Overseas company",
+          conditional: {
+            html: overseasCompanyHtml
+          }
+        },
+        {
+          value: "other-organisation",
+          text: "Other organisation like charity, council, government department",
+          conditional: {
+            html: otherOrganisationHtml
+          }
+        }
+      ]
+    }) }}
+
+
+      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+      {{ govukWarningText({
+        text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct and consistent with supporting documents. If it isn’t consistent, you must attach evidence of a name change.",
+        iconFallbackText: "Warning"
+      }) }}
+      
+      
+        {% from "govuk/components/button/macro.njk" import govukButton %}
+
+        {{ govukButton({
+          text: "Continue",
+          type: "submit"
+        }) }}
+      </form>
+
+
+    </div> <!-- ./govuk-grid-column-two-thirds -->
+
+    <div class="govuk-grid-column-one-third">
+    </div> <!-- ./govuk-grid-column-one-third -->
+  </div> <!-- ./row -->
+  
+
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Review transferor details – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <!-- Full Width Div for Heading and Text -->
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-l">
+          Transfer for value
+        </span>
+        Review transferor details
+      </h1>
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-2">
+        Transferors on the register
+      </h2>
+      <p class="govuk-body govuk-!-margin-bottom-7">
+        These are the registered proprietors we hold for the title (or titles) in this application.
+      </p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <!-- Empty for alignment -->
+    </div>
+  </div>
+
+  <!-- Full Width Div for Summary Lists and Details Component -->
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+      <!-- Transferor 1 -->
+    {{ govukSummaryList({
+      card: {
+        title: {
+          text: "Transferor 1"
+        },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Add a party",
+              visuallyHiddenText: "TBC"
+            }
+          ]
+        }
+      },
+      rows: [
+        {
+          key: { text: "Transferor type" },
+          value: { html: "Private individual" }
+        },
+        {
+          key: { text: "Transferor name" },
+          value: { html: "Anya Sharif" },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "Amend",
+                visuallyHiddenText: "transferor name"
+              }
+            ]
+          }
+        },
+        {
+          key: { text: "Capacity" },
+          value: { html: "Registered proprietor" }
+        },
+        {
+          key: { text: "Power of attorney" },
+          value: { html: "Not in place" },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "Add attorney",
+                visuallyHiddenText: "power of attorney"
+              }
+            ]
+          }
+        }
+      ]
+    }) }}
+
+      {% from "govuk/components/details/macro.njk" import govukDetails %}
+
+      {{ govukDetails({
+        summaryText: "If all these details are incorrect",
+        html: "<p class='govuk-body'>If this information is not correct, you can <a href=\"/s2/confirm-transferor-1-reset\" class=\"govuk-link\">reset all transferor details</a>. <br>If you need to make changes you can add and remove transferors (and amend some details).</p>"
+      }) }}
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <!-- Details Component Here -->
+      {% from "govuk/components/details/macro.njk" import govukDetails %}
+      {{ govukDetails({
+        summaryText: "Guidance on transferors",
+        html: "<strong>Transferors on the register</strong>" +
+        "<p class='govuk-body'>You can:</p>" +
+        "<ul class='govuk-list govuk-list--bullet'>" +
+          "<li>add a party (such as an executor, guardian or administrator)</li>" +
+          "<li>amend the transferor name</li>" +
+          "<li>remove the transferor</li>" +
+          "<li>add a trustee</li>" +
+          "<li>add an attorney</li>" +
+        "</ul>",
+        open: true
+      }) }}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Add a trustee",
+        href: "#",
+        classes: "govuk-button--secondary"
+      }) }}
+
+      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+      {{ govukWarningText({
+        text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct.",
+        iconFallbackText: "Warning"
+      }) }}
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </div>
+  </div>
+
+{% endblock %}

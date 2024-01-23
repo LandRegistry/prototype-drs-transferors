@@ -1,0 +1,76 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Select capacity – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+				<span class="govuk-caption-l">
+					Transfer for value
+				</span>
+				Select capacity
+			</h1>
+			<p class="govuk-body govuk-!-margin-bottom-7">
+				Select the capacity the transferor is acting in. You’ll need to lodge evidence of the capacity to act and check whether ID evidence will be required.
+			</p>
+            <form action="/save-capacity-1" method="post">
+			<!-- radios here -->
+			{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+            {{ govukRadios({
+                name: "capacity",
+                items: [
+                    {
+                        value: "Trustee",
+                        text: "A trustee in bankruptcy, liquidator, supervisor, administrator or administrative"
+                    },
+                    {
+                        value: "Receiver (Insolvency Act 1986)",
+                        text: "A receiver appointed under the Insolvency Act 1986"
+                    },
+                    {
+                        value: "Receiver (Property Act 1925) ",
+                        text: "A receiver under the Law of Property Act 1925"
+                    },
+                    {
+                        value: "Deputy (Mental Capacity Act 2005)",
+                        text: "A deputy appointed under the Mental Capacity Act 2005"
+                    },
+                    {
+                        value: "Guardian (Missing Persons Act 2017)",
+                        text: "A guardian appointed under the Guardianship (Missing Persons) Act 2017"
+                    },
+                    {
+                        value: "Personal Representative",
+                        text: "A personal representative (such as an executor) who assents or transfers the law"
+                    }
+                ]
+            }) }}
+			
+			{% from "govuk/components/button/macro.njk" import govukButton %}
+
+			{{ govukButton({
+                text: "Continue",
+                type: "submit"
+              }) }}
+
+            </form>
+
+		</div> <!-- ./govuk-grid-column-two-thirds -->
+
+		<div class="govuk-grid-column-one-third">
+		</div> <!-- ./govuk-grid-column-one-third -->
+	</div> <!-- ./row -->
+
+{% endblock %}

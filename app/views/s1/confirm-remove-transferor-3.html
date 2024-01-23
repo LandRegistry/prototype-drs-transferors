@@ -1,0 +1,102 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+	Confirm removal of transferor – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukBackLink({
+		text: "Back",
+		href: "javascript:window.history.back()"
+	}) }}
+{% endblock %}
+
+{% block content %}
+	{% set transferorName = data['transferor2Name'] | default('Emily Pankhurst') %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+				<span class="govuk-caption-l">
+					Transfer for value
+				</span>
+				Confirm removal of transferor
+			</h1>
+
+			{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+			{{ govukWarningText({
+			  text: "Removing this transferor will reinstate the registered proprietor.",
+			  iconFallbackText: "Warning"
+			}) }}
+		</div>
+		
+	</div>
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<!-- Transferor 1 -->
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: "Transferor 1"
+          },
+          actions: {
+            items: []
+          }
+        },
+        rows: [
+          {
+            key: { text: "Transferor type" },
+            value: { html: "Private individual" },
+            actions: {
+              items: []
+            }
+          },
+          {
+            key: { text: "Transferor name" },
+            value: { html: data['transferorName'] },
+            actions: {
+              items: []
+            }
+          },
+          {
+            key: { text: "Capacity" },  
+            value: { html: data['capacity'] },
+            actions: {
+              items: []
+            }
+          },
+          {
+            key: { text: "Acting on behalf of" },
+            value: { html: data['transferor1Name'] | default('Sophie Green') },
+            actions: {
+              items: []
+            }
+          },
+          {
+            key: { text: "Power of attorney" },
+            value: { html: "Not in place" },
+            actions: {
+              items: []
+            }
+          }
+        ]
+      }) }}
+
+			<form method="get" action="/s1/review-transferor-details-tor-1-no-reinstate">
+
+				<div class="govuk-button-group">
+					<button type="submit" class="govuk-button" data-module="govuk-button">
+						Confirm
+					</button>
+					<input type="hidden" name="reinstatedTransferor" value="1">
+					<a class="govuk-link" href="/s1/review-transferor-details-mat-1">Cancel</a>
+				</div>
+			
+			</form>
+		</div> <!-- ./govuk-grid-column-two-thirds -->
+	</div> <!-- ./govuk-grid-row -->
+
+
+{% endblock %}

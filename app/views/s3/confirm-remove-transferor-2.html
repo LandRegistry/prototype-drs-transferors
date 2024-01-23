@@ -1,0 +1,79 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+	Confirm removal of transferor – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukBackLink({
+		text: "Back",
+		href: "javascript:window.history.back()"
+	}) }}
+{% endblock %}
+
+{% block content %}
+	{% set transferorName = data['transferor2Name'] | default('Emily Pankhurst') %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+				<span class="govuk-caption-l">
+					Transfer for value
+				</span>
+				Confirm removal of transferor
+			</h1>
+		</div>
+		
+	</div>
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			{{ govukSummaryList({
+				card: {
+					title: {
+						text: "Transferor 2"
+					},
+					actions: {
+						items: []
+					}
+				},
+				rows: [
+					{
+						key: { text: "Transferor type" },
+						value: { html: "Private individual" }
+					},
+					{
+						key: { text: "Transferor name" },
+						value: { html: transferorName },
+						actions: {
+							items: []
+						}
+					},
+					{
+						key: { text: "Capacity" },
+						value: { html: "Registered proprietor" }
+					},
+					{
+						key: { text: "Power of attorney" },
+						value: { html: "Not in place" },
+						actions: {}
+					}
+				]
+			}) }}
+
+			<form method="get" action="/s3/review-transferor-details-tor-1">
+
+				<div class="govuk-button-group">
+					<button type="submit" class="govuk-button" data-module="govuk-button">
+						Confirm
+					</button>
+					<input type="hidden" name="reinstatedTransferor" value="1">
+					<a class="govuk-link" href="/s3/review-transferor-details-tor-2">Cancel</a>
+				</div>
+			
+			</form>
+		</div> <!-- ./govuk-grid-column-two-thirds -->
+	</div> <!-- ./govuk-grid-row -->
+
+
+{% endblock %}

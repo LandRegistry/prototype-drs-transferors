@@ -1,0 +1,95 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirm removal of transferor – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {% set transferorId = request.query.transferor %}
+  {% set transferorName = "" %}
+
+  {% if transferorId == "1" %}
+    {% set transferorName = data['transferor1Name'] | default('Sophie Green') %}
+  {% else %}
+    {% set transferorName = data['transferor2Name'] | default('Emily Pankhurst') %}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-l">
+          Transfer for value
+        </span>
+        Confirm removal of transferor
+      </h1>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <!-- Empty for alignment -->
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: "Transferor " ~ transferorId
+          },
+          actions: {
+            items: []
+          }
+        },
+        rows: [
+          {
+            key: { text: "Transferor type" },
+            value: { html: "Private individual" }
+          },
+          {
+            key: { text: "Transferor name" },
+            value: { html: transferorName },
+            actions: {
+              items: []
+            }
+          },
+          {
+            key: { text: "Capacity" },
+            value: { html: "Registered proprietor" }
+          },
+          {
+            key: { text: "Power of attorney" },
+            value: { html: "Not in place" },
+            actions: {}
+          }
+        ]
+      }) }}
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <!-- Details Component Here -->
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <form method="get" action="/s1/review-transferor-details-tor-1">
+
+    <button type="submit" class="govuk-button">
+      Confirm 
+    </button>
+
+    <input type="hidden" name="remainingTransferor" value="{{ transferorId }}">
+
+  </form>
+
+  <a href="/s1/review-transferor-details-tor-2" class="govuk-link">
+    Cancel
+  </a>
+  </div>
+
+{% endblock %}

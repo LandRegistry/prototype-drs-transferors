@@ -1,0 +1,69 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Amend trustee name – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {% set trusteeName = data['trusteeName'] | default('Current Trustee Name') %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-l">
+          Transfer for value
+        </span>
+        Amend trustee name
+      </h1>
+
+      <h3 class="govuk-heading-m">Current trustee name</h3>
+      <p class="govuk-body">{{ trusteeName }}</p>
+
+      <h3 class="govuk-heading-m">Enter new trustee name</h3>
+      <form action="/s1/amend-trustee-name" method="post">
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+        {{ govukInput({
+          classes: "govuk-input--width-20",
+          id: "forenames",
+          name: "forenames",
+          label: {
+            text: "Forenames"
+          }
+        }) }}
+        {{ govukInput({
+          classes: "govuk-input--width-20",
+          id: "surname",
+          name: "surname",
+          label: {
+            text: "Surname"
+          }
+        }) }}
+
+        {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+        {{ govukWarningText({
+          text: "Name must be exactly as it appears in your supporting documents.",
+          iconFallbackText: "Warning"
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue",
+            type: "submit"
+          }) }}
+          <a class="govuk-link" href="/s1/review-transferor-details-tor-1-mat-1">Cancel</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <!-- Additional content or leave blank -->
+    </div>
+  </div>
+{% endblock %}

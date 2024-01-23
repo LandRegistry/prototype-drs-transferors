@@ -1,0 +1,44 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+	Reinstate transferor – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ govukBackLink({
+		text: "Back",
+		href: "javascript:window.history.back()"
+	}) }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+				<span class="govuk-caption-l">
+					Transfer for value
+				</span>
+				Remove attorney
+			</h1>
+			<p class="govuk-body">
+				Confirm you want to remove attorney <strong>{{ data['attorneyName-2'] }}</strong>?
+			</p>
+			<br>
+			<form method="get" action="/s2/review-transferor-details-mat-2">
+
+				<div class="govuk-button-group">
+					<button type="submit" class="govuk-button" data-module="govuk-button">
+						Confirm
+					</button>
+					<input type="hidden" name="reinstatedTransferor" value="2">
+					<a class="govuk-link" href="/s2/review-transferor-details-mat-2-attorney-1">Cancel</a>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+
+	
+
+{% endblock %}
