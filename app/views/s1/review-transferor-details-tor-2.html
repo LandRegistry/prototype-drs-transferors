@@ -164,6 +164,24 @@
       html: "<p class='govuk-body'>If this information is not correct, you can <a href=\"#\" class=\"govuk-link\">reset all transferor details</a>. <br>If you need to make changes you can add and remove transferors (and amend some details).</p>"
     }) }}
 
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+    {{ govukButton({
+      text: "Add a trustee",
+      href: "#",
+      classes: "govuk-button--secondary"
+    }) }}
+
+    {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+    {{ govukWarningText({
+      text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct.",
+      iconFallbackText: "Warning"
+    }) }}
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
   </div>
 
   <div class="govuk-grid-column-one-third">
@@ -185,26 +203,5 @@
   </div>
 </div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    {% from "govuk/components/button/macro.njk" import govukButton %}
-    {{ govukButton({
-      text: "Add a trustee",
-      href: "#",
-      classes: "govuk-button--secondary"
-    }) }}
-
-    {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-    {{ govukWarningText({
-      text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct.",
-      iconFallbackText: "Warning"
-    }) }}
-
-    {% from "govuk/components/button/macro.njk" import govukButton %}
-    {{ govukButton({
-      text: "Continue"
-    }) }}
-  </div>
-</div>
 
 {% endblock %}

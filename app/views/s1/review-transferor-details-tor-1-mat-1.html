@@ -175,6 +175,20 @@
         ]
       }) }}
 
+      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+      {{ govukWarningText({
+        text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct.",
+        iconFallbackText: "Warning"
+      }) }}
+
+      <form action="/s1/tl-1-end" method="post">
+        {% from "govuk/components/button/macro.njk" import govukButton %}
+        {{ govukButton({
+          text: "Continue",
+          type: "submit"
+        }) }}
+      </form>
+
     </div>
 
     <div class="govuk-grid-column-one-third">
@@ -200,26 +214,6 @@
         "</ul>",
         open: true
       }) }}
-
-    </div>
-  </div>
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-
-      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-      {{ govukWarningText({
-        text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct.",
-        iconFallbackText: "Warning"
-      }) }}
-
-      <form action="/s1/tl-1-end" method="post">
-        {% from "govuk/components/button/macro.njk" import govukButton %}
-        {{ govukButton({
-          text: "Continue",
-          type: "submit"
-        }) }}
-      </form>
 
     </div>
   </div>

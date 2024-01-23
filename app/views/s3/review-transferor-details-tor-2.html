@@ -164,29 +164,6 @@
       html: "<p class='govuk-body'>If this information is not correct, you can <a href=\"#\" class=\"govuk-link\">reset all transferor details</a>. <br>If you need to make changes you can add and remove transferors (and amend some details).</p>"
     }) }}
 
-  </div>
-
-  <div class="govuk-grid-column-one-third">
-    <!-- Details Component Here -->
-    {% from "govuk/components/details/macro.njk" import govukDetails %}
-    {{ govukDetails({
-      summaryText: "Guidance on transferors",
-      html: "<strong>Transferors on the register</strong>" +
-      "<p class='govuk-body'>You can:</p>" +
-      "<ul class='govuk-list govuk-list--bullet'>" +
-        "<li>add a party (such as an executor, guardian or administrator)</li>" +
-        "<li>amend the transferor name</li>" +
-        "<li>remove the transferor</li>" +
-        "<li>add a trustee</li>" +
-        "<li>add an attorney</li>" +
-      "</ul>",
-      open: true
-    }) }}
-  </div>
-</div>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
     {% from "govuk/components/button/macro.njk" import govukButton %}
     {{ govukButton({
       text: "Add a trustee",
@@ -207,6 +184,25 @@
         type: "submit"
       }) }}
     </form>
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <!-- Details Component Here -->
+    {% from "govuk/components/details/macro.njk" import govukDetails %}
+    {{ govukDetails({
+      summaryText: "Guidance on transferors",
+      html: "<strong>Transferors on the register</strong>" +
+      "<p class='govuk-body'>You can:</p>" +
+      "<ul class='govuk-list govuk-list--bullet'>" +
+        "<li>add a party (such as an executor, guardian or administrator)</li>" +
+        "<li>amend the transferor name</li>" +
+        "<li>remove the transferor</li>" +
+        "<li>add a trustee</li>" +
+        "<li>add an attorney</li>" +
+      "</ul>",
+      open: true
+    }) }}
   </div>
 </div>
 

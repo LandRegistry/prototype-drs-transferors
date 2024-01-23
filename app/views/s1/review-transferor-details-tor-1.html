@@ -97,8 +97,26 @@
         Removed transferors
       </h2>
       <p class="govuk-body">
-        If you have accidentally removed a transferor you can <a href="/s1/reinstate-transferor-2" class="govuk-link">reinstate</a> them.
+       If you have accidentally removed a transferor you can <a href="/s1/reinstate-transferor-2" class="govuk-link">reinstate</a> them.
       </p>
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Add a trustee",
+        href: "#",
+        classes: "govuk-button--secondary"
+      }) }}
+
+      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+      {{ govukWarningText({
+        text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct.",
+        iconFallbackText: "Warning"
+      }) }}
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
 
     </div>
 
@@ -116,28 +134,6 @@
           "<li>add an attorney</li>" +
         "</ul>",
         open: true
-      }) }}
-    </div>
-  </div>
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      {% from "govuk/components/button/macro.njk" import govukButton %}
-      {{ govukButton({
-        text: "Add a trustee",
-        href: "#",
-        classes: "govuk-button--secondary"
-      }) }}
-
-      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-      {{ govukWarningText({
-        text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct.",
-        iconFallbackText: "Warning"
-      }) }}
-
-      {% from "govuk/components/button/macro.njk" import govukButton %}
-      {{ govukButton({
-        text: "Continue"
       }) }}
     </div>
   </div>
