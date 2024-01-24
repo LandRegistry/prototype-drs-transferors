@@ -4,3 +4,16 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 #}
 
 {% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+
+{% block beforeContent %}
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Prototype"
+    },
+    html: "Help us improve this service with your feedback."
+  }) }}
+  {{ super() }}  <!-- This will include any content from the parent layout's beforeContent block -->
+{% endblock %}
+
+
