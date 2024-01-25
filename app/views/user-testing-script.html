@@ -3,8 +3,9 @@
 {% set pageName="Home" %}
 
 {% block beforeContent %}
+  {{ super() }}  <!-- Include content from the parent layout's beforeContent -->
   {{ govukBackLink({
-    text: "Back",
+    text: "Home",
     href: "/index"
   }) }}
 {% endblock %}

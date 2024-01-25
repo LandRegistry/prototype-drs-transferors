@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block beforeContent %}
+  {{ super() }}  <!-- Include content from the parent layout's beforeContent -->
   {{ govukBackLink({
     text: "Back",
     href: "javascript:window.history.back()"
@@ -96,13 +97,13 @@
       {% from "govuk/components/details/macro.njk" import govukDetails %}
 
       {{ govukDetails({
-        summaryText: "If all these details are incorrect",
-        html: "<p class='govuk-body'>If this information is not correct, you can <a href=\"/s2/confirm-transferor-1-reset\" class=\"govuk-link\">reset all transferor details</a>. <br>If you need to make changes you can add and remove transferors (and amend some details).</p>"
+        summaryText: "Reset all transferor details if they are incorrect",
+        html: "<p class='govuk-body'>If you don’t recognise the registered proprietors we hold on the register, you can <a href=\"/s2/confirm-transferor-1-reset\" class=\"govuk-link\">reset all transferor details</a>.</p><p class='govuk-body'>You will have to add at least one new proprietor (or person entitled to act as registered proprietor) and provide evidence for the change.</p>"
       }) }}
 
       {% from "govuk/components/button/macro.njk" import govukButton %}
       {{ govukButton({
-        text: "Add a trustee",
+        text: "Add additional trustee",
         href: "#",
         classes: "govuk-button--secondary"
       }) }}
@@ -130,7 +131,7 @@
         "<ul class='govuk-list govuk-list--bullet'>" +
           "<li>add a party (such as an executor, guardian or administrator)</li>" +
           "<li>amend the transferor name</li>" +
-          "<li>add a trustee</li>" +
+          "<li>add additional trustee</li>" +
           "<li>add an attorney</li>" +
         "</ul>",
         open: true

@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block beforeContent %}
+  {{ super() }}  <!-- Include content from the parent layout's beforeContent -->
   {{ govukBackLink({
     text: "Back",
     href: "javascript:window.history.back()"

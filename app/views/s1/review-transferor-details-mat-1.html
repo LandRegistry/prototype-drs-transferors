@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block beforeContent %}
+  {{ super() }}  <!-- Include content from the parent layout's beforeContent -->
   {{ govukBackLink({
     text: "Back",
     href: "javascript:window.history.back()"
@@ -120,7 +121,7 @@
 
       {% from "govuk/components/button/macro.njk" import govukButton %}
       {{ govukButton({
-        text: "Add a trustee",
+        text: "Add additional trustee",
         href: "#",
         classes: "govuk-button--secondary"
       }) }}
@@ -150,7 +151,7 @@
           "<li>amend the transferor name and type</li>" +
           "<li>remove the transferor (this will reinstate the registered proprietor they are acting on behalf of)</li>" +
           "<li>add an attorney</li>" +
-          "<li>add a trustee</li>" +
+          "<li>add additional trustee</li>" +
         "</ul>",
         open: true
       }) }}
