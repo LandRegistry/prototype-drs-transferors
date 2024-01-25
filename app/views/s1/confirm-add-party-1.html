@@ -24,48 +24,9 @@
 				Confirm addition of a party
 			</h1>
 			<p class="govuk-body">
-				You will have to add the person acting on behalf of this transferor and tell us the capacity they are acting in. You will do this on the next page.
+				You will have to add the person acting on behalf of <strong>{{ transferorName }}</strong> and tell us the capacity they are acting in. You will do this on the next page.
 			</p>
-		</div>
-		<div class="govuk-grid-column-one-third">
-			<!-- Empty for alignment -->
-		</div>
-	</div>
-
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-two-thirds">
-			{{ govukSummaryList({
-				card: {
-					title: {
-						text: "Transferor 1"
-					},
-					actions: {
-						items: []
-					}
-				},
-				rows: [
-					{
-						key: { text: "Transferor type" },
-						value: { html: "Private individual" }
-					},
-					{
-						key: { text: "Transferor name" },
-						value: { html: transferorName },
-						actions: {
-							items: []
-						}
-					},
-					{
-						key: { text: "Capacity" },
-						value: { html: "Registered proprietor" }
-					},
-					{
-						key: { text: "Power of attorney" },
-						value: { html: "Not in place" },
-						actions: {}
-					}
-				]
-			}) }}
+			<br>
 
 			<form method="get" action="/s1/add-transferor-party-1.html">
 
@@ -78,8 +39,12 @@
 				</div>
 				
 			</form>
+		</div>
+		<div class="govuk-grid-column-one-third">
+			<!-- Empty for alignment -->
 		</div> <!-- ./govuk-grid-column-two-thirds -->
 	</div> <!-- ./govuk-grid-row -->
+
 
 
 

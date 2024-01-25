@@ -162,7 +162,7 @@
 
     {{ govukDetails({
         summaryText: "Reset all transferor details if they are incorrect",
-        html: "<p class='govuk-body'>If you don’t recognise the registered proprietors we hold on the register, you can <a href=\"#\" class=\"govuk-link\">reset all transferor details</a>.</p><p class='govuk-body'>You will have to add at least one new proprietor (or person entitled to act as registered proprietor) and provide evidence for the change.</p>"
+        html: "<p class='govuk-body'>If you don’t recognise the registered proprietors we hold on the register (for example because there has been a registration gap), you can <a href=\"#\" class=\"govuk-link\">reset all transferor details</a>.</p><p class='govuk-body'>You will have to add at least one new proprietor (or person entitled to act as registered proprietor) and provide evidence for the change.</p>"
       }) }}
 
     {% from "govuk/components/button/macro.njk" import govukButton %}
@@ -196,10 +196,10 @@
       html: "<strong>Transferors on the register</strong>" +
       "<p class='govuk-body'>You can:</p>" +
       "<ul class='govuk-list govuk-list--bullet'>" +
-        "<li>add a party (such as an executor, guardian or administrator)</li>" +
+        "<li>add a party (such as an executor, trustee in bankruptcy or administrator)</li>" +
         "<li>amend the transferor name</li>" +
         "<li>remove the transferor</li>" +
-        "<li>add additional trustee</li>" +
+        "<li>add additional trustee (for the purposes of over-reaching)</li>" +
         "<li>add an attorney</li>" +
       "</ul>",
       open: true
