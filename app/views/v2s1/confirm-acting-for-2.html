@@ -1,0 +1,46 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+    Confirm addition of a party – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+    {{ super() }}  <!-- Include content from the parent layout's beforeContent -->
+    {{ govukBackLink({
+        text: "Back",
+        href: "javascript:window.history.back()"
+    }) }}
+{% endblock %}
+
+{% block content %}
+    {% set transferorName = data['transferorNameV2-1-1'] %}
+    {% set capacity = data['capacity-v2-1-1'] %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">
+                <span class="govuk-caption-l">
+                    Transfer for value
+                </span>
+                Confirm who transferor is acting for
+            </h1>
+            <p class="govuk-body">
+                <strong>{{ transferorName }}</strong> is acting on behalf of <strong>Sophie Green</strong>.
+            </p>
+            <br>
+            <form method="get" action="/v2s1/review-transferor-details-mat-1.html">
+
+				<div class="govuk-button-group">
+					<button type="submit" class="govuk-button" data-module="govuk-button">
+						Confirm
+					</button>
+					<input type="hidden" name="reinstatedTransferor" value="1">
+					<a class="govuk-link" href="/v2s1/select-capacity-at-ap-1">Cancel</a>
+				</div>
+				
+			</form>
+
+            <!-- Rest of your form and content -->
+        </div>
+    </div>
+{% endblock %}

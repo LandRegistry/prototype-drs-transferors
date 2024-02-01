@@ -1,0 +1,100 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+	Confirm transferor reset – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}  <!-- Include content from the parent layout's beforeContent -->
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+	{% set transferorName = data['transferor2Name'] | default('Emily Pankhurst') %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+				<span class="govuk-caption-l">
+					Transfer for value
+				</span>
+				Confirm transferor reset
+			</h1>
+
+			{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+			{{ govukWarningText({
+			  text: "The displayed transferors, all associated documents and attorneys will be removed and cannot be undone.",
+			  iconFallbackText: "Warning"
+			}) }}
+
+			<p class="govuk-body">
+				You will have to add at least one person entitled to be registered as proprietor to this application. You will need to do that on the next page.
+			</p>
+		</div>
+		
+	</div>
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<!-- Transferor 1 -->
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: "Transferor 1"
+          },
+          actions: {
+            items: []
+          }
+        },
+        rows: [
+          {
+            key: { text: "Transferor type" },
+            value: { html: "Private individual" },
+            actions: {
+              items: []
+            }
+          },
+          {
+            key: { text: "Transferor name" },
+            value: { html: "Anya Sharif" },
+            actions: {
+              items: []
+            }
+          },
+          {
+            key: { text: "Capacity" },  
+            value: { html: "Registered proprietor" },
+            actions: {
+              items: []
+            }
+          },
+          {
+            key: { text: "Power of attorney" },
+            value: { html: "Not in place" },
+            actions: {
+              items: []
+            }
+          }
+        ]
+      }) }}
+
+			<form method="get" action="/v2s2/add-transferor-1-post-reset">
+
+				<div class="govuk-button-group">
+					<button type="submit" class="govuk-button govuk-button--warning" data-module="govuk-button">
+						Reset transferors
+					</button>
+					<input type="hidden" name="reinstatedTransferor" value="1">
+					<a class="govuk-link" href="/v2s2/review-transferor-details-tor-1">Cancel</a>
+				</div>
+			
+			</form>
+		</div> <!-- ./govuk-grid-column-two-thirds -->
+	</div> <!-- ./govuk-grid-row -->
+
+
+{% endblock %}

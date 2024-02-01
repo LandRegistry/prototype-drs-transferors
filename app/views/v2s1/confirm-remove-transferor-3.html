@@ -1,0 +1,43 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+    Confirm removal of transferor – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+    {{ super() }}  <!-- Include content from the parent layout's beforeContent -->
+    {{ govukBackLink({
+        text: "Back",
+        href: "javascript:window.history.back()"
+    }) }}
+{% endblock %}
+
+{% block content %}
+    {% set transferorNameToRemove = data['transferor-name-v2s1-1'] %}
+    {% set transferorNameToReinstate = data['transferorName'] | default('Sophie Green') %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">
+                <span class="govuk-caption-l">
+                    Transfer for value
+                </span>
+                Confirm removal of transferor
+            </h1>
+
+            <p class="govuk-body">
+                Removing <strong>Jane Jenkins</strong> will reinstate registered proprietor <strong>Sophie Green</strong>.
+            </p>
+            <br>
+            <form method="get" action="/v2s1/review-transferor-details-tor-1-no-reinstate">
+                <div class="govuk-button-group">
+                    <button type="submit" class="govuk-button" data-module="govuk-button">
+                        Confirm
+                    </button>
+                    <input type="hidden" name="reinstatedTransferor" value="1">
+                    <a class="govuk-link" href="/v2s1/review-transferor-details-mat-1">Cancel</a>
+                </div>
+            </form>
+        </div> <!-- ./govuk-grid-column-two-thirds -->
+    </div> <!-- ./govuk-grid-row -->
+{% endblock %}
