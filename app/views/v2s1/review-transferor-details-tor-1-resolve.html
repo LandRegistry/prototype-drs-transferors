@@ -1,0 +1,112 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+	Review transferor details – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+	{{ super() }}  <!-- Include content from the parent layout's beforeContent block, such as the phase banner -->
+	{{ govukBackLink({
+		text: "Back",
+		href: "javascript:window.history.back()"
+	}) }}
+{% endblock %}
+
+{% block content %}
+
+	<!-- Full Width Div for Heading and Text -->
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+				<span class="govuk-caption-l">
+					Transfer for value
+				</span>
+				Review transferor details
+			</h1>
+			<h2 class="govuk-heading-l govuk-!-margin-bottom-2">
+				Transferors on the register
+			</h2>
+			<p class="govuk-body govuk-!-margin-bottom-7">
+				These are the registered proprietors we hold for the title (or titles) in this application.
+			</p>
+		</div>
+		<div class="govuk-grid-column-one-third">
+			<!-- Empty for alignment -->
+		</div>
+	</div>
+
+	<!-- Full Width Div for Summary Lists and Details Component -->
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+			{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+			<!-- Transferor 1 -->
+
+			{{ govukSummaryList({
+			  card: {
+			    title: {
+			      text: "Transferor 1"
+			    }
+			  },
+			  rows: [
+			    {
+			      key: { text: "Transferor type" },
+			      value: { html: "Private individual" }
+			    },
+			    {
+			      key: { text: "Transferor name" },
+			      value: {
+			        html: govukWarningText({
+			          text: 'Missing',
+			          iconFallbackText: "Warning",
+			          classes: "govuk-warning-text--small-icon"
+			        })
+			      },
+			      actions: {
+			        items: [
+			          {
+			            href: "#",
+			            text: "Resolve",
+			            visuallyHiddenText: "transferor name"
+			          }
+			        ]
+			      }
+			    },
+			    {
+			      key: { text: "Capacity" },
+			      value: { html: "Registered proprietor" }
+			    },
+			    {
+			      key: { text: "Power of attorney" },
+			      value: { html: "Not in place" },
+			      actions: {
+			        items: [
+			          {}
+			        ]
+			      }
+			    }
+			  ]
+			}) }}
+
+		</div> <!-- ./govuk-grid-column-two-thirds -->
+
+		<div class="govuk-grid-column-one-third">
+			<!-- Details Component Here -->
+			{% from "govuk/components/details/macro.njk" import govukDetails %}
+			{{ govukDetails({
+				summaryText: "Guidance on transferors",
+				html: "<strong>Transferors on the register</strong>" +
+				"<p class='govuk-body'>You can:</p>" +
+				"<ul class='govuk-list govuk-list--bullet'>" +
+					"<li>add a party (such as an executor, trustee in bankruptcy or administrator)</li>" +
+					"<li>amend the transferor name</li>" +
+					"<li>add additional trustee (for the purposes of over-reaching)</li>" +
+					"<li>add an attorney</li>" +
+				"</ul>",
+				open: true
+			}) }}
+		</div>
+	</div>
+
+{% endblock %}

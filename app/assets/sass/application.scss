@@ -28,3 +28,24 @@
 }
 
 
+
+/* Warning text - small */
+
+.govuk-warning-text--small-icon .govuk-warning-text__icon {
+  min-width: 25px;
+  min-height: 25px;
+  margin-top: -4px;
+  border-width: 2px;
+  font-size: 21px;
+  line-height: 21px;
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-warning-text--small-icon .govuk-warning-text__icon {
+    margin-top: -1px;
+  }
+}
+
+.govuk-warning-text--small-icon .govuk-warning-text__text {
+  padding-left: 35px;
+}
