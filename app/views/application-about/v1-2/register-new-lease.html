@@ -15,14 +15,19 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Do you want to register a new lease with a term of more than 7 years?</h1>
+      
+      {{ govukInsetText({
+        text: "You can only register a lease with a term of more than 7 years (this means the lease must be at least 7 years and one day)."
+      }) }}
+
       <form action="/application-about/v1-2/register-new-lease" method="post">
         {{ govukRadios({
           name: "register-new-lease",
           fieldset: {
             legend: {
-              text: "Do you want to register a new lease with a term of 7 years or more?",
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--xl"
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
             }
           },
           items: [

@@ -15,10 +15,12 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">Confirm you are renewing an existing lease</h1>
-      <div class="govuk-inset-text">
-        If you need to make an application concerning a lease with a term of less than 7 years, you can This application creates one transaction that will close the old lease and register a new one for the same property to the same tenants. You can only use this application for this combination of lease transactions.
-      </div>
+      <h1 class="govuk-heading-xl">
+        Confirm you are renewing an existing lease
+      </h1>
+      <p>
+        This application creates one transaction that closes the old lease and registers a new one for the same property to the same tenants. It can only be used for this combination of lease transactions.
+      </p>
       <form action="/application-about/v1-3/confirm-renewing-existing-lease" method="post">
         {{ govukButton({
           text: "Confirm"
