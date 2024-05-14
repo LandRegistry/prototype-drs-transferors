@@ -1,0 +1,62 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Add a transferor – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}  <!-- Include content from the parent layout's beforeContent -->
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    
+      <form action="/save-transferor-name-v2s1-1" method="post">
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+        {{ govukRadios({
+          name: "wholeORpart",
+          fieldset: {
+            legend: {
+              text: "Are you transferring the whole or part of a title?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--xl"
+            }
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes"
+            },
+            {
+              value: "No",
+              text: "no"
+            }
+          ]
+        }) }}
+
+        {% from "govuk/components/button/macro.njk" import govukButton %}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue",
+            type: "submit"
+          }) }}
+        </div>
+      </form>
+
+
+    </div> <!-- ./govuk-grid-column-two-thirds -->
+
+    <div class="govuk-grid-column-one-third">
+    </div> <!-- ./govuk-grid-column-one-third -->
+  </div> <!-- ./row -->
+  
+
+{% endblock %}

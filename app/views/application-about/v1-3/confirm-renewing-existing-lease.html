@@ -1,0 +1,29 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirm you are renewing an existing lease – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Confirm you are renewing an existing lease</h1>
+      <div class="govuk-inset-text">
+        If you need to make an application concerning a lease with a term of less than 7 years, you can This application creates one transaction that will close the old lease and register a new one for the same property to the same tenants. You can only use this application for this combination of lease transactions.
+      </div>
+      <form action="/application-about/v1-3/confirm-renewing-existing-lease" method="post">
+        {{ govukButton({
+          text: "Confirm"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

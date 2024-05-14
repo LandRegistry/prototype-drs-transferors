@@ -1,0 +1,30 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirm you are updating details for an existing title – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Confirm you are updating details for an existing title</h1>
+      <p class="govuk-body">Use this application to update details of an existing title on the register.</p>
+      <div class="govuk-inset-text">
+        Do not use this application for transfers of part (TP1 or TP2).
+      </div>
+      <form action="/application-about/v1-3/confirm-updating-existing-title" method="post">
+        {{ govukButton({
+          text: "Confirm"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

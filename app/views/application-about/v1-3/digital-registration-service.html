@@ -1,0 +1,93 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Digital Registration Service – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back to portal homepage",
+    href: ""
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+      {% set html %}
+        <p class="govuk-notification-banner__heading">
+          You can now edit your application details. Editing one part of your application may affect other sections so we will ask you to check (and sometimes revalidate) some information before you can submit your application.
+        </p>
+      {% endset %}
+
+      {{ govukNotificationBanner({
+        titleText: "Information about the service",
+        html: html
+      }) }}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Apply to register or update titles</h1>
+
+      <p class="govuk-body">Use this service to:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>update registered titles</li>
+        <li>register new titles (including transfers of part and new leases)</li>
+        <li>register lease extensions (close an old lease and register a new lease of the same property to the same tenant)</li>
+        <li>close leasehold titles (including merger applications)</li>
+        <li>remove default Form A restrictions</li>
+      </ul>
+
+      {{ govukInsetText({
+        text: "You can only use this service for applications with up to 25 titles."
+      }) }}
+
+      {{ govukButton({
+        text: "Go to saved applications",
+        classes: "govuk-button--secondary",
+        href: "#"
+      }) }}
+
+      <br>
+
+      {{ govukButton({
+        text: "Start new application",
+        isStartButton: true,
+        href: "/application-about/v1-3/application-reference"
+      }) }}
+
+      <h2 class="govuk-heading-m">When to use a different service</h2>
+
+      <p class="govuk-body">You cannot transfer portfolios (TR5) using this service yet. You can submit these applications using the <a href="#" class="govuk-link">document registration service</a>.</p>
+
+      <p class="govuk-body">You cannot submit multi-district title applications for transfers of part, new leases and lease extensions using the Digital Registration Service. You have to submit these applications by post.</p>
+
+      <p class="govuk-body">You can register updates to existing multi-district titles using the Digital Registration Service.</p>
+
+      <p class="govuk-body">If your application has more than:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>25 titles, you should use the <a href="#" class="govuk-link">document registration service</a>.</li>
+        <li>50 titles, <a href="#" class="govuk-link">contact the bulk application team</a>.</li>
+      </ul>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
+        <h2 class="govuk-heading-m">Related content</h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list">
+            <li><a href="#" class="govuk-link">Get help with this service</a></li>
+            <li><a href="#" class="govuk-link">View submitted applications</a></li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+  </div>
+{% endblock %}

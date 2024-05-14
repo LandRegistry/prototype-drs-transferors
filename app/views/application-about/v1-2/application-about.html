@@ -1,0 +1,46 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Tell us what your application is about – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="/application-about/v1-2/route" method="post">
+        {{ govukRadios({
+          name: "application-type",
+          fieldset: {
+            legend: {
+              text: "Tell us what your application is about",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--xl"
+            }
+          },
+          items: [
+            {
+              value: "change-of-ownership",
+              text: "A change of ownership"
+            },
+            {
+              value: "no-change-of-ownership",
+              text: "No change of ownership (registering or renewing a lease is not considered a change of ownership)"
+            },
+            {
+              value: "removal-of-restriction",
+              text: "Removal of a default Form A restriction (JP1)"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

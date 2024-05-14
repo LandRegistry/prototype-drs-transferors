@@ -1,0 +1,31 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirm the new lease has a term of 7 years or more – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        Confirm the new lease has a term of more than 7 years
+      </h1>
+      <div class="govuk-inset-text">
+        If you need to make an application for a lease with a term of 7 years or less, select the ‘Updating specific title details’ option in the application list, and then select the ‘Noting a lease’ transaction type.
+      </div>
+      <form action="/application-about/v1-3/confirm-new-lease-term" method="post">
+        {{ govukButton({
+          text: "Confirm"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

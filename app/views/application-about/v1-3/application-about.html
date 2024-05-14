@@ -1,0 +1,54 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Tell us what your application is about – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="/application-about/v1-3/route" method="post">
+        {{ govukRadios({
+          name: "application-type",
+          fieldset: {
+            legend: {
+              text: "Tell us what your application is about",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--xl"
+            }
+          },
+          items: [
+            {
+              value: "change-of-ownership",
+              text: "A change of ownership"
+            },
+            {
+              value: "updating-specific-title-details",
+              text: "Updating specific title details (for example adding or removing restrictions or amending names and addresses)"
+            },
+            {
+              value: "registering-lease",
+              text: "Registering a lease with a term of more than 7 years (this means the lease must be at least 7 years and one day)"
+            },
+            {
+              value: "renewing-lease",
+              text: "Renewing a lease"
+            },
+            {
+              value: "removal-of-restriction",
+              text: "Removal of a default Form A restriction (JP1)"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

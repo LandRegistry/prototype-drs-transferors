@@ -1,0 +1,48 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Are you transferring the whole or part of a title? – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="/application-about/v1-3/transferring-whole-or-part" method="post">
+        {{ govukRadios({
+          name: "transfer-type",
+          fieldset: {
+            legend: {
+              text: "Are you transferring the whole or part of a title?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--xl"
+            }
+          },
+          hint: {
+            text: "Select 'Whole' if you are applying to transfer the whole of a title. Select 'Part' if your application involves a transfer of part of the title (for example, if part of a title on the register such as a garden or a garage is being transferred)."
+          },
+          items: [
+            {
+              value: "whole",
+              text: "Whole"
+            },
+            {
+              value: "part",
+              text: "Part"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

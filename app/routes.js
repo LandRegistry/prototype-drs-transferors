@@ -177,4 +177,122 @@ router.post('/v2s2/add-attorney-name-1', function (req, res) {
 
 
 
+
+// application about v2.3
+
+router.post('/application-about/v1-3/route', function (req, res) {
+  const applicationType = req.body['application-type'];
+
+  switch (applicationType) {
+    case 'change-of-ownership':
+      res.redirect('/application-about/v1-3/transferring-whole-or-part');
+      break;
+    case 'updating-specific-title-details':
+      res.redirect('/application-about/v1-3/confirm-updating-existing-title');
+      break;
+    case 'registering-lease':
+      res.redirect('/application-about/v1-3/confirm-new-lease-term');
+      break;
+    case 'renewing-lease':
+      res.redirect('/application-about/v1-3/confirm-renewing-existing-lease');
+      break;
+    case 'removal-of-restriction':
+      req.session.data['selectedRoute'] = 'JP1';
+      res.redirect('/application-about/v1-3/task-list');
+      break;
+    default:
+      res.redirect('/application-about/v1-3');
+  }
+});
+
+router.post('/application-about/v1-3/transferring-whole-or-part', function (req, res) {
+  const transferType = req.body['transfer-type'];
+
+  if (transferType === 'whole') {
+    req.session.data['selectedRoute'] = 'RU';
+  } else if (transferType === 'part') {
+    req.session.data['selectedRoute'] = 'TP';
+  }
+
+  res.redirect('/application-about/v1-3/task-list');
+});
+
+router.post('/application-about/v1-3/confirm-updating-existing-title', function (req, res) {
+  req.session.data['selectedRoute'] = 'RU';
+  res.redirect('/application-about/v1-3/task-list');
+});
+
+router.post('/application-about/v1-3/confirm-new-lease-term', function (req, res) {
+  req.session.data['selectedRoute'] = 'NL';
+  res.redirect('/application-about/v1-3/task-list');
+});
+
+router.post('/application-about/v1-3/confirm-renewing-existing-lease', function (req, res) {
+  req.session.data['selectedRoute'] = 'LE';
+  res.redirect('/application-about/v1-3/task-list');
+});
+
+
+// application about v2.2
+
+router.post('/application-about/v1-2/route', function (req, res) {
+  const applicationType = req.body['application-type'];
+
+  switch (applicationType) {
+    case 'change-of-ownership':
+      res.redirect('/application-about/v1-2/transferring-whole-or-part');
+      break;
+    case 'no-change-of-ownership':
+      res.redirect('/application-about/v1-2/register-new-lease');
+      break;
+    case 'removal-of-restriction':
+      req.session.data['selectedRoute'] = 'JP1';
+      res.redirect('/application-about/v1-2/task-list');
+      break;
+    default:
+      res.redirect('/application-about/v1-2');
+  }
+});
+
+router.post('/application-about/v1-2/transferring-whole-or-part', function (req, res) {
+  const transferType = req.body['transfer-type'];
+
+  if (transferType === 'whole') {
+    req.session.data['selectedRoute'] = 'RU';
+    res.redirect('/application-about/v1-2/task-list');
+  } else if (transferType === 'part') {
+    req.session.data['selectedRoute'] = 'TP';
+    res.redirect('/application-about/v1-2/task-list');
+  } else {
+    res.redirect('/application-about/v1-2/transferring-whole-or-part');
+  }
+});
+
+router.post('/application-about/v1-2/register-new-lease', function (req, res) {
+  const registerNewLease = req.body['register-new-lease'];
+
+  if (registerNewLease === 'yes') {
+    res.redirect('/application-about/v1-2/renewing-lease');
+  } else if (registerNewLease === 'no') {
+    req.session.data['selectedRoute'] = 'RU';
+    res.redirect('/application-about/v1-2/task-list');
+  } else {
+    res.redirect('/application-about/v1-2/register-new-lease');
+  }
+});
+
+router.post('/application-about/v1-2/renewing-lease', function (req, res) {
+  const renewingLease = req.body['renewing-lease'];
+
+  if (renewingLease === 'yes') {
+    req.session.data['selectedRoute'] = 'LE';
+    res.redirect('/application-about/v1-2/task-list');
+  } else if (renewingLease === 'no') {
+    req.session.data['selectedRoute'] = 'NL';
+    res.redirect('/application-about/v1-2/task-list');
+  } else {
+    res.redirect('/application-about/v1-2/renewing-lease');
+  }
+});
+
 module.exports = router;
