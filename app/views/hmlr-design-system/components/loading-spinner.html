@@ -1,0 +1,137 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirm the new lease has a term of 7 years or more – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+      <span class="govuk-caption-xl">Components</span>
+          
+          <h1 class="govuk-heading-xl">Loading spinner</h1>
+
+          <p class="govuk-body">Use the loading spinner component to indicate that a user-initiated action is being processed and they need to wait for a result. This could be for various scenarios such as submitting a form, generating a file, or performing complex calculations.</p>
+
+          <h2 class="govuk-heading-l">When to use this component</h2>
+          
+          <p class="govuk-body">Use the loading spinner when:</p>
+          
+          <ul class="govuk-list govuk-list--bullet">
+            <li>A user action takes significant time to complete (>1 second)</li>
+            <li>You want to reassure users that the system is actively working on their request</li>
+            <li>There is a possibility of connection issues or timeouts that may require user action</li>
+          </ul>
+          
+          <p class="govuk-body">For example, the HM Land Registry API team used a loading spinner when users submitted an application, as the back-end processing could take several seconds.</p>
+
+          <h2 class="govuk-heading-l">When not to use this component</h2>
+
+          <p class="govuk-body">Avoid using the loading spinner when:</p>
+
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Actions complete very quickly (<1 second), as it may distract users unnecessarily</li>  
+            <li>You haven't explored technical optimisations to improve the responsiveness of the service</li>
+          </ul>
+
+          <p class="govuk-body">Before adding a loading spinner, carefully consider if it is truly needed and if the user experience can be improved through other means.</p>
+
+          <h2 class="govuk-heading-l">How it works</h2>
+          
+          <p class="govuk-body">The loading spinner consists of an animated icon and text describing the action being processed. For example:</p>
+
+          <div class="govuk-!-margin-bottom-8">
+            <div class="hods-loading-spinner">
+              <div class="hods-loading-spinner__spinner"></div>
+              <div class="hods-loading-spinner__content">
+                <h1 class="govuk-heading-m">Processing your request...</h1>
+              </div>
+            </div>
+          </div>
+
+          <p class="govuk-body">This animation is achieved using CSS only and does not rely on JavaScript.</p>
+
+          <h3 class="govuk-heading-m">Status page</h3>
+
+          <p class="govuk-body">When a user initiates an action that requires back-end processing, they should be taken to a status page. The behaviour of this page depends on whether the user has JavaScript enabled:</p>
+
+          <h4 class="govuk-heading-s">With JavaScript enabled</h4>
+          
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Display a loading spinner with a message indicating the action being performed and that there might be a delay.</li>
+            <li>Include sections for possible outcomes, such as success, failure, or timeout scenarios.</li>
+            <li>Explain what will happen in each case (e.g., redirect to confirmation page, display error message, send email notification).</li>
+            <li>Automatically refresh the page at an appropriate interval to check the status.</li>
+            <li>When the status is determined, display the relevant content and take any necessary actions.</li>
+          </ul>
+
+          <h4 class="govuk-heading-s">Without JavaScript</h4>
+          
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Explain that due to browser limitations, the page cannot automatically refresh.</li>
+            <li>Give users the option to manually reload the page using their browser controls to check the status.</li>  
+            <li>Include the same outcome sections as the JavaScript version.</li>
+            <li>When the user reloads and the status is available, display the appropriate success or failure content.</li>
+          </ul>
+
+          <h3 class="govuk-heading-m">Handling long wait times</h3>
+
+          <p class="govuk-body">If the processing is taking longer than expected:</p>
+          
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Continue to display the loading spinner and update the messaging to manage expectations</li>
+            <li>Suggest that users can navigate away and provide clear instructions on how to return to the status page</li>  
+            <li>If a user returns to the status page and the process is still ongoing, ensure they see the loading spinner and appropriate messaging</li>
+            <li>If a user returns after the process has completed, display the final status (success or failure) and guide them to the next steps</li>
+            <li>Ensure any subsequent pages (confirmation, error, etc.) accurately reflect the status</li>
+          </ul>
+
+          <h2 class="govuk-heading-l">Accessibility</h2>
+
+          <p class="govuk-body">To help assistive technology users, ensure your loading spinner code includes:</p>
+          
+          <ul class="govuk-list govuk-list--bullet">
+            <li><code>aria-live="polite"</code> to announce status changes</li>
+            <li><code>role="status"</code> to identify the live region</li>  
+            <li>An element with the content "Loading" to describe the spinner's meaning</li>
+          </ul>
+
+          <p class="govuk-body">This component uses CSS animations and does not require JavaScript, so it will work for users who have JavaScript disabled.</p>
+
+          <h2 class="govuk-heading-l">Research</h2>
+          
+          <p class="govuk-body">This component builds upon the loading spinner from the Home Office design system, with insights from the HM Land Registry API team's work on handling submission states, JavaScript/non-JavaScript behaviour, and success/failure scenarios.</p>
+          
+          <p class="govuk-body">Some open research questions include:</p>
+
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Ideal time thresholds for displaying the loading spinner across different scenarios</li>
+            <li>User behaviour and expectations around connectivity issues and page refreshing</li>
+            <li>Messaging and instructions that provide clarity across possible outcomes</li>
+          </ul>
+
+          <h2 class="govuk-heading-l">Contribute</h2>
+
+          <p class="govuk-body">If you have suggestions or feedback on this component, please comment on the GitHub discussion or submit a proposal following our contribution guidelines. We particularly welcome insights on:</p>
+
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Use cases beyond form submission where a loading spinner is valuable</li>
+            <li>Accessibility considerations for loading and refreshing content</li>
+            <li>User comprehension of status messaging</li>
+            <li>Analytics on processing times and user drop-off</li>
+          </ul>
+
+
+      
+    </div>
+  </div>
+{% endblock %}

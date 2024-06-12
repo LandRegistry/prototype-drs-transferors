@@ -176,9 +176,58 @@ router.post('/v2s2/add-attorney-name-1', function (req, res) {
 });
 
 
+// application about v1.6b
+router.post('/application-about/v1-6b/route', function (req, res) {
+  const applicationType = req.body['application-type'];
+  switch (applicationType) {
+    case 'change-of-ownership':
+      res.redirect('/application-about/v1-6b/transferring-whole-or-part');
+      break;
+    case 'updating-specific-title-details':
+      res.redirect('/application-about/v1-6b/confirm-updating-existing-title');
+      break;
+    case 'registering-lease':
+      res.redirect('/application-about/v1-6b/confirm-new-lease-term');
+      break;
+    case 'renewing-lease':
+      res.redirect('/application-about/v1-6b/confirm-renewing-existing-lease');
+      break;
+    case 'removal-of-restriction':
+      req.session.data['selectedRoute'] = 'JP1';
+      res.redirect('/application-about/v1-6b/task-list');
+      break;
+    default:
+      res.redirect('/application-about/v1-6b');
+  }
+});
+
+router.post('/application-about/v1-6b/transferring-whole-or-part', function (req, res) {
+  const transferType = req.body['transfer-type'];
+  if (transferType === 'whole') {
+    req.session.data['selectedRoute'] = 'RU';
+  } else if (transferType === 'part') {
+    req.session.data['selectedRoute'] = 'TP';
+  }
+  res.redirect('/application-about/v1-6b/task-list');
+});
+
+router.post('/application-about/v1-6b/confirm-updating-existing-title', function (req, res) {
+  req.session.data['selectedRoute'] = 'RU';
+  res.redirect('/application-about/v1-6b/task-list');
+});
+
+router.post('/application-about/v1-6b/confirm-new-lease-term', function (req, res) {
+  req.session.data['selectedRoute'] = 'NL';
+  res.redirect('/application-about/v1-6b/task-list');
+});
+
+router.post('/application-about/v1-6b/confirm-renewing-existing-lease', function (req, res) {
+  req.session.data['selectedRoute'] = 'LE';
+  res.redirect('/application-about/v1-6b/task-list');
+});
 
 
-// application about v2.3
+// application about v1.3
 
 router.post('/application-about/v1-3/route', function (req, res) {
   const applicationType = req.body['application-type'];
