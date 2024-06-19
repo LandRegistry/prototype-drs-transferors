@@ -46,7 +46,7 @@
                 <li>a deed of an appointment or retirement of trustees</li>
                 <li>a transfer by operation of law</li>
               </ul>
-              <p>Select 'Part' if your application involves a transfer of part of the title (such as a garden or a garage being transferred) including:</p>
+              <p>Select ‘Part’ if your application involves a transfer of part of the title including:</p>
               <ul class='govuk-list govuk-list--bullet'>
                 <li>a transfer (TP1 or TP2)</li>
                 <li>an assent (AS3)</li>
@@ -71,12 +71,20 @@
       </form>
     </div>
      <div class="govuk-grid-column-one-third">
-      {% from "govuk/components/details/macro.njk" import govukDetails %}
-      {{ govukDetails({
-        summaryText: "Guidance on transfer forms",
-        html: '<a href="#" class="govuk-link">Get help with understanding and using HMLR forms.</a>',
-        open: false
-      }) }}
-    </div>
+        {% from "govuk/components/details/macro.njk" import govukDetails %}
+        {{ govukDetails({
+          summaryText: "Guidance on transfer forms",
+          html: '
+          <ul class="govuk-list govuk-list--bullet">
+            <li>
+              <a href="https://www.gov.uk/government/collections/hm-land-registry-forms" class="govuk-link" target="_blank">HM Land Registry forms</a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/playlist?list=PLrY9B8h0rdXi-bALhj6rWDM3VlmMWO-40" target="_blank" class="govuk-link">Videos on how to complete HM Land Registry forms.</a>
+            </li>
+          </ul>',
+          open: false
+        }) }}
+      </div>
   </div>
 {% endblock %}
