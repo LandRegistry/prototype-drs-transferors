@@ -16,7 +16,9 @@
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-xl">Components</span>
       <h1 class="govuk-heading-xl">Loading spinner</h1>
-      <p>Use the loading spinner component to indicate that a user-initiated action is being processed and they need to wait for a result. This could be for various scenarios such as submitting a form, generating a file, or performing complex calculations.</p>
+      <p>
+        Use the loading spinner component to indicate that a user-initiated action is being processed and they need to wait for a result. This could be for various scenarios such as submitting a form, generating a file, or performing complex calculations.
+      </p>
       <div class="hods-loading-spinner">
         <div class="hods-loading-spinner__spinner"></div>
         <div class="hods-loading-spinner__content">
@@ -24,13 +26,20 @@
         </div>
       </div><br>
       <h2 class="govuk-heading-m">When to use this component</h2>
-      <p>Use the loading spinner when:</p>
+      <p>
+        Before implementing a loading spinner, explore all possible technical optimisations to improve responsiveness.
+      </p>
+      <p>
+        If technical optimisations have been exhausted, use the loading spinner when:
+      </p>
       <ul class="govuk-list govuk-list--bullet">
         <li>A user action takes significant time to complete (&gt;5 seconds)</li>
         <li>You want to reassure users that the system is actively working on their request</li>
         <li>There is a possibility of connection issues or timeouts that may require user action</li>
       </ul>
-      <p>For example, the HM Land Registry DRS team used a loading spinner when users submitted an application, as the back-end processing could take several seconds.</p>
+      <p>
+        For example, the HM Land Registry DRS team used a loading spinner when users submitted an application, as the back-end processing could take several seconds, but only after exploring ways to optimise the process.
+      </p>
       <h2 class="govuk-heading-m">When not to use this component</h2>
       <p>Avoid using the loading spinner when:</p>
       <ul class="govuk-list govuk-list--bullet">
@@ -106,6 +115,10 @@
 </code></pre>
       </div>
       <p>This animation is achieved using CSS only and does not rely on JavaScript.</p>
+      <h2 class="govuk-heading-m">Important</h2>
+      <p>
+        Consider implementing timing logic to ensure that any messages displayed to the user remain on screen long enough to be read, even if the process completes quickly. Set a minimum display time (e.g., 3-5 seconds) for messages, regardless of how quickly the backend process finishes. This ensures users have sufficient time to read and understand the message before any success or failure states are shown.
+      </p>
       <h2 class="govuk-heading-m">Design considerations</h2>
       <h3 class="govuk-heading-s">Status page</h3>
       <p>When a user initiates an action that requires back-end processing, consider navigating to a status page. The behaviour of this page depends on whether the user has JavaScript enabled:</p>
