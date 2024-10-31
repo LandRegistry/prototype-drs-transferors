@@ -8,101 +8,249 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">DRS Prototype</h1>
 
-    <h2 class="govuk-heading-m">Select application type prototype</h2>
-    <p class="govuk-body">
-      This prototype focuses on the initial stage of the application process where users select the type of application they want to make. It aims to guide users to choose the appropriate application type based on their requirements, ensuring that applications are routed to the correct processing path, such as register update, transfer of part, LE, NL or JP1. The prototype explores various designs and flows to achieve this goal effectively.
-    </p>
-    <ul class="govuk-list">
-      <li>
-        <a href="/application-about/v1-6b/digital-registration-service" class="govuk-link" rel="noreferrer noopener" target="_self">
-          Design v1.6B
-        </a>
-      </li>
-      <li>
-        <a href="/application-about/v1-3/digital-registration-service" class="govuk-link" rel="noreferrer noopener" target="_self">
-          Design v1.3
-        </a>
-      </li>
-      <li>
-        <a href="/application-about/v1-2/digital-registration-service" class="govuk-link" rel="noreferrer noopener" target="_self">
-          Design v1.2
-        </a>
-      </li>
-    </ul>
+    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+              Implementation of VCAD Validation Flow (Part 1)
+            </span>
+          </h2>
+        </div>
+        <div id="accordion-default-content-1" class="govuk-accordion__section-content">
+          <section>
+              <h2 class="govuk-heading-m">
+                Overview
+              </h2>
+              <p class="govuk-body">
+                This prototype demonstrates the new Validating Customer Application Data (VCAD) implementation for the DRS digital registration service. Part 1 focuses on the enhanced submission flow and new application status management system, introducing level 3 validation which compares user-input data against, known data and extracted document data.
+              </p>
+          </section>
 
-    <br>
+          <section>
+              <h2 class="govuk-heading-m">
+                Key Changes
+              </h2>
+              <ul class="govuk-list govuk-list--bullet">
+                  <li class="govuk-body">New "Applications" page (formerly "Saved Applications") showing all application statuses</li>
+                  <li class="govuk-body">Introduction of level 3 validation (VCAD) for document data extraction</li>
+                  <li class="govuk-body">Enhanced status management: Validating, Rejected, and Received statuses</li>
+                  <li class="govuk-body">Improved application tracking with filtering capabilities</li>
+                  <li class="govuk-body">New interim page explaining the validation process</li>
+              </ul>
+          </section>
 
-    <h2 class="govuk-heading-m">Transferor details prototype</h2>
-    <p class="govuk-body">
-      This prototype is designed for user testing the redesign of the Transferor details section on DRS. It simulates three specific user journeys, focusing on reviewing and amending transferor details. Please note that some links and functionalities outside of these specific journeys may not be operational.
-    </p>
+          <section>
+              <h2 class="govuk-heading-m">
+                Key Change in Routing
+              </h2>
+              <p class="govuk-body">
+                Instead of users being routed directly to success/failure pages, all scenarios now direct users through the new Applications page. This centralised approach allows users to manage and monitor all their applications from a single location. Given our assumption that Level 3 (L3) extraction may take an unreasonably long time, which would be impractical for users to wait for validation to complete, this approach offers a more efficient experience.
+                {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
-    <p class="govuk-body">
-      <a href="/user-testing-script" class="govuk-link" rel="noreferrer noopener" target="_blank">
-        User testing script (opens in new tab)
-      </a>
-    </p>
+                {{ govukInsetText({
+                  text: "We plan to review this routing model once the extraction pilot results are available, to ensure it remains the optimal solution based on real-world data."
+                }) }}
+              </p>
+          </section>
+          <!-- Scenario 1 -->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                    Scenario 1: Successful Submission
+                </span>
+            </summary>
+            <div class="govuk-details__text">
+                <ol class="govuk-list govuk-list--number">
+                    <li class="govuk-body">
+                        User starts on the <a href="/vcad/ur-v1/s1/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
+                    </li>
+                    <li class="govuk-body">Clicks "Send for Validation" button</li>
+                    <li class="govuk-body">Routes to interim page explaining validation process</li>
+                    <li class="govuk-body">User clicks "Continue" button</li>
+                    <li class="govuk-body">Routes to new Applications page where:
+                        <ul class="govuk-list govuk-list--bullet">
+                            <li class="govuk-body">Application appears in the top row</li>
+                            <li class="govuk-body">Status shows as <strong class="govuk-tag govuk-tag--green govuk-tag-bm02">Received</strong></li>
+                        </ul>
+                    </li>
+                    <li class="govuk-body">User selects "Open" from action dropdown</li>
+                    <li class="govuk-body">Routes to "Application submitted" confirmation page with links to View Applications for detailed information</li>
+                </ol>
+            </div>
+        </details>
 
-    <details class="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          Design v2.9
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        <ul class="govuk-list">
-          <li>
-            <a href="/v2s1/tl-1-start" class="govuk-link" rel="noreferrer noopener" target="_self">
-              Scenario 1
-            </a>
-          </li>
-          <li>
-            <a href="/v2s2/tl-2-start" class="govuk-link" rel="noreferrer noopener" target="_self">
-              Scenario 2
-            </a>
-          </li>
-          <li>
-            <a href="/v2s3/tl-3-start" class="govuk-link" rel="noreferrer noopener" target="_self">
-              Scenario 3
-            </a>
-          </li>
-        </ul>
+
+          <!-- Scenario 2 -->
+          <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">
+                      Scenario 2: Rejected Submission
+                  </span>
+              </summary>
+              <div class="govuk-details__text">
+                  <ol class="govuk-list govuk-list--number">
+                      <li class="govuk-body">
+                        User starts on the <a href="/vcad/ur-v1/s2/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
+                    </li>
+                      <li class="govuk-body">Clicks "Send for Validation" button</li>
+                      <li class="govuk-body">Routes to interim page explaining validation process</li>
+                      <li class="govuk-body">User clicks "Continue" button</li>
+                      <li class="govuk-body">Routes to new Applications page where:
+                          <ul class="govuk-list govuk-list--bullet">
+                              <li class="govuk-body">Application appears in second row</li>
+                              <li class="govuk-body">Status shows as <strong class="govuk-tag govuk-tag--red govuk-tag-bm02">Rejected</strong></li>
+                          </ul>
+                      </li>
+                      <li class="govuk-body">User selects "Open" from action dropdown</li>
+                      <li class="govuk-body">Routes to error management system (Part 2 - <strong>not included</strong> in current prototype)</li>
+                  </ol>
+              </div>
+          </details>
+
+          <!-- Scenario 3 -->
+          <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">
+                      Scenario 3: Validation In Progress
+                  </span>
+              </summary>
+              <div class="govuk-details__text">
+                  <ol class="govuk-list govuk-list--number">
+                     <li class="govuk-body">
+                        User starts on the <a href="/vcad/ur-v1/s3/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
+                    </li>
+                      <li class="govuk-body">Clicks "Send for Validation" button</li>
+                      <li class="govuk-body">Routes to interim page explaining validation process</li>
+                      <li class="govuk-body">User clicks "Continue" button</li>
+                      <li class="govuk-body">Routes to new Applications page where:
+                          <ul class="govuk-list govuk-list--bullet">
+                              <li class="govuk-body">Application appears in the third row</li>
+                              <li class="govuk-body">Status shows as <div class="govuk-tag govuk-tag--blue govuk-tag-bm02">Validating</div></li>
+                          </ul>
+                      </li>
+                      <li class="govuk-body">User selects "Open" from action dropdown</li>
+                      <li class="govuk-body">Routes to "Application Being Validated" page</li>
+                      <li class="govuk-body">User clicks "Continue" button</li>
+                      <li class="govuk-body">Returns to Applications page with status updating automatically to either "Received" or "Rejected"</li>
+                  </ol>
+              </div>
+          </details>
+        </div>
       </div>
-    </details>
-
-    <details class="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          Design v2.8
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        <ul class="govuk-list">
-          <li>
-            <a href="/s1/tl-1-start" class="govuk-link" rel="noreferrer noopener" target="_self">
-              Scenario 1
-            </a>
-          </li>
-          <li>
-            <a href="/s2/tl-2-start" class="govuk-link" rel="noreferrer noopener" target="_self">
-              Scenario 2
-            </a>
-          </li>
-          <li>
-            <a href="/s3/tl-3-start" class="govuk-link" rel="noreferrer noopener" target="_self">
-              Scenario 3
-            </a>
-          </li>
-        </ul>
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+              Select application type prototype
+            </span>
+          </h2>
+        </div>
+        <div id="accordion-default-content-2" class="govuk-accordion__section-content">
+            <p class="govuk-body">
+              This prototype focuses on the initial stage of the application process where users select the type of application they want to make. It aims to guide users to choose the appropriate application type based on their requirements, ensuring that applications are routed to the correct processing path, such as register update, transfer of part, LE, NL or JP1. The prototype explores various designs and flows to achieve this goal effectively.
+            </p>
+            <ul class="govuk-list">
+              <li>
+                <a href="/application-about/v1-6b/digital-registration-service" class="govuk-link" rel="noreferrer noopener" target="_self">
+                  Design v1.6B
+                </a>
+              </li>
+              <li>
+                <a href="/application-about/v1-3/digital-registration-service" class="govuk-link" rel="noreferrer noopener" target="_self">
+                  Design v1.3
+                </a>
+              </li>
+              <li>
+                <a href="/application-about/v1-2/digital-registration-service" class="govuk-link" rel="noreferrer noopener" target="_self">
+                  Design v1.2
+                </a>
+              </li>
+            </ul>
+        </div>
       </div>
-    </details>
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
+              Transferor details prototype
+            </span>
+          </h2>
+        </div>
+        <div id="accordion-default-content-3" class="govuk-accordion__section-content">
+          <p class="govuk-body">
+            This prototype is designed for user testing the redesign of the Transferor details section on DRS. It simulates three specific user journeys, focusing on reviewing and amending transferor details. Please note that some links and functionalities outside of these specific journeys may not be operational.
+          </p>
 
-    <p class="govuk-body">
-      <a href="/v2s1/review-transferor-details-tor-1-resolve" class="govuk-link" rel="noreferrer noopener" target="_blank">
-        Resolve missing information example
-      </a>
-    </p>
-    <br>
+          <p class="govuk-body">
+            <a href="/user-testing-script" class="govuk-link" rel="noreferrer noopener" target="_blank">
+              User testing script (opens in new tab)
+            </a>
+          </p>
+
+          <details class="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Design v2.9
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ul class="govuk-list">
+                <li>
+                  <a href="/v2s1/tl-1-start" class="govuk-link" rel="noreferrer noopener" target="_self">
+                    Scenario 1
+                  </a>
+                </li>
+                <li>
+                  <a href="/v2s2/tl-2-start" class="govuk-link" rel="noreferrer noopener" target="_self">
+                    Scenario 2
+                  </a>
+                </li>
+                <li>
+                  <a href="/v2s3/tl-3-start" class="govuk-link" rel="noreferrer noopener" target="_self">
+                    Scenario 3
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Design v2.8
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ul class="govuk-list">
+                <li>
+                  <a href="/s1/tl-1-start" class="govuk-link" rel="noreferrer noopener" target="_self">
+                    Scenario 1
+                  </a>
+                </li>
+                <li>
+                  <a href="/s2/tl-2-start" class="govuk-link" rel="noreferrer noopener" target="_self">
+                    Scenario 2
+                  </a>
+                </li>
+                <li>
+                  <a href="/s3/tl-3-start" class="govuk-link" rel="noreferrer noopener" target="_self">
+                    Scenario 3
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <p class="govuk-body">
+            <a href="/v2s1/review-transferor-details-tor-1-resolve" class="govuk-link" rel="noreferrer noopener" target="_blank">
+              Resolve missing information example
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  
   </div>
 </div>
 

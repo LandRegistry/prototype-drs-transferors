@@ -1,0 +1,641 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">
+                Applications
+            </h1>
+
+            <!-- {% from "govuk/components/details/macro.njk" import govukDetails %}
+
+            {{ govukDetails({
+              summaryText: "Help with search",
+              text: "You can search using the application reference or title. <br>Saved applications are available for up to 90 days from the date they were created (saved applications are deleted from the system after 90 days)." | safe
+            }) }}
+ -->
+        </div>
+
+    </div> <!-- ./govuk-grid-row -->
+
+    
+    <div id="search-panel">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third search-container">
+                <label class="govuk-label" for="find-application">
+                    <strong>
+                        Find Application
+                    </strong>
+                </label>
+                <div class="input-wrapper">
+                    <div class="input-with-button">
+                        <input class="govuk-input" id="find-application" name="find-application" type="text">
+                        <button class="search-btn" type="button">
+                            <!-- <span class="search-text">Search</span> -->
+                            <svg class="search-icon" width="24" height="24" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                <circle cx="12.0161" cy="12.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                                <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div> <!-- /.govuk-grid-column-one-third search-container -->
+            
+            <div class="govuk-grid-column-one-third">
+                <label class="govuk-label" for="filter-status">
+                    <strong>
+                        Filter by status
+                    </strong>
+                </label>
+                <div class="input-wrapper">
+                    <div class="input-with-button">
+                        <select id="filter-status" class="govuk-select full-width">
+                            <option value="all" selected>
+                                All Statuses
+                            </option>
+                            <option value="draft">
+                                Draft
+                            </option>
+                            <option value="rejected">
+                                Rejected
+                            </option>
+                            <option value="submitted">
+                                Received
+                            </option>
+                            <option value="validating">
+                                Validating
+                            </option>
+                        </select>
+                        <!-- Add a spyglass icon button next to the select element -->
+                        <button id="ffilter-status-button" class="search-btn" type="button">
+                            <svg class="search-icon" width="24" height="24" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                            <circle cx="12.0161" cy="12.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                            <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+                        </svg>
+                        </button>
+                    </div>
+                </div>
+            </div> <!-- .govuk-grid-column-one-third -->
+
+            <div class="govuk-grid-column-one-third">
+                <label class="govuk-label" for="filter-applications">
+                    <strong>
+                        Filter by owner
+                    </strong>
+                </label>
+                <div class="input-wrapper">
+                    <div class="input-with-button">
+                        <select id="filter-applications" class="govuk-select full-width">
+                            <option value="mine">
+                                My Applications
+                            </option>
+                            <option value="all" selected>
+                                All Owners
+                            </option>
+                        </select>
+                        <!-- Add a spyglass icon button next to the select element -->
+                        <button id="filter-button" class="search-btn" type="button">
+                            <svg class="search-icon" width="24" height="24" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                            <circle cx="12.0161" cy="12.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                            <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+                        </svg>
+                        </button>
+                    </div>
+                </div>
+            </div> <!-- .govuk-grid-column-one-third -->
+
+        </div> <!-- /.govuk-grid-row -->
+    </div> <!-- /#search-panel -->
+
+    <div class="govuk-grid-row">
+    <!-- Find Application, Filter by Status, and Filter by Owner sections remain the same -->
+    
+        <!-- Add Clear Search link -->
+        <div class="govuk-grid-column-full govuk-!-text-align-right">
+
+            <button type="submit" id="clear-search" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+              Clear Search
+            </button>
+        </div>
+    </div>
+
+    
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="table-container">
+                <div role="region" aria-labelledby="Caption01" tabindex="0">
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th scope="col" class="govuk-table__header">Status</th>
+                                <th scope="col" class="govuk-table__header">Ref</th>
+                                <th scope="col" class="govuk-table__header">Titles</th>
+                                <th scope="col" class="govuk-table__header">Property</th>
+                                <th scope="col" class="govuk-table__header">Applicants</th>
+                                <th scope="col" class="govuk-table__header">Created</th>
+                                <th scope="col" class="govuk-table__header">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row" data-owner="mine">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Received</strong></td>
+                                <td class="govuk-table__cell">BT21456</td>
+                                <td class="govuk-table__cell">LN1872</td>
+                                <td class="govuk-table__cell">3 Devons Lane, London, SE8 7PR</td>
+                                <td class="govuk-table__cell">Emily Johnson</td>
+                                <td class="govuk-table__cell">14/11/24</td>
+                                <td class="govuk-table__cell">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-button">
+                                                <select class="govuk-select full-width">
+                                                <option value="">Select action</option>
+                                                    <option value="/vcad/ur-v1/s1/4-application-submitted" data-url="/vcad/ur-v1/s1/4-application-submitted">Open</option>
+                                                    <option value="/application-transfer-1" data-url="/application-transfer-1">Transfer</option>
+                                                    <option value="/delete-application-page-1" data-url="/delete-application-page-1">Delete</option>
+                                                </select>
+                                                <button class="search-btn" type="button">
+                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row" data-owner="mine">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Draft</strong></td>
+                                <td class="govuk-table__cell">EF12964</td>
+                                <td class="govuk-table__cell">PW1903</td>
+                                <td class="govuk-table__cell">5 Victoria Road, London, W9 5LN</td>
+                                <td class="govuk-table__cell">Thomas Green</td>
+                                <td class="govuk-table__cell">02/11/24</td>
+                                <td class="govuk-table__cell">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-button">
+                                                <select class="govuk-select full-width">
+                                                    <option value="">Select action</option>
+                                                    <option value="/task-list-02" data-url="/task-list-02">Open</option>
+                                                    <option value="/application-transfer-2" data-url="/application-transfer-2">Transfer</option>
+                                                    <option value="/delete-application-page-2" data-url="/delete-application-page-2">Delete</option>
+                                                </select>
+                                                <button class="search-btn" type="button">
+                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- <tr class="govuk-table__row" data-owner="mine">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Validating</strong></td>
+                                <td class="govuk-table__cell">KU50372</td>
+                                <td class="govuk-table__cell">XN8497</td>
+                                <td class="govuk-table__cell">9 Elmfield Court, London, SW19 4BX</td>
+                                <td class="govuk-table__cell">Emma Muller</td>
+                                <td class="govuk-table__cell">17/11/24</td>
+                                <td class="govuk-table__cell govuk-table__cell__spinner">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-spinner">
+                                                <div class="small-loading-spinner"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr> -->
+                            <tr class="govuk-table__row" data-owner="mine">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Draft</strong></td>
+                                <td class="govuk-table__cell">KU50372</td>
+                                <td class="govuk-table__cell">XN8497</td>
+                                <td class="govuk-table__cell">9 Elmfield Court, London, SW19 4BX</td>
+                                <td class="govuk-table__cell">Emma Muller</td>
+                                <td class="govuk-table__cell">17/11/24</td>
+                                <td class="govuk-table__cell">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-button">
+                                                <select class="govuk-select full-width">
+                                                    <option value="">Select action</option>
+                                                    <option value="/task-list-03" data-url="/task-list-03">Open</option>
+                                                    <option value="/application-transfer-3" data-url="/application-transfer-3">Transfer</option>
+                                                    <option value="/delete-application-page-3" data-url="/delete-application-page-3">Delete</option>
+                                                </select>
+                                                <button class="search-btn" type="button">
+                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr class="govuk-table__row" data-owner="mine">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Draft</strong></td>
+                                <td class="govuk-table__cell">GH42816</td>
+                                <td class="govuk-table__cell">AB7685</td>
+                                <td class="govuk-table__cell">18 The Gardens, London, NW8 8SQ</td>
+                                <td class="govuk-table__cell">Blake Wilson</td>
+                                <td class="govuk-table__cell">02/09/24</td>
+                                <td class="govuk-table__cell">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-button">
+                                                <select class="govuk-select full-width">
+                                                    <option value="">Select action</option>
+                                                    <option value="/task-list-04" data-url="/task-list-04">Open</option>
+                                                    <option value="/application-transfer-4" data-url="/application-transfer-4">Transfer</option>
+                                                    <option value="/delete-application-page-4" data-url="/delete-application-page-4">Delete</option>
+                                                </select>
+                                                <button class="search-btn" type="button">
+                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row" data-owner="mine">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Draft</strong></td>
+                                <td class="govuk-table__cell">LX93572</td>
+                                <td class="govuk-table__cell">QP6942</td>
+                                <td class="govuk-table__cell">31 Shelby, London, W3 E4P</td>
+                                <td class="govuk-table__cell">Olivia Turner</td>
+                                <td class="govuk-table__cell">02/12/24</td>
+                                <td class="govuk-table__cell">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-button">
+                                                <select class="govuk-select full-width">
+                                                    <option value="">Select action</option>
+                                                    <option value="/task-list-05" data-url="/task-list-05">Open</option>
+                                                    <option value="/application-transfer-5" data-url="/application-transfer-5">Transfer</option>
+                                                    <option value="/delete-application-page-5" data-url="/delete-application-page-5">Delete</option>
+                                                </select>
+                                                <button class="search-btn" type="button">
+                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row" data-owner="mine">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Draft</strong></td>
+                                <td class="govuk-table__cell">OE85346</td>
+                                <td class="govuk-table__cell">MS9337</td>
+                                <td class="govuk-table__cell">1 Fulford Street, London, SE1 4LP</td>
+                                <td class="govuk-table__cell">John Smith</td>
+                                <td class="govuk-table__cell">28/02/24</td>
+                                <td class="govuk-table__cell">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-button">
+                                                <select class="govuk-select full-width">
+                                                    <option value="">Select action</option>
+                                                    <option value="/task-list-06" data-url="/task-list-06">Open</option>
+                                                    <option value="/application-transfer-6" data-url="/application-transfer-6">Transfer</option>
+                                                    <option value="/delete-application-page-6" data-url="/delete-application-page-6">Delete</option>
+                                                </select>
+                                                <button class="search-btn" type="button">
+                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row" data-owner="other">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Received</strong></td>
+                                <td class="govuk-table__cell">HD64287</td>
+                                <td class="govuk-table__cell">MS9338</td>
+                                <td class="govuk-table__cell">2 Fulford Street, London, SE1 4LP</td>
+                                <td class="govuk-table__cell">Jane Doe</td>
+                                <td class="govuk-table__cell">29/02/24</td>
+                                <td class="govuk-table__cell">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-button">
+                                                <select class="govuk-select full-width">
+                                                    <option value="">Select action</option>
+                                                    <option value="/task-list-07" data-url="/task-list-07">Open</option>
+                                                    <option value="/application-transfer-7" data-url="/application-transfer-7">Transfer</option>
+                                                    <option value="/delete-application-page-7" data-url="/delete-application-page-7">Delete</option>
+                                                </select>
+                                                <button class="search-btn" type="button">
+                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row" data-owner="other">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Received</strong></td>
+                                <td class="govuk-table__cell">WX31948</td>
+                                <td class="govuk-table__cell">LN1872</td>
+                                <td class="govuk-table__cell">45 Kings Avenue, London, E14 6JX</td>
+                                <td class="govuk-table__cell">David Brown</td>
+                                <td class="govuk-table__cell">09/01/24</td>
+                                <td class="govuk-table__cell">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-button">
+                                                <select class="govuk-select full-width">
+                                                    <option value="">Select action</option>
+                                                    <option value="/task-list-08" data-url="/task-list-08">Open</option>
+                                                    <option value="/application-transfer-8" data-url="/application-transfer-8">Transfer</option>
+                                                    <option value="/delete-application-page-8" data-url="/delete-application-page-8">Delete</option>
+                                                </select>
+                                                <button class="search-btn" type="button">
+                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row" data-owner="other">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Received</strong></td>
+                                <td class="govuk-table__cell">PL71293</td>
+                                <td class="govuk-table__cell">MZ5621</td>
+                                <td class="govuk-table__cell">7 Belmont Road, London, SW17 9QW</td>
+                                <td class="govuk-table__cell">Sarah Wilson</td>
+                                <td class="govuk-table__cell">12/08/24</td>
+                                <td class="govuk-table__cell">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-button">
+                                                <select class="govuk-select full-width">
+                                                    <option value="">Select action</option>
+                                                    <option value="/task-list-09" data-url="/task-list-09">Open</option>
+                                                    <option value="/application-transfer-9" data-url="/application-transfer-9">Transfer</option>
+                                                    <option value="/delete-application-page-9" data-url="/delete-application-page-9">Delete</option>
+                                                </select>
+                                                <button class="search-btn" type="button">
+                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="govuk-table__row" data-owner="other">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Draft</strong></td>
+                                <td class="govuk-table__cell">MN80415</td>
+                                <td class="govuk-table__cell">HR4906</td>
+                                <td class="govuk-table__cell">4 Elmwood Street, London, N1 2PL</td>
+                                <td class="govuk-table__cell">Richard Patel</td>
+                                <td class="govuk-table__cell">03/04/24</td>
+                                <td class="govuk-table__cell">
+                                    <div class="input-wrapper">
+                                        <div class="input-with-button last-column-container">
+                                            <div class="input-with-button">
+                                                <select class="govuk-select full-width">
+                                                    <option value="">Select action</option>
+                                                    <option value="/task-list-10" data-url="/task-list-10">Open</option>
+                                                    <option value="/application-transfer-10" data-url="/application-transfer-10">Transfer</option>
+                                                    <option value="/delete-application-page-10" data-url="/delete-application-page-10">Delete</option>
+                                                </select>
+                                                <button class="search-btn" type="button">
+                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- /.role="region" aria-labelledby="Caption01" tabindex="0" -->
+            </div> <!-- /.table-container -->
+        </div> <!-- /.govuk-grid-column-full -->
+    </div> <!-- .govuk-grid-row -->
+
+    <div id="table-footer">
+
+        <div class="govuk-grid-row">
+
+            <div class="govuk-grid-column-one-half">
+                <p class="govuk-body-s govuk-!-text-align-left text-align-centre-mob total-applications">Showing <strong>1</strong> to <strong>X</strong> of <strong>X</strong> applications</p>
+
+                {% from "govuk/components/pagination/macro.njk" import govukPagination %}
+                {{ govukPagination({
+                    items: [
+                        {
+                            number: 1,
+                            current: true,
+                            href: "#"
+                        },
+                        {
+                            number: 2,
+                            href: "#"
+                        }
+                    ]
+                }) }}
+                
+            </div> <!-- /.govuk-grid-column-one-half -->
+
+            <!-- Applications per page -->
+            <div class="govuk-grid-column-one-half">
+                <p class="govuk-body-s govuk-!-text-align-right text-align-centre-mob">
+                        Applications per page
+                    </p>
+                <div class="govuk-column-full-width pagination-component pagination-component-right">
+                    <nav class="govuk-pagination" role="navigation" aria-label="results">
+                        <ul class="govuk-pagination__list">
+                            <li class="govuk-pagination__item govuk-pagination__item--current">
+                                <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 10" aria-current="page">
+                                  10
+                                </a>
+                            </li>
+                            <li class="govuk-pagination__item">
+                                <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 20">
+                                  20
+                                </a>
+                            </li>
+                            <li class="govuk-pagination__item">
+                                <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 30">
+                                  30
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div> <!--  /.govuk-column-full-width pagination-component -->
+                
+            </div> <!-- /.govuk-grid-column-one-half -->
+
+        </div> <!-- .govuk-grid-row -->
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full govuk-!-margin-top-3">
+                
+                <!-- <p class="govuk-body text-align-centre-mob">
+                  <a href="#" class="govuk-link">
+                    Start a new application</a>
+                </p> -->
+                {% from "govuk/components/button/macro.njk" import govukButton %}
+
+                {{ govukButton({
+                  text: "Start a new application",
+                  classes: "govuk-button--secondary"
+                }) }}
+            </div> 
+        </div> <!-- .govuk-grid-row -->
+    </div> <!-- #table-footer -->
+
+</div> <!-- ./govuk-width-container -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const filterButtonOwner = document.getElementById('filter-button');
+        const filterSelectOwner = document.getElementById('filter-applications');
+        const filterButtonStatus = document.getElementById('ffilter-status-button');
+        const filterSelectStatus = document.getElementById('filter-status');
+        const searchButton = document.querySelector('.search-btn');
+        const searchInput = document.getElementById('find-application');
+        const clearSearchLink = document.getElementById('clear-search'); // Clear Search link
+
+        // Set default selection to 'My Applications' (data-owner="mine") and apply filters on load
+        filterSelectOwner.value = 'mine';
+        applyFilters();
+
+        // Event listeners for filter buttons
+        filterButtonOwner.addEventListener('click', function () {
+            applyFilters();
+        });
+        
+        filterButtonStatus.addEventListener('click', function () {
+            applyFilters();
+        });
+
+        searchButton.addEventListener('click', function () {
+            applyFilters();
+        });
+
+        // Event listener for Clear Search link
+        clearSearchLink.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default link behavior
+
+            // Reset filters to default 'My Applications' and status filter to 'All'
+            filterSelectOwner.value = 'mine';
+            filterSelectStatus.value = 'all';
+            searchInput.value = '';
+
+            // Apply default filters again
+            applyFilters();
+        });
+
+        // Add event listeners for option buttons in action dropdown
+        const optionButtons = document.querySelectorAll('.search-btn');
+        optionButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const selectElement = button.parentElement.querySelector('select');
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+                const url = selectedOption.getAttribute('data-url');
+                
+                if (url && url !== '') {
+                    window.location.href = url;
+                }
+            });
+        });
+
+        // Function to apply filters and search
+        function applyFilters() {
+            const selectedOwner = filterSelectOwner.value;
+            const selectedStatus = filterSelectStatus.value;
+            const searchTerm = searchInput.value.trim().toLowerCase();
+
+            const tableBody = document.querySelector('.govuk-table__body');
+            const tableRows = tableBody.querySelectorAll('.govuk-table__row');
+
+            tableRows.forEach(function (row) {
+                const statusCell = row.querySelector('.govuk-table__cell:first-child'); // Status cell
+                const rowOwner = row.getAttribute('data-owner'); // New attribute for row owner
+                const refCell = row.querySelector('.govuk-table__cell:nth-child(2)'); // Ref cell
+                const titleCell = row.querySelector('.govuk-table__cell:nth-child(3)'); // Title cell
+
+                const matchesOwner = (selectedOwner === 'all' || rowOwner === 'mine');
+                const matchesStatus = (selectedStatus === 'all' || statusCell.textContent.trim().toLowerCase() === selectedStatus.toLowerCase());
+                const matchesSearch = (
+                    !searchTerm || 
+                    refCell.textContent.trim().toLowerCase().includes(searchTerm) || 
+                    titleCell.textContent.trim().toLowerCase().includes(searchTerm)
+                );
+
+                // Show row if it matches all filters and search
+                if (matchesOwner && matchesStatus && matchesSearch) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Update row count after filtering
+            updateRowCount();
+        }
+
+        // Function to update row count
+        function updateRowCount() {
+            const tableBody = document.querySelector('.govuk-table__body');
+            const tableRows = tableBody.querySelectorAll('.govuk-table__row');
+            let visibleRowCount = 0;
+            let totalRowCount = tableRows.length;
+
+            tableRows.forEach(function (row) {
+                if (row.style.display !== 'none') {
+                    visibleRowCount++;
+                }
+            });
+
+            const rowCountText = document.querySelector('.total-applications');
+            rowCountText.innerHTML = `Showing <strong>1</strong> to <strong>${visibleRowCount}</strong> of <strong>${totalRowCount}</strong> applications`;
+        }
+    });
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">
+                Your application is being validated
+            </h1>
+            <p class="govuk-body">
+                We’re validating your application and checking that the information does not contain any errors. Validation may take a while. Click ‘Continue’ to go to the Applications page where you can see the status of all of your applications.
+            </p>
+
+            <h2 class="govuk-heading-l">
+                What application statuses mean
+            </h2>
+
+            <div class="govuk-grid-row">
+                <!-- Left column -->
+                <div class="govuk-grid-column-one-half">
+                    <div class="govuk-tag govuk-tag--blue govuk-tag-bm02">Validating</div>
+                    <p class="govuk-body">
+                        The information in your application is still being validated. This status will change to Received if there are no errors, or Rejected if we do find errors.
+                    </p>
+                    
+                    <div class="govuk-tag govuk-tag--red govuk-tag-bm02">Rejected</div>
+                    <p class="govuk-body">
+                        Your application will show as Rejected if errors are found and will not be on the day list. You will need to open the application and resolve the errors before you can send it for validation again.
+                    </p>
+                </div>
+
+                <!-- Right column -->
+                <div class="govuk-grid-column-one-half">
+                    <div class="govuk-tag govuk-tag--green govuk-tag-bm02">Received</div>
+                    <p class="govuk-body">
+                        Your application has been successfully validated and is received on the day list.
+                    </p>
+                    
+                    <div class="govuk-tag govuk-tag--grey govuk-tag-bm02">Draft</div>
+                    <p class="govuk-body">
+                        You are still working on the application and it has not been sent for validation.
+                    </p>
+                </div>
+            </div> <!-- ./govuk-grid-row -->
+
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Continue",
+                    href: "/vcad/ur-v1/s1/3-saved-applications"
+                }) }}
+
+            </div>
+        </div> <!-- ./govuk-grid-column-two-thirds -->
+    </div> <!-- ./govuk-grid-row -->
+
+</div> <!-- ./govuk-width-container -->
+
+
+
+{% endblock %}

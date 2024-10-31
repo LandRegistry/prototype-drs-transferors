@@ -1,0 +1,545 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-!-margin-top-9">
+    <div class="govuk-panel govuk-panel--confirmation">
+  <h1 class="govuk-panel__title">
+    Application submitted
+  </h1>
+  <div class="govuk-panel__body">
+        Your HM Land Registry reference number:<br>
+    <strong>      S448YWW
+</strong>
+
+  </div>
+</div>
+
+
+  </div>
+
+  <p class="govuk-body">You must quote your HM Land Registry reference number in any correspondence.</p>
+
+  <h2 class="govuk-heading-l">Priority details</h2>
+
+    <dl class="govuk-summary-list govuk-!-margin-bottom-9" id="priority_details_summary">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Priority date
+          </dt>
+          <dd class="govuk-summary-list__value">
+            29 October 2024
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Priority time
+          </dt>
+          <dd class="govuk-summary-list__value">
+            13:40:43
+          </dd>
+        </div>
+  </dl>
+
+
+
+  
+
+  <h2 class="govuk-heading-l">Application details</h2>
+
+
+
+  <dl class="govuk-summary-list govuk-!-margin-bottom-9" id="application_details_summary">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Your reference
+          </dt>
+          <dd class="govuk-summary-list__value">
+            vcad2
+          </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="https://uat1eservices.landregistry.gov.uk/preview/digital-registration-service/application-submitted">
+                </a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+          <dt class="govuk-summary-list__key">
+            Application type
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Update existing titles only
+          </dd>
+        </div>
+  </dl>
+
+
+
+
+
+  
+    <h2 class="govuk-heading-l govuk-!-margin-top-9">Property details</h2>
+
+
+
+
+
+
+
+
+
+
+
+    <table class="govuk-table" id="property_details_table">
+  <caption class="govuk-table__caption govuk-visually-hidden">Property details</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Title number</th>
+      <th scope="col" class="govuk-table__header">Property description</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Additional details</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">DT122233</td>
+          <td class="govuk-table__cell">
+
+  43 Benville Road, Weymouth, (DT4 0SG)
+
+</td>
+          <td class="govuk-table__cell">        This application affects the whole of the title
+</td>
+        </tr>
+  </tbody>
+</table>
+
+
+
+
+    
+
+    <h2 class="govuk-heading-l govuk-!-margin-top-9">Overriding interests</h2>
+
+
+
+
+
+
+  <dl class="govuk-summary-list govuk-!-margin-bottom-9" id="doi_details_summary">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Is this title affected by overriding interests?
+          </dt>
+          <dd class="govuk-summary-list__value">
+                  No
+
+          </dd>
+        </div>
+  </dl>
+
+
+
+
+
+    
+
+    <h2 class="govuk-heading-l govuk-!-margin-top-9">Linked transactions and title numbers</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <table class="govuk-table title_transaction_mapping" id="title_transaction_mapping">
+  <caption class="govuk-table__caption govuk-visually-hidden">Linked transactions and title numbers</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half">Transactions</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half">Title numbers</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Transfer for value</td>
+          <td class="govuk-table__cell">DT122233</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Change of name</td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+    
+    <h2 class="govuk-heading-l govuk-!-margin-top-9">Applicants</h2>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <table class="govuk-table ddrs-party-table govuk-!-margin-bottom-2" id="applicant_summary_table">
+  <caption class="govuk-table__caption govuk-visually-hidden">Applicant details are displayed in this table.</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Applicant type</th>
+      <th scope="col" class="govuk-table__header">Full name</th>
+      <th scope="col" class="govuk-table__header">Company number</th>
+      <th scope="col" class="govuk-table__header">Territory of incorporation</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Private individual</td>
+          <td class="govuk-table__cell">d d</td>
+          <td class="govuk-table__cell">N/A</td>
+          <td class="govuk-table__cell">N/A</td>
+        </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+  <h2 class="govuk-heading-l govuk-!-margin-top-9">Transactions</h2>
+<div class="app-task-list govuk-!-margin-bottom-9">
+    <div class="transaction-container govuk-!-margin-bottom-7" id="priority-1">
+
+      <span class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-5" id="priority-label-1">
+        Priority 1
+      </span>
+      <h3 class="govuk-heading-m">Transfer for value</h3>
+
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-3" id="transaction_summary-1">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Price/Value (£)
+          </dt>
+          <dd class="govuk-summary-list__value">
+            123,000
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Fee (£)
+          </dt>
+          <dd class="govuk-summary-list__value">
+            100
+          </dd>
+        </div>
+  </dl>
+
+
+
+
+    <h4 class="govuk-heading-m govuk-!-margin-top-6">Transferee details</h4>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+    <table class="govuk-table ddrs-party-table govuk-!-margin-bottom-2" id="transferee_party_summary_table1">
+  <caption class="govuk-table__caption govuk-visually-hidden">This table shows the transferee details for the Transfer for value transaction.</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Transferee type</th>
+      <th scope="col" class="govuk-table__header">Full name</th>
+      <th scope="col" class="govuk-table__header">Represented by</th>
+      <th scope="col" class="govuk-table__header">Address for service</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Private individual</td>
+          <td class="govuk-table__cell">d d</td>
+          <td class="govuk-table__cell">FEV UAT LTD</td>
+          <td class="govuk-table__cell">            <p class="govuk-body">CORNERSTONE HOUSING LTD, CORNERSTONE HOUSE, WESTERN WAY, EXETER, EX1 1AL</p>
+</td>
+        </tr>
+  </tbody>
+</table>
+
+
+
+
+
+    <h4 class="govuk-heading-m govuk-!-margin-top-6">Transferor details</h4>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <table class="govuk-table ddrs-party-table govuk-!-margin-bottom-2" id="transferor_party_summary_table1">
+  <caption class="govuk-table__caption govuk-visually-hidden">This table shows the transferor details for the Transfer for value transaction.</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Transferor type</th>
+      <th scope="col" class="govuk-table__header">Full name</th>
+      <th scope="col" class="govuk-table__header">Represented by</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Private individual</td>
+          <td class="govuk-table__cell">STUART EDWARD MOREY</td>
+          <td class="govuk-table__cell">FEV UAT LTD</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Private individual</td>
+          <td class="govuk-table__cell">LISA MOREY amended from LISA MOORE</td>
+          <td class="govuk-table__cell">FEV UAT LTD</td>
+        </tr>
+  </tbody>
+</table>
+
+
+
+
+
+    <div class="govuk-!-margin-top-6" id="additional-fields">
+      <h4 class="govuk-heading-m">Additional fields</h4>
+
+
+
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Transfer date
+          </dt>
+          <dd class="govuk-summary-list__value">
+            01/06/2023
+          </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="https://uat1eservices.landregistry.gov.uk/preview/digital-registration-service/application-submitted">
+                </a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Consideration
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Transfer of £123,000 received from transferee
+          </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="https://uat1eservices.landregistry.gov.uk/preview/digital-registration-service/application-submitted">
+                </a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Title guarantee
+          </dt>
+          <dd class="govuk-summary-list__value">
+            full title guarantee
+          </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="https://uat1eservices.landregistry.gov.uk/preview/digital-registration-service/application-submitted">
+                </a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Additional provisions
+          </dt>
+          <dd class="govuk-summary-list__value">
+                      None
+
+          </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="https://uat1eservices.landregistry.gov.uk/preview/digital-registration-service/application-submitted">
+                </a>
+            </dd>
+        </div>
+  </dl>
+
+
+    </div>
+
+<h4 class="govuk-heading-m govuk-!-margin-bottom-1 govuk-!-margin-top-6">Attached documents</h4>
+
+  
+
+
+
+
+
+
+
+
+
+
+      <table class="govuk-table document_summary_table">
+  <caption class="govuk-table__caption govuk-visually-hidden">This table shows the attached documents for the transaction.</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Document type</th>
+      <th scope="col" class="govuk-table__header">Certification</th>
+      <th scope="col" class="govuk-table__header">File name</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">TR1 Registered title(s): whole
+transfer</td>
+          <td class="govuk-table__cell">Certified</td>
+          <td class="govuk-table__cell">Draft TR1 (1).pdf</td>
+        </tr>
+  </tbody>
+</table>
+
+
+
+
+
+    </div>
+
+    <div class="transaction-container govuk-!-margin-bottom-7" id="priority-2">
+
+      <span class="govuk-caption-m govuk-!-font-size-16 govuk-!-margin-bottom-5" id="priority-label-2">
+        Priority 2
+      </span>
+      <h3 class="govuk-heading-m">Change of name</h3>
+
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-3" id="transaction_summary-2">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Price/Value (£)
+          </dt>
+          <dd class="govuk-summary-list__value">
+            0
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Fee (£)
+          </dt>
+          <dd class="govuk-summary-list__value">
+            0
+          </dd>
+        </div>
+  </dl>
+
+
+
+
+
+<h4 class="govuk-heading-m govuk-!-margin-bottom-1 govuk-!-margin-top-6">Attached documents</h4>
+
+  
+
+
+
+
+
+
+
+
+
+    <p class="govuk-body">- No documents attached -</p>
+
+
+    </div>
+
+</div>
+  <h2 class="govuk-heading-l">Your contact email for this application</h2>
+
+  <dl class="govuk-summary-list govuk-!-margin-bottom-9" id="contact_email_summary">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Email address
+          </dt>
+          <dd class="govuk-summary-list__value">
+            corres@landregistry.gov.uk
+          </dd>
+        </div>
+  </dl>
+
+
+
+  <h2 class="govuk-heading-l">Next steps</h2>
+
+  <p class="govuk-body">
+    You can print this screen for your records.
+  </p>
+  <p class="govuk-body">
+<a href="https://uat1eservices.landregistry.gov.uk/preview/digital-registration-service/download-ap1" class="govuk-link" target="_blank" rel="noopener noreferrer">Download completed AP1 (PDF)</a>  </p>
+  <p class="govuk-body">
+<a href="https://uat1eservices.landregistry.gov.uk/preview/digital-registration-service/" class="govuk-link" id="start_new_application">Start a new application</a>  </p>
+  <p class="govuk-body">
+<a href="https://uat1eservices.landregistry.gov.uk/view-applications_UAT1/" class="govuk-link govuk-link--no-visited-state" id="view_my_applications">View Applications</a>  </p>
+  <p class="govuk-body">
+<a href="https://uat1eservices.landregistry.gov.uk/homepage_UAT1" class="govuk-link govuk-link--no-visited-state" id="portal_homepage">Go to portal homepage</a>      for other HM Land Registry services.
+  </p>
+  <p class="govuk-body">
+    Got a moment? <a href="https://forms.office.com/r/WQTU0Rf66P" class="govuk-link govuk-link--no-visited-state" id="feedback-survey" target="_blank" rel="noopener noreferrer">Tell us what you think (opens in a new tab)</a>  </p>
+        </div> <!-- ./govuk-grid-column-full -->
+    </div> <!-- ./govuk-grid-row -->
+
+</div> <!-- ./govuk-width-container -->
+
+
+
+{% endblock %}

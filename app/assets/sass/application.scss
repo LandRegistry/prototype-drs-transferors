@@ -132,3 +132,323 @@
     font-size: inherit;
 }
 
+
+/* VCAD */
+
+/* General Styles */
+
+/* Custom border for the header container */
+.govuk-header__container {
+    border-bottom: 10px solid #789904;
+}
+
+/* Full-width utility class */
+.full-width {
+    width: 100%;
+}
+
+/* Search container positioning */
+.search-container {
+    position: relative;
+}
+
+/* Input wrapper styles */
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Adjust padding for input to make space for button */
+.govuk-input {
+    padding-right: 40px;
+}
+
+/* Vertical alignment for table cells */
+.govuk-table__cell {
+    vertical-align: middle;
+}
+
+/* Margin for search panel */
+#search-panel {
+    margin-bottom: 20px;
+}
+
+/* Flexbox layout for input with button */
+.input-with-button {
+    display: flex;
+    align-items: center;
+}
+
+/* Search button styles */
+.search-btn {
+    background-color: #005ea5;
+    border: 1px solid #005ea5;
+    color: white;
+    cursor: pointer;
+    padding: 7px 7px;
+    border-radius: 0;
+    outline: none;
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+}
+
+/* Text and icon spacing within search button */
+.search-text {
+    margin-right: 5px;
+}
+
+/* Search icon color */
+.search-icon {
+    color: white;
+}
+
+/* Hover and focus styles for search button */
+.search-btn:hover, .search-btn:focus {
+    background-color: #00457e;
+}
+
+/* Remove margin-bottom for input-wrapper within table */
+.govuk-table .input-wrapper {
+    margin-bottom: 0;
+}
+
+/* Padding for larger screens */
+.t1 {
+    padding-left: 100px;
+}
+
+/* Accessibility styles for region roles */
+[role="region"][aria-labelledby][tabindex] {
+    overflow: auto;
+}
+
+[role="region"][aria-labelledby][tabindex]:focus {
+    outline: .1em solid rgba(0,0,0,.1);
+}
+
+/* Media Queries */
+
+/* Styles for smaller screens */
+@media (max-width: 768px) {
+    .t1 {
+        padding-left: 0;
+    }
+    .text-align-centre-mob {
+        text-align: center !important;
+    }
+}
+
+/* Font size adjustment for table on larger screens */
+@media (min-width: 40.0625em) {
+    .govuk-table {
+        font-size: 1rem;
+        line-height: 1.3157894737;
+    }
+    /* Align pagination to the right */
+    .pagination-component-right .govuk-pagination {
+        justify-content: flex-end !important;
+    }
+}
+
+/* Display pagination items inline on smaller screens */
+@media (max-width: 40.0625em) {
+    .govuk-pagination__item {
+        display: inline-block !important;
+    }
+}
+
+
+#table-footer .govuk-pagination {
+    margin-bottom: 0.9rem;
+}
+
+/* Custom styles for autocomplete */
+.ui-autocomplete {
+  background-color: white;
+  border: 1px solid #ccc;
+  font-family: "GDS Transport", Arial, sans-serif;
+  font-size: 19px;
+  width: 300px; /* Set the width to a reasonable value */
+  -webkit-box-shadow: 2px 2px 6px 0px #7D7D7D; 
+  box-shadow: 2px 2px 6px 0px #7D7D7D;
+  padding: 10px;
+}
+.ui-autocomplete li {
+  list-style-type: none;
+}
+
+// Task list - side bar
+.ddrs-application-info-box {
+    border-top: 4px solid #5694ca;
+}
+
+// Task list pattern
+
+.govuk-prototype-kit-task-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  @include govuk-media-query($from: tablet) {
+    min-width: 550px;
+  }
+}
+
+.govuk-prototype-kit-task-list__section {
+  display: table;
+  @include govuk-font($size:24, $weight: bold);
+}
+
+.govuk-prototype-kit-task-list__section-number {
+  display: table-cell;
+
+  @include govuk-media-query($from: tablet) {
+    min-width: govuk-spacing(6);
+    padding-right: 0;
+  }
+}
+
+.govuk-prototype-kit-task-list__items {
+  @include govuk-font($size: 19);
+  @include govuk-responsive-margin(9, "bottom");
+  list-style: none;
+  padding-left: 0;
+  @include govuk-media-query($from: tablet) {
+    padding-left: govuk-spacing(6);
+  }
+}
+
+.govuk-prototype-kit-task-list__item {
+  border-bottom: 1px solid $govuk-border-colour;
+  margin-bottom: 0 !important;
+  padding-top: govuk-spacing(2);
+  padding-bottom: govuk-spacing(2);
+  @include govuk-clearfix;
+}
+
+.govuk-prototype-kit-task-list__item:first-child {
+  border-top: 1px solid $govuk-border-colour;
+}
+
+.govuk-prototype-kit-task-list__task-name {
+  display: block;
+  @include govuk-media-query($from: 450px) {
+    float: left;
+  }
+}
+
+
+/* 07/09/24 */
+.clear-icon {
+    vertical-align: middle; /* Ensures the icon aligns vertically with the text */
+    margin-right: 8px; /* Adjusts spacing between the icon and text */
+    position: relative; /* Allows adjustment of position */
+    top: -2px; /* Adjusts the icon upwards by 2px (increase the value to move it up more) */
+}
+
+/* END - 07/09/24 */
+
+
+// The `govuk-prototype-kit-task-list__task-completed` class was previously used on the task
+// list for the completed tag (changed in 86c90ec) – it's still included here to
+// avoid breaking task lists in existing prototypes.
+.govuk-prototype-kit-task-list__tag,
+.govuk-prototype-kit-task-list__task-completed {
+  margin-top: govuk-spacing(2);
+  margin-bottom: govuk-spacing(1);
+
+  @include govuk-media-query($from: 450px) {
+    float: right;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.hods-loading-spinner {
+  padding-top: 15px;
+}
+@media (min-width: 40.0625em) {
+  .hods-loading-spinner {
+    padding-top: 20px;
+  }
+}
+.hods-loading-spinner__spinner {
+  margin-left: auto;
+  margin-right: auto;
+  border: 12px solid #DEE0E2;
+  border-radius: 50%;
+  border-top-color: #1d70b8;
+  width: 80px;
+  height: 80px;
+  -webkit-animation: hods-loading-spinner-animation 2s linear infinite;
+  animation: hods-loading-spinner-animation 2s linear infinite;
+}
+.hods-loading-spinner__content {
+  padding-top: 15px;
+  text-align: center;
+}
+@media (min-width: 40.0625em) {
+  .hods-loading-spinner__content {
+    padding-top: 20px;
+  }
+}
+
+@-webkit-keyframes hods-loading-spinner-animation {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes hods-loading-spinner-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Spinner Container */
+.input-with-spinner {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensures spinner container fills cell width */
+    text-align: center; /* Centers content within the table cell */
+}
+
+/* Small Loading Spinner */
+.small-loading-spinner {
+    border: 6px solid #DEE0E2; /* Spinner border width and colour */
+    border-top-color: #1d70b8; /* Spinner top colour */
+    border-radius: 50%;
+    width: 24px; /* Spinner diameter */
+    height: 24px;
+    animation: hods-loading-spinner-animation 1.5s linear infinite; /* Rotation animation */
+}
+
+/* Spinner Animation */
+@keyframes hods-loading-spinner-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Review your application */
+.change-link {
+    text-align: right;
+}
+
+
+.govuk-tag-bm02 {
+    margin-bottom: 0.2em;
+}
