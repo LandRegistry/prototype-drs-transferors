@@ -23,7 +23,7 @@
                 Overview
               </h2>
               <p class="govuk-body">
-                This prototype demonstrates the new Validating Customer Application Data (VCAD) implementation for the DRS digital registration service. Part 1 focuses on the enhanced submission flow and new application status management system, introducing level 3 validation which compares user-input data against, known data and extracted document data.
+                This prototype demonstrates the new Validating Customer Application Data (VCAD) implementation for DRS. Part 1 focuses on the enhanced submission flow and new application status management system, introducing level 3 validation which compares user-input data against, known data and extracted document data.
               </p>
           </section>
 
@@ -32,7 +32,7 @@
                 Key Changes
               </h2>
               <ul class="govuk-list govuk-list--bullet">
-                  <li class="govuk-body">New "Applications" page (formerly "Saved Applications") showing all application statuses</li>
+                  <li class="govuk-body">New "Applications" page (formerly "Saved applications") showing all application statuses</li>
                   <li class="govuk-body">Introduction of level 3 validation (VCAD) for document data extraction</li>
                   <li class="govuk-body">Enhanced status management: Validating, Rejected, and Received statuses</li>
                   <li class="govuk-body">Improved application tracking with filtering capabilities</li>
@@ -45,11 +45,11 @@
                 Key Change in Routing
               </h2>
               <p class="govuk-body">
-                Instead of users being routed directly to success/failure pages, all scenarios now direct users through the new Applications page. This centralised approach allows users to manage and monitor all their applications from a single location. Given our assumption that Level 3 (L3) extraction may take an unreasonably long time, which would be impractical for users to wait for validation to complete, this approach offers a more efficient experience.
+                Instead of users being routed directly to success/failure pages, all scenarios now direct users through to the new Applications page. This centralised approach allows users to manage and monitor all their applications from a single location. Given that Level 3 data extraction may take longer to process, this approach ensures users can continue with other tasks without waiting for validation to complete, providing a more efficient experience overall.
                 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
                 {{ govukInsetText({
-                  text: "We plan to review this routing model once the extraction pilot results are available, to ensure it remains the optimal solution based on real-world data."
+                  text: "We plan to review this routing model once the extraction pilot results are available, to ensure it remains the optimal solution based on practical insights."
                 }) }}
               </p>
           </section>
