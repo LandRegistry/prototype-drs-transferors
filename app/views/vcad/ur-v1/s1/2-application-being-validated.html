@@ -18,44 +18,66 @@
                 Your application is being validated
             </h1>
             <p class="govuk-body">
-                We’re validating your application and checking that the information does not contain any errors. Validation may take a while. Click ‘Continue’ to go to the Applications page where you can see the status of all of your applications.
+                We’re validating your application to check that the information is accurate. 
+            </p>
+            <h2 class="govuk-heading-l">
+                How the validation process works
+            </h2>
+            <p class="govuk-body">
+                We will run checks to identify if there are any discrepancies in the information in your application and supporting documents (such as names; addresses and dates). 
+            </p>
+            <p class="govuk-body">
+               We can’t tell you exactly how long validation will take, but the status of your application will be automatically updated on the Applications page once validation is complete. Applications statuses are explained here.
             </p>
 
-            <h2 class="govuk-heading-l">
-                What application statuses mean
-            </h2>
+            {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+            {% from "govuk/components/tag/macro.njk" import govukTag %}
 
-            <div class="govuk-grid-row">
-                <!-- Left column -->
-                <div class="govuk-grid-column-one-half">
-                    <div class="govuk-tag govuk-tag--blue govuk-tag-bm02">Validating</div>
-                    <p class="govuk-body">
-                        The information in your application is still being validated. This status will change to Received if there are no errors, or Rejected if we do find errors.
-                    </p>
-                    
-                    <div class="govuk-tag govuk-tag--red govuk-tag-bm02">Rejected</div>
-                    <p class="govuk-body">
-                        Your application will show as Rejected if errors are found and will not be on the day list. You will need to open the application and resolve the errors before you can send it for validation again.
-                    </p>
-                </div>
-
-                <!-- Right column -->
-                <div class="govuk-grid-column-one-half">
-                    <div class="govuk-tag govuk-tag--green govuk-tag-bm02">Received</div>
-                    <p class="govuk-body">
-                        Your application has been successfully validated and is received on the day list.
-                    </p>
-                    
-                    <div class="govuk-tag govuk-tag--grey govuk-tag-bm02">Draft</div>
-                    <p class="govuk-body">
-                        You are still working on the application and it has not been sent for validation.
-                    </p>
-                </div>
-            </div> <!-- ./govuk-grid-row -->
+            {{ govukSummaryList({
+              card: {
+                title: {
+                  text: "Application statuses"
+                }
+              },
+              rows: [
+                {
+                  key: {
+                    html: govukTag({ text: "Validating", classes: "govuk-tag--blue status-column" })
+                  },
+                  value: {
+                    html: "We’re validating the information. If we find errors, the status will change to Rejected. If there are no errors, it will change to Received."
+                  }
+                },
+                {
+                  key: {
+                    html: govukTag({ text: "Received", classes: "govuk-tag--green status-column" })
+                  },
+                  value: {
+                    html: "We’ve successfully validated your application and it is on the day list."
+                  }
+                },
+                {
+                  key: {
+                    html: govukTag({ text: "Rejected", classes: "govuk-tag--red status-column" })
+                  },
+                  value: {
+                    html: "Errors have been found and the application is Rejected. You’ll need to open the application from the Applications page and resolve the errors."
+                  }
+                },
+                {
+                  key: {
+                    html: govukTag({ text: "Draft", classes: "govuk-tag--grey status-column" })
+                  },
+                  value: {
+                    html: "You’re still working on the application and it has not been sent for validation."
+                  }
+                }
+              ]
+            }) }}
 
             <div class="govuk-button-group">
                 {{ govukButton({
-                    text: "Continue",
+                    text: "Continue to Applications page",
                     href: "/vcad/ur-v1/s1/3-saved-applications"
                 }) }}
 

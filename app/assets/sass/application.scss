@@ -452,3 +452,12 @@
 .govuk-tag-bm02 {
     margin-bottom: 0.2em;
 }
+
+/* VCAD Card - Your application is being validated
+Apply a narrower width to the first column */
+@media (min-width: 40.0625em) {
+    .govuk-summary-list__key {
+        width: 17%;
+    }
+}
+
