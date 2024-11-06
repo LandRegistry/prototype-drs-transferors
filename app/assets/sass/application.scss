@@ -461,3 +461,31 @@ Apply a narrower width to the first column */
     }
 }
 
+
+/* Full-width buttons container with padding for vertical alignment */
+.full-width-buttons {
+    display: flex;
+    gap: 8px;
+    padding-top: 30px; /* Adjust this value until aligned with the inputs */
+}
+
+/* Each button fills half of the container width */
+.full-width-buttons .full-width {
+    flex: 1;
+}
+
+/* Custom color styles */
+#apply-filters {
+    background-color: #1d70b8;
+    border-color: #1d70b8;
+    color: #ffffff;
+}
+
+#clear-search {
+    background-color: #ffffff;
+    border-color: #1d70b8;
+    color: #1d70b8;
+}
+
+
+

@@ -32,8 +32,7 @@
     
     <div id="search-panel">
         <div class="govuk-grid-row">
-
-            <div class="govuk-grid-column-one-quarter search-container">
+            <div class="govuk-grid-column-one-third search-container">
                 <label class="govuk-label" for="find-application">
                     <strong>
                         Find Application
@@ -51,45 +50,86 @@
                         </button>
                     </div>
                 </div>
-            </div> <!-- /.govuk-grid-column-one-quarter search-container -->
+            </div> <!-- /.govuk-grid-column-one-third search-container -->
             
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-third">
                 <label class="govuk-label" for="filter-status">
-                    <strong>Filter by status</strong>
+                    <strong>
+                        Filter by status
+                    </strong>
                 </label>
-                <select id="filter-status" class="govuk-select full-width">
-                    <option value="all" selected>All Statuses</option>
-                    <option value="draft">Draft</option>
-                    <option value="rejected">Rejected</option>
-                    <option value="received">Received</option>
-                    <option value="validating">Validating</option>
-                </select>
-            </div> <!-- .govuk-grid-column-one-quarter -->
-
-            <div class="govuk-grid-column-one-quarter">
-                <label class="govuk-label" for="filter-applications">
-                    <strong>Filter by owner</strong>
-                </label>
-                <select id="filter-applications" class="govuk-select full-width">
-                    <option value="mine">My Applications</option>
-                    <option value="all" selected>All Owners</option>
-                </select>
-
-            </div> <!-- .govuk-grid-column-one-quarter -->
-
-            <div class="govuk-grid-column-one-quarter">
-                <div class="govuk-button-group full-width-buttons">
-                    <button id="apply-filters" class="govuk-button full-width" type="button">Filter</button>
-                    <button id="clear-search" class="govuk-button govuk-button--secondary full-width" type="button">Clear</button>
+                <div class="input-wrapper">
+                    <div class="input-with-button">
+                        <select id="filter-status" class="govuk-select full-width">
+                            <option value="all" selected>
+                                All Statuses
+                            </option>
+                            <option value="draft">
+                                Draft
+                            </option>
+                            <option value="rejected">
+                                Rejected
+                            </option>
+                            <option value="received">
+                                Received
+                            </option>
+                            <option value="validating">
+                                Validating
+                            </option>
+                        </select>
+                        <!-- Add a spyglass icon button next to the select element -->
+                        <button id="ffilter-status-button" class="search-btn" type="button">
+                            <svg class="search-icon" width="24" height="24" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                            <circle cx="12.0161" cy="12.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                            <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+                        </svg>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </div> <!-- .govuk-grid-column-one-third -->
 
-             <!-- .govuk-grid-column-one-quarter -->
+            <div class="govuk-grid-column-one-third">
+                <label class="govuk-label" for="filter-applications">
+                    <strong>
+                        Filter by owner
+                    </strong>
+                </label>
+                <div class="input-wrapper">
+                    <div class="input-with-button">
+                        <select id="filter-applications" class="govuk-select full-width">
+                            <option value="mine">
+                                My Applications
+                            </option>
+                            <option value="all" selected>
+                                All Owners
+                            </option>
+                        </select>
+                        <!-- Add a spyglass icon button next to the select element -->
+                        <button id="filter-button" class="search-btn" type="button">
+                            <svg class="search-icon" width="24" height="24" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                            <circle cx="12.0161" cy="12.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                            <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+                        </svg>
+                        </button>
+                    </div>
+                </div>
+            </div> <!-- .govuk-grid-column-one-third -->
 
         </div> <!-- /.govuk-grid-row -->
-
-
     </div> <!-- /#search-panel -->
+
+    <div class="govuk-grid-row">
+    <!-- Find Application, Filter by Status, and Filter by Owner sections remain the same -->
+    
+        <!-- Add Clear Search link -->
+        <div class="govuk-grid-column-full govuk-!-text-align-right">
+
+            <button type="submit" id="clear-search" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+              Clear Search
+            </button>
+        </div>
+    </div>
+
     
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
@@ -121,7 +161,7 @@
                                             <div class="input-with-button">
                                                 <select class="govuk-select full-width">
                                                 <option value="">Select action</option>
-                                                    <option value="/vcad/ur-v1/s3/4-application-submitted" data-url="/vcad/ur-v1/s3/4-application-submitted">Open</option>
+                                                    <option value="/vcad/ur-v1/s2/4-application-submitted" data-url="/vcad/ur-v1/s2/4-application-submitted">Open</option>
                                                     <option value="/application-transfer-1" data-url="/application-transfer-1">Transfer</option>
                                                     <option value="/delete-application-page-1" data-url="/delete-application-page-1">Delete</option>
                                                 </select>
@@ -149,7 +189,7 @@
                                             <div class="input-with-button">
                                                 <select class="govuk-select full-width">
                                                     <option value="">Select action</option>
-                                                    <option value="/task-list-02" data-url="/task-list-02">Open</option>
+                                                    <option value="/vcad/ur-v1/s2/5-rejected-resolve-v1" data-url="/vcad/ur-v1/s2/5-rejected-resolve-v1">Open</option>
                                                     <option value="/application-transfer-2" data-url="/application-transfer-2">Transfer</option>
                                                     <option value="/delete-application-page-2" data-url="/delete-application-page-2">Delete</option>
                                                 </select>
@@ -164,7 +204,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr class="govuk-table__row" data-owner="mine">
+                            <!-- <tr class="govuk-table__row" data-owner="mine">
                                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Validating</strong></td>
                                 <td class="govuk-table__cell">KU50372</td>
                                 <td class="govuk-table__cell">XN8497</td>
@@ -181,10 +221,9 @@
                                         </div>
                                     </div>
                                 </td>
-                            </tr>
-                            <!-- Standard tr (replaced by loading spinner)-->
-                            <!-- <tr class="govuk-table__row" data-owner="mine">
-                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Validating</strong></td>
+                            </tr> -->
+                            <tr class="govuk-table__row" data-owner="mine">
+                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Draft</strong></td>
                                 <td class="govuk-table__cell">KU50372</td>
                                 <td class="govuk-table__cell">XN8497</td>
                                 <td class="govuk-table__cell">9 Elmfield Court, London, SW19 4BX</td>
@@ -196,8 +235,9 @@
                                             <div class="input-with-button">
                                                 <select class="govuk-select full-width">
                                                     <option value="">Select action</option>
-                                                    <option value="/task-list-03" data-url="/vcad/ur-v1/s3/5-application-being-validated">Open</option>
+                                                    <option value="/task-list-03" data-url="/task-list-03">Open</option>
                                                     <option value="/application-transfer-3" data-url="/application-transfer-3">Transfer</option>
+                                                    <!-- <option value="/delete-application-page-3" data-url="/delete-application-page-3">Delete</option> -->
                                                 </select>
                                                 <button class="search-btn" type="button">
                                                     <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -209,8 +249,8 @@
                                         </div>
                                     </div>
                                 </td>
-                            </tr> -->
-                            <!-- Loading spinner tr -->
+                            </tr>
+                            
                             <tr class="govuk-table__row" data-owner="mine">
                                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Draft</strong></td>
                                 <td class="govuk-table__cell">GH42816</td>
@@ -239,7 +279,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                             <tr class="govuk-table__row" data-owner="mine">
                                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--grey">Draft</strong></td>
                                 <td class="govuk-table__cell">LX93572</td>
@@ -487,93 +526,110 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const filterSelectOwner = document.getElementById('filter-applications');
-    const filterSelectStatus = document.getElementById('filter-status');
-    const searchButton = document.querySelector('.search-btn');
-    const searchInput = document.getElementById('find-application');
-    const clearSearchLink = document.getElementById('clear-search');
-    const applyFiltersButton = document.getElementById('apply-filters');
+        const filterButtonOwner = document.getElementById('filter-button');
+        const filterSelectOwner = document.getElementById('filter-applications');
+        const filterButtonStatus = document.getElementById('ffilter-status-button');
+        const filterSelectStatus = document.getElementById('filter-status');
+        const searchButton = document.querySelector('.search-btn');
+        const searchInput = document.getElementById('find-application');
+        const clearSearchLink = document.getElementById('clear-search'); // Clear Search link
 
-    // Set default selection and apply initial filters
-    filterSelectOwner.value = 'mine';
-    applyFilters();
-
-    // Event listener for the Apply Filters button
-    applyFiltersButton.addEventListener('click', applyFilters);
-
-    // Event listener for the search button to trigger filtering as well
-    searchButton.addEventListener('click', applyFilters);
-
-    // Clear search functionality
-    clearSearchLink.addEventListener('click', function (event) {
-        event.preventDefault();
-        
-        // Reset filters and search input
+        // Set default selection to 'My Applications' (data-owner="mine") and apply filters on load
         filterSelectOwner.value = 'mine';
-        filterSelectStatus.value = 'all';
-        searchInput.value = '';
+        applyFilters();
 
-        // Reset all action dropdowns to "Select action"
-        const actionDropdowns = document.querySelectorAll('.govuk-table__cell select');
-        actionDropdowns.forEach(dropdown => {
-            dropdown.selectedIndex = 0; // Reset to the first option ("Select action")
+        // Event listeners for filter buttons
+        filterButtonOwner.addEventListener('click', function () {
+            applyFilters();
         });
-
-        applyFilters(); // Apply default filters again
-    });
-
-    // Event listener for action buttons in the table rows
-    const actionButtons = document.querySelectorAll('.govuk-table__cell .search-btn');
-    actionButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            const selectElement = button.parentElement.querySelector('select');
-            const selectedOption = selectElement.options[selectElement.selectedIndex];
-            const url = selectedOption ? selectedOption.getAttribute('data-url') : '';
-
-            if (url) {
-                window.location.href = url;
-            }
-        });
-    });
-
-    // Filter function to display rows based on criteria
-    function applyFilters() {
-        const selectedOwner = filterSelectOwner.value;
-        const selectedStatus = filterSelectStatus.value;
-        const searchTerm = searchInput.value.trim().toLowerCase();
-
-        const tableBody = document.querySelector('.govuk-table__body');
-        const tableRows = tableBody.querySelectorAll('.govuk-table__row');
-
-        tableRows.forEach(function (row) {
-            const statusCell = row.querySelector('.govuk-table__cell:first-child');
-            const rowOwner = row.getAttribute('data-owner');
-            const refCell = row.querySelector('.govuk-table__cell:nth-child(2)');
-            const titleCell = row.querySelector('.govuk-table__cell:nth-child(3)');
-
-            const matchesOwner = selectedOwner === 'all' || rowOwner === selectedOwner;
-            const matchesStatus = selectedStatus === 'all' || statusCell.textContent.trim().toLowerCase() === selectedStatus.toLowerCase();
-            const matchesSearch = !searchTerm || refCell.textContent.trim().toLowerCase().includes(searchTerm) || titleCell.textContent.trim().toLowerCase().includes(searchTerm);
-
-            // Show row if all criteria match
-            row.style.display = matchesOwner && matchesStatus && matchesSearch ? 'table-row' : 'none';
-        });
-
-        updateRowCount();
-    }
-
-    // Row count update function
-    function updateRowCount() {
-        const tableBody = document.querySelector('.govuk-table__body');
-        const tableRows = tableBody.querySelectorAll('.govuk-table__row');
-        let visibleRowCount = 0;
-        tableRows.forEach(row => { if (row.style.display !== 'none') visibleRowCount++; });
         
-        document.querySelector('.total-applications').innerHTML = `Showing <strong>1</strong> to <strong>${visibleRowCount}</strong> of <strong>${tableRows.length}</strong> applications`;
-    }
-});
+        filterButtonStatus.addEventListener('click', function () {
+            applyFilters();
+        });
 
+        searchButton.addEventListener('click', function () {
+            applyFilters();
+        });
 
+        // Event listener for Clear Search link
+        clearSearchLink.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default link behavior
+
+            // Reset filters to default 'My Applications' and status filter to 'All'
+            filterSelectOwner.value = 'mine';
+            filterSelectStatus.value = 'all';
+            searchInput.value = '';
+
+            // Apply default filters again
+            applyFilters();
+        });
+
+        // Add event listeners for option buttons in action dropdown
+        const optionButtons = document.querySelectorAll('.search-btn');
+        optionButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const selectElement = button.parentElement.querySelector('select');
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+                const url = selectedOption.getAttribute('data-url');
+                
+                if (url && url !== '') {
+                    window.location.href = url;
+                }
+            });
+        });
+
+        // Function to apply filters and search
+        function applyFilters() {
+            const selectedOwner = filterSelectOwner.value;
+            const selectedStatus = filterSelectStatus.value;
+            const searchTerm = searchInput.value.trim().toLowerCase();
+
+            const tableBody = document.querySelector('.govuk-table__body');
+            const tableRows = tableBody.querySelectorAll('.govuk-table__row');
+
+            tableRows.forEach(function (row) {
+                const statusCell = row.querySelector('.govuk-table__cell:first-child'); // Status cell
+                const rowOwner = row.getAttribute('data-owner'); // New attribute for row owner
+                const refCell = row.querySelector('.govuk-table__cell:nth-child(2)'); // Ref cell
+                const titleCell = row.querySelector('.govuk-table__cell:nth-child(3)'); // Title cell
+
+                const matchesOwner = (selectedOwner === 'all' || rowOwner === 'mine');
+                const matchesStatus = (selectedStatus === 'all' || statusCell.textContent.trim().toLowerCase() === selectedStatus.toLowerCase());
+                const matchesSearch = (
+                    !searchTerm || 
+                    refCell.textContent.trim().toLowerCase().includes(searchTerm) || 
+                    titleCell.textContent.trim().toLowerCase().includes(searchTerm)
+                );
+
+                // Show row if it matches all filters and search
+                if (matchesOwner && matchesStatus && matchesSearch) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Update row count after filtering
+            updateRowCount();
+        }
+
+        // Function to update row count
+        function updateRowCount() {
+            const tableBody = document.querySelector('.govuk-table__body');
+            const tableRows = tableBody.querySelectorAll('.govuk-table__row');
+            let visibleRowCount = 0;
+            let totalRowCount = tableRows.length;
+
+            tableRows.forEach(function (row) {
+                if (row.style.display !== 'none') {
+                    visibleRowCount++;
+                }
+            });
+
+            const rowCountText = document.querySelector('.total-applications');
+            rowCountText.innerHTML = `Showing <strong>1</strong> to <strong>${visibleRowCount}</strong> of <strong>${totalRowCount}</strong> applications`;
+        }
+    });
 </script>
 
 
