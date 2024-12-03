@@ -1,0 +1,154 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  New lease - other – Digital Registration Service – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <span class="govuk-caption-xl">New lease - other</span>
+            <h1 class="govuk-heading-xl">Which applicants are tenants?</h1>
+            <p class="govuk-body">Select all that apply. If no applicants are tenants, select 'Continue'.</p>
+            
+            <form method="post" action="/next-step">
+                <div class="govuk-form-group">
+                    <!-- Applicant 1 -->
+                    <div class="govuk-checkboxes govuk-checkboxes--conditional" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="applicant-1" name="applicant-1" type="checkbox" value="applicant-1" data-aria-controls="conditional-applicant-1">
+                            <label class="govuk-label govuk-checkboxes__label" for="applicant-1">
+                                Applicant 1
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__conditional" id="conditional-applicant-1">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select capacity for applicant 1</legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-capacity-registered-proprietor" name="applicant-capacity" type="radio" value="registered-proprietor">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-capacity-registered-proprietor">
+                                            Registered proprietor
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-capacity-additional-trustee" name="applicant-capacity" type="radio" value="additional-trustee">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-capacity-additional-trustee">
+                                            Additional trustee (for example, for the purposes of over-reaching)
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-capacity-insolvency" name="applicant-capacity" type="radio" value="insolvency-act-1986">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-capacity-insolvency">
+                                            Trustee in bankruptcy, liquidator, supervisor, administrator or administrative receiver appointed under the Insolvency Act 1986
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-capacity-lpa-receiver" name="applicant-capacity" type="radio" value="lpa-receiver">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-capacity-lpa-receiver">
+                                            Receiver under the Law of Property Act 1925
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-capacity-mental-capacity-deputy" name="applicant-capacity" type="radio" value="mental-capacity-deputy">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-capacity-mental-capacity-deputy">
+                                            Deputy appointed under the Mental Capacity Act 2005
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-capacity-guardian" name="applicant-capacity" type="radio" value="guardian-missing-persons">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-capacity-guardian">
+                                            Guardian appointed under the Guardianship (Missing Persons) Act 2017
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-capacity-personal-representative" name="applicant-capacity" type="radio" value="personal-representative">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-capacity-personal-representative">
+                                            Personal representative (such as an executor) who assents or transfers the land or charge
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                    </div>
+
+                    <!-- Applicant 2 -->
+                    <div class="govuk-checkboxes govuk-checkboxes--conditional" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="applicant-2" name="applicant-2" type="checkbox" value="applicant-2" data-aria-controls="conditional-applicant-2">
+                            <label class="govuk-label govuk-checkboxes__label" for="applicant-2">
+                                Applicant 2
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__conditional" id="conditional-applicant-2">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select capacity for applicant 2</legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-2-capacity-registered-proprietor" name="applicant-2-capacity" type="radio" value="registered-proprietor">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-2-capacity-registered-proprietor">
+                                            Registered proprietor
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-2-capacity-additional-trustee" name="applicant-2-capacity" type="radio" value="additional-trustee">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-2-capacity-additional-trustee">
+                                            Additional trustee (for example, for the purposes of over-reaching)
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-2-capacity-insolvency" name="applicant-2-capacity" type="radio" value="insolvency-act-1986">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-2-capacity-insolvency">
+                                            Trustee in bankruptcy, liquidator, supervisor, administrator or administrative receiver appointed under the Insolvency Act 1986
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-2-capacity-lpa-receiver" name="applicant-2-capacity" type="radio" value="lpa-receiver">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-2-capacity-lpa-receiver">
+                                            Receiver under the Law of Property Act 1925
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-2-capacity-mental-capacity-deputy" name="applicant-2-capacity" type="radio" value="mental-capacity-deputy">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-2-capacity-mental-capacity-deputy">
+                                            Deputy appointed under the Mental Capacity Act 2005
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-2-capacity-guardian" name="applicant-2-capacity" type="radio" value="guardian-missing-persons">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-2-capacity-guardian">
+                                            Guardian appointed under the Guardianship (Missing Persons) Act 2017
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="applicant-2-capacity-personal-representative" name="applicant-2-capacity" type="radio" value="personal-representative">
+                                        <label class="govuk-label govuk-radios__label" for="applicant-2-capacity-personal-representative">
+                                            Personal representative (such as an executor) who assents or transfers the land or charge
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="govuk-inset-text">
+                    You can add tenants in the next step
+                </div>
+
+                <button class="govuk-button" data-module="govuk-button" type="submit">Continue</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
