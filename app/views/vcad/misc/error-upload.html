@@ -1,0 +1,99 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = true %}
+{% set useAlternativeBackLink = true %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  Error: Attach and certify document – Digital Registration Service – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title">
+                        There is a problem
+                    </h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li>
+                                <a href="#document_file">The selected file could not be uploaded - try again</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <form method="post" enctype="multipart/form-data" novalidate>
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-8">
+                        <span class="govuk-caption-xl">Transfer of charge
+                        </span>
+                        <h1 class="govuk-fieldset__heading">
+                            Attach and certify document
+                        </h1>
+                    </legend>
+
+                    <p class="govuk-body">Files can be GIF, TIFF, JPG or PDF and must not exceed 40MB file size.</p>
+
+                    <dl class="govuk-summary-list govuk-summary-list--no-border">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Category</dt>
+                            <dd class="govuk-summary-list__value">Legal Deeds</dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Document type</dt>
+                            <dd class="govuk-summary-list__value">TR4</dd>
+                        </div>
+                    </dl>
+
+                    <div class="govuk-form-group govuk-form-group--error">
+                        <label class="govuk-label" for="document_file">
+                            Attach a file
+                        </label>
+                        <span id="document_file-error" class="govuk-error-message">
+                            <span class="govuk-visually-hidden">Error:</span> Make sure the selected file is in the right format, is not bigger than 40 MB, and is not password protected or infected with a virus
+                        </span>
+                        <input class="govuk-file-upload" id="document_file" name="document_file" type="file" aria-describedby="document_file-error">
+                    </div>
+
+                    <fieldset class="govuk-fieldset govuk-!-margin-top-7">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-margin-bottom-3">
+                            Certification
+                        </legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="certification_statement" name="certification_statement" type="radio" value="certified">
+                                <label class="govuk-label govuk-radios__label" for="certification_statement">
+                                    I/we certify this is a true copy of an original document.
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="certification_statement-2" name="certification_statement" type="radio" value="certified-by-another">
+                                <label class="govuk-label govuk-radios__label" for="certification_statement-2">
+                                    I/we certify this attachment is a true copy of an original document which is certified by a conveyancer to be a true copy of the original.
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="certification_statement-3" name="certification_statement" type="radio" value="not-certified">
+                                <label class="govuk-label govuk-radios__label" for="certification_statement-3">
+                                    This attachment is an uncertified copy.
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br>
+                    <button type="submit" class="govuk-button govuk-!-margin-top-6" data-module="govuk-button">
+                        Continue
+                    </button>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
