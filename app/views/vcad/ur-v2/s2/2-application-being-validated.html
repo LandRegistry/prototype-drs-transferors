@@ -1,0 +1,90 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="pb0 govuk-heading-xl">
+                Your application is being submitted
+            </h1>
+            <div class="hods-loading-spinner">
+            <div
+              class="hods-loading-spinner__spinner"
+              aria-live="polite"
+              style="margin-left: 0;"
+              role="status"
+            ></div>
+          </div>
+          <br>
+            <p class="govuk-body">
+              As soon as it is successful this application will show in the Applications page which has replaced Saved Applications.
+            </p>
+            <p class="govuk-body">
+            Successful applications will have a status of Accepted and you’ll be able to view your confirmation; download the e-AP1; or go to View Applications where you can manage the application.
+          </p>
+            <p class="govuk-body">
+            There is more information about statuses on this page.
+          </p>
+
+            {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+            {% from "govuk/components/tag/macro.njk" import govukTag %}
+
+            {{ govukSummaryList({
+              card: {
+                title: {
+                  text: "Application statuses"
+                }
+              },
+              rows: [
+                {
+                  key: {
+                    html: govukTag({ text: "Accepted", classes: "govuk-tag--green status-column" })
+                  },
+                  value: {
+                    html: "Your application has been successfully submitted. It is on the day list and has priority. If it was validated out of office hours it will show on the day list (with priority)  (you’ll receive an email confirming the details)."
+                  }
+                },
+                {
+                  key: {
+                    html: govukTag({ text: "Draft", classes: "govuk-tag--grey status-column" })
+                  },
+                  value: {
+                    html: "You’re still working on the application and it has not been submitted."
+                  }
+                },
+                {
+                  key: {
+                    html: govukTag({ text: "Validating", classes: "govuk-tag--blue status-column" })
+                  },
+                  value: {
+                    html: "We are still checking the application. When this is completed, the application status will change to Accepted."
+                  }
+                }
+              ]
+            }) }}
+
+            <div class="govuk-button-group">
+                {{ govukButton({
+                    text: "Continue to Applications",
+                    href: "/vcad/ur-v2/s2/3-saved-applications"
+                }) }}
+
+            </div>
+        </div> <!-- ./govuk-grid-column-two-thirds -->
+    </div> <!-- ./govuk-grid-row -->
+
+</div> <!-- ./govuk-width-container -->
+
+
+
+{% endblock %}

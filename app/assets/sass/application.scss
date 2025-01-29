@@ -492,3 +492,17 @@ Apply a narrower width to the first column */
     min-width: 265.53px;
 }
 
+.pb0.govuk-heading-xl {
+  padding-bottom: 0 !important;
+  margin-bottom: 10px;
+}
+@media (min-width: 40.0625em) {
+    .pb0.govuk-heading-xl {
+        padding-bottom: 0 !important;
+        margin-bottom: 10px;
+    }
+}
+
+
+
+
