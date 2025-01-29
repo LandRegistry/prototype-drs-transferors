@@ -41,18 +41,19 @@
           </section>
 
           <section>
-              <h2 class="govuk-heading-m">
-                Key Change in Routing
-              </h2>
-              <p class="govuk-body">
-                Instead of users being routed directly to success/failure pages, all scenarios now direct users through to the new Applications page. This centralised approach allows users to manage and monitor all their applications from a single location. Given that Level 3 data extraction may take longer to process, this approach ensures users can continue with other tasks without waiting for validation to complete, providing a more efficient experience overall.
-                {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+            <h2 class="govuk-heading-m">
+              Key Change in Routing
+            </h2>
+            <p class="govuk-body">
+              Instead of users being routed directly to success/failure pages, all scenarios now direct users through to the new Applications page. This centralised approach allows users to manage and monitor all their applications from a single location. Given that Level 3 data extraction may take longer to process, this approach ensures users can continue with other tasks without waiting for validation to complete, providing a more efficient experience overall.
+              {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
-                {{ govukInsetText({
-                  text: "We plan to review this routing model once the extraction pilot results are available, to ensure it remains the optimal solution based on practical insights."
-                }) }}
-              </p>
+              {{ govukInsetText({
+                text: "We plan to review this routing model once the extraction pilot results are available, to ensure it remains the optimal solution based on practical insights."
+              }) }}
+            </p>
           </section>
+
           <!-- Scenario 1 -->
           <details class="govuk-details" data-module="govuk-details">
             <summary class="govuk-details__summary">
@@ -75,10 +76,11 @@
                         </ul>
                     </li>
                     <li class="govuk-body">User selects "Open" from action dropdown</li>
-                    <li class="govuk-body">Routes to "Application submitted" confirmation page with links to View Applications for detailed information</li>
+                    <li class="govuk-body">Routes to "Application submitted" confirmation page with links to View Applications for detailed information
+                    </li>
                 </ol>
-            </div>
-        </details>
+              </div>
+          </details>
 
 
           <!-- Scenario 2 -->
@@ -105,37 +107,136 @@
                       <li class="govuk-body">User selects "Open" from action dropdown</li>
                       <li class="govuk-body">Routes to error management system (Part 2 - <strong>not included</strong> in current prototype)</li>
                   </ol>
+                </div>
+            </details>
+
+            <!-- Scenario 3 -->
+            <details class="govuk-details" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        Scenario 3: Validation In Progress
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <ol class="govuk-list govuk-list--number">
+                       <li class="govuk-body">
+                          User starts on the <a href="/vcad/ur-v1/s3/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
+                      </li>
+                        <li class="govuk-body">Clicks "Send for Validation" button</li>
+                        <li class="govuk-body">Routes to interim page explaining validation process</li>
+                        <li class="govuk-body">User clicks "Continue" button</li>
+                        <li class="govuk-body">Routes to new Applications page where:
+                            <ul class="govuk-list govuk-list--bullet">
+                                <li class="govuk-body">Application appears in the third row</li>
+                                <li class="govuk-body">Status shows as <div class="govuk-tag govuk-tag--blue govuk-tag-bm02">Validating</div></li>
+                            </ul>
+                        </li>
+                        <li class="govuk-body">User selects "Open" from action dropdown</li>
+                        <li class="govuk-body">Routes to "Application Being Validated" page</li>
+                        <li class="govuk-body">User clicks "Continue" button</li>
+                        <li class="govuk-body">Returns to Applications page with status updating automatically to either "Received" or "Rejected"</li>
+                    </ol>
+                </div>
+            </details>
+
+
+
+
+            <section>
+            <h2 class="govuk-heading-m">
+              Pre VCAD version
+            </h2>
+            <p class="govuk-body">
+            </p>
+          </section>
+
+          <!-- Scenario 1 -->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                    Scenario 1: Successful Submission
+                </span>
+            </summary>
+            <div class="govuk-details__text">
+                <ol class="govuk-list govuk-list--number">
+                    <li class="govuk-body">
+                        User starts on the <a href="/vcad/ur-v2/s1/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
+                    </li>
+                    <li class="govuk-body">Clicks "Send for Validation" button</li>
+                    <li class="govuk-body">Routes to interim page explaining validation process</li>
+                    <li class="govuk-body">User clicks "Continue" button</li>
+                    <li class="govuk-body">Routes to new Applications page where:
+                        <ul class="govuk-list govuk-list--bullet">
+                            <li class="govuk-body">Application appears in the top row</li>
+                            <li class="govuk-body">Status shows as <strong class="govuk-tag govuk-tag--green govuk-tag-bm02">Received</strong></li>
+                        </ul>
+                    </li>
+                    <li class="govuk-body">User selects "Open" from action dropdown</li>
+                    <li class="govuk-body">Routes to "Application submitted" confirmation page with links to View Applications for detailed information
+                    </li>
+                </ol>
               </div>
           </details>
 
-          <!-- Scenario 3 -->
+
+          <!-- Scenario 2 -->
           <details class="govuk-details" data-module="govuk-details">
               <summary class="govuk-details__summary">
                   <span class="govuk-details__summary-text">
-                      Scenario 3: Validation In Progress
+                      Scenario 2: Successful Submission with guidance
                   </span>
               </summary>
               <div class="govuk-details__text">
                   <ol class="govuk-list govuk-list--number">
-                     <li class="govuk-body">
-                        User starts on the <a href="/vcad/ur-v1/s3/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
+                    <li class="govuk-body">
+                        User starts on the <a href="/vcad/ur-v2/s2/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
                     </li>
-                      <li class="govuk-body">Clicks "Send for Validation" button</li>
-                      <li class="govuk-body">Routes to interim page explaining validation process</li>
-                      <li class="govuk-body">User clicks "Continue" button</li>
-                      <li class="govuk-body">Routes to new Applications page where:
-                          <ul class="govuk-list govuk-list--bullet">
-                              <li class="govuk-body">Application appears in the third row</li>
-                              <li class="govuk-body">Status shows as <div class="govuk-tag govuk-tag--blue govuk-tag-bm02">Validating</div></li>
-                          </ul>
+                    <li class="govuk-body">Clicks "Send for Validation" button</li>
+                    <li class="govuk-body">Routes to interim page explaining validation process</li>
+                    <li class="govuk-body">User clicks "Continue" button</li>
+                    <li class="govuk-body">Routes to new Applications page where:
+                        <ul class="govuk-list govuk-list--bullet">
+                            <li class="govuk-body">Application appears in the top row</li>
+                            <li class="govuk-body">Status shows as <strong class="govuk-tag govuk-tag--green govuk-tag-bm02">Received</strong></li>
+                        </ul>
+                    </li>
+                    <li class="govuk-body">User selects "Open" from action dropdown</li>
+                    <li class="govuk-body">Routes to "Application submitted" confirmation page with links to View Applications for detailed information
+                    </li>
+                </ol>
+                </div>
+            </details>
+
+            <!-- Scenario 3 -->
+            <details class="govuk-details" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        Scenario 3: Validation In Progress
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <ol class="govuk-list govuk-list--number">
+                       <li class="govuk-body">
+                          User starts on the <a href="/vcad/ur-v2/s3/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
                       </li>
-                      <li class="govuk-body">User selects "Open" from action dropdown</li>
-                      <li class="govuk-body">Routes to "Application Being Validated" page</li>
-                      <li class="govuk-body">User clicks "Continue" button</li>
-                      <li class="govuk-body">Returns to Applications page with status updating automatically to either "Received" or "Rejected"</li>
-                  </ol>
-              </div>
-          </details>
+                        <li class="govuk-body">Clicks "Send for Validation" button</li>
+                        <li class="govuk-body">Routes to interim page explaining validation process</li>
+                        <li class="govuk-body">User clicks "Continue" button</li>
+                        <li class="govuk-body">Routes to new Applications page where:
+                            <ul class="govuk-list govuk-list--bullet">
+                                <li class="govuk-body">Application appears in the third row</li>
+                                <li class="govuk-body">Status shows as <div class="govuk-tag govuk-tag--blue govuk-tag-bm02">Validating</div></li>
+                            </ul>
+                        </li>
+                        <li class="govuk-body">User selects "Open" from action dropdown</li>
+                        <li class="govuk-body">Routes to "Application Being Validated" page</li>
+                        <li class="govuk-body">User clicks "Continue" button</li>
+                        <li class="govuk-body">Returns to Applications page with status updating automatically to either "Received" or "Rejected"</li>
+                    </ol>
+                </div>
+            </details>
+
+
         </div>
       </div>
       <div class="govuk-accordion__section">
