@@ -19,16 +19,16 @@
             </h1>
 
             <details class="govuk-details">
-              <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">
-                  Guidance on selecting an action
-                </span>
-              </summary>
-              <div class="govuk-details__text">
-                The options will depend on the application’s status.<br><br> If the status is Accepted, you can:<br> View the confirmation
-          Download the EAP1 <br>Go to View Applications <br>Transfer the application <br><br>If the status is Draft you can:<br> Open the application <br> Transfer the application <br>
-          Delete the application <br><br> A validating status means that we are still checking the application and you will not be able to do anything to it until it is Accepted.
-          </div>
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                    Guidance on selecting an action
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    The options will depend on the application’s status.<br><br> If the status is Accepted, you can:<br> View the confirmation
+                    Download the EAP1 <br>Go to View Applications <br>Transfer the application <br><br>If the status is Draft you can:<br> Open the application <br> Transfer the application <br>
+                    Delete the application <br><br> A validating status means that we are still checking the application and you will not be able to do anything to it until it is Accepted.
+                </div>
             </details>
 
             <!-- {% from "govuk/components/details/macro.njk" import govukDetails %}
@@ -42,8 +42,7 @@
 
     </div> <!-- ./govuk-grid-row -->
 
-
-
+    
     <div id="search-panel">
         <div class="govuk-grid-row">
 
@@ -66,7 +65,7 @@
                     </div>
                 </div>
             </div> <!-- /.govuk-grid-column-one-quarter search-container -->
-
+            
             <div class="govuk-grid-column-one-quarter">
                 <label class="govuk-label" for="filter-status">
                     <strong>Filter by status</strong>
@@ -104,7 +103,7 @@
 
 
     </div> <!-- /#search-panel -->
-
+    
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="table-container">
@@ -137,7 +136,7 @@
                                                 <option value="">Select action</option>
                                                     <option value="/vcad/ur-v2/s1/4-application-submitted" data-url="/vcad/ur-v2/s1/4-application-submitted">View confirmation</option>
                                                     <option value="/download-ap1" data-url="/download-eap1">Download AP1</option>
-                                                    <option value="/view-applications" data-url="/view-applications">Go to View Applications</option>
+                                                    <option value="/view-applications" data-url="/vcad/external-services/view-applications-guided">Go to View Applications</option>
                                                     <option value="/application-transfer-1" data-url="/application-transfer-1">Transfer</option>
                                                 </select>
                                                 <button class="search-btn" type="button">
@@ -399,7 +398,7 @@
                         }
                     ]
                 }) }}
-
+                
             </div> <!-- /.govuk-grid-column-one-half -->
 
             <!-- Applications per page -->
@@ -428,14 +427,14 @@
                         </ul>
                     </nav>
                 </div> <!--  /.govuk-column-full-width pagination-component -->
-
+                
             </div> <!-- /.govuk-grid-column-one-half -->
 
         </div> <!-- .govuk-grid-row -->
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full govuk-!-margin-top-3">
-
+                
                 <!-- <p class="govuk-body text-align-centre-mob">
                   <a href="#" class="govuk-link">
                     Start a new application</a>
@@ -446,7 +445,7 @@
                   text: "Start new application",
                   classes: "govuk-button--secondary"
                 }) }}
-            </div>
+            </div> 
         </div> <!-- .govuk-grid-row -->
     </div> <!-- #table-footer -->
 
@@ -474,7 +473,7 @@
     // Clear search functionality
     clearSearchLink.addEventListener('click', function (event) {
         event.preventDefault();
-
+        
         // Reset filters and search input
         filterSelectOwner.value = 'mine';
         filterSelectStatus.value = 'all';
@@ -535,7 +534,7 @@
         const tableRows = tableBody.querySelectorAll('.govuk-table__row');
         let visibleRowCount = 0;
         tableRows.forEach(row => { if (row.style.display !== 'none') visibleRowCount++; });
-
+        
         document.querySelector('.total-applications').innerHTML = `Showing <strong>1</strong> to <strong>${visibleRowCount}</strong> of <strong>${tableRows.length}</strong> applications`;
     }
 });
