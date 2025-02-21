@@ -54,6 +54,97 @@
             </p>
           </section>
 
+          <h2 class="govuk-heading-s">
+            February 2025
+          </h2>
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                    Scenario 1: Successful Submission
+                </span>
+            </summary>
+            <div class="govuk-details__text">
+                <ol class="govuk-list govuk-list--number">
+                    <li class="govuk-body">
+                        User starts on the <a href="/vcad/ur-v3/s1/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
+                    </li>
+                    <li class="govuk-body">Clicks "Confirm and submit" button</li>
+                    <li class="govuk-body">Routes to interim page explaining validation process</li>
+                    <li class="govuk-body">User clicks "Continue" button</li>
+                    <li class="govuk-body">Routes to new Applications page where:
+                        <ul class="govuk-list govuk-list--bullet">
+                            <li class="govuk-body">Application appears in the top row</li>
+                            <li class="govuk-body">Status shows as <strong class="govuk-tag govuk-tag--green govuk-tag-bm02">Accepted</strong></li>
+                        </ul>
+                    </li>
+                    <li class="govuk-body">User selects "Open" from action dropdown</li>
+                    <li class="govuk-body">Routes to "Application submitted" confirmation page with links to View Applications for detailed information
+                    </li>
+                </ol>
+              </div>
+          </details>
+
+
+          <!-- Scenario 2 -->
+          <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">
+                      Scenario 2: Rejected Submission
+                  </span>
+              </summary>
+              <div class="govuk-details__text">
+                <p class="govuk-body"><b>REDUNDANT FOR PHASE 1- NO REJECTED STATUS</b></p>
+                  <ol class="govuk-list govuk-list--number">
+                      <li class="govuk-body">
+                        User starts on the <a href="/vcad/ur-v3/s2/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
+                    </li>
+                      <li class="govuk-body">Clicks "Confirm and submit" button</li>
+                      <li class="govuk-body">Routes to interim page explaining validation process</li>
+                      <li class="govuk-body">User clicks "Continue" button</li>
+                      <li class="govuk-body">Routes to new Applications page where:
+                          <ul class="govuk-list govuk-list--bullet">
+                              <li class="govuk-body">Application appears in second row</li>
+                              <li class="govuk-body">Status shows as <strong class="govuk-tag govuk-tag--red govuk-tag-bm02">Rejected</strong></li>
+                          </ul>
+                      </li>
+                      <li class="govuk-body">User selects "Open" from action dropdown</li>
+                      <li class="govuk-body">Routes to error management system (Part 2 - <strong>not included</strong> in current prototype)</li>
+                  </ol>
+                </div>
+            </details>
+
+            <!-- Scenario 3 -->
+            <details class="govuk-details" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        Scenario 3: Validation In Progress (in submission)
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <ol class="govuk-list govuk-list--number">
+                       <li class="govuk-body">
+                          User starts on the <a href="/vcad/ur-v3/s3/1-review-application" target="_blank" class="govuk-link">Review Your Application</a> page
+                      </li>
+                        <li class="govuk-body">Clicks "Confirm and submit" button</li>
+                        <li class="govuk-body">Routes to interim page explaining validation process</li>
+                        <li class="govuk-body">User clicks "Continue" button</li>
+                        <li class="govuk-body">Routes to new Applications page where:
+                            <ul class="govuk-list govuk-list--bullet">
+                                <li class="govuk-body">Application appears in the third row</li>
+                                <li class="govuk-body">Status shows as <div class="govuk-tag govuk-tag--blue govuk-tag-bm02">In submission</div></li>
+                            </ul>
+                        </li>
+                        <li class="govuk-body">User selects "Open" from action dropdown</li>
+                        <li class="govuk-body">Routes to "Application Being Validated" page</li>
+                        <li class="govuk-body">User clicks "Continue" button</li>
+                        <li class="govuk-body">Returns to Applications page with status updating automatically to either "Accepted" or "Rejected"</li>
+                    </ol>
+                </div>
+            </details>
+
+            <h2 class="govuk-heading-s">
+              January 2025
+            </h2>
           <!-- Scenario 1 -->
           <details class="govuk-details" data-module="govuk-details">
             <summary class="govuk-details__summary">
@@ -147,7 +238,7 @@
             <h3 class="govuk-heading-s">
               Test A:
             </h3>
-          
+
             <!-- Scenario 1 -->
             <details class="govuk-details" data-module="govuk-details">
               <summary class="govuk-details__summary">
@@ -172,9 +263,9 @@
                       <li class="govuk-body">User selects "Open" from action dropdown</li>
                       <li class="govuk-body">Routes to "Application submitted" confirmation page with links to View Applications for detailed information
                       </li>
-                      <li class="govuk-body">User selects "Go to View Applications" from action dropdown and Application <em>BT21456</em> is now accessible (via drop down) in <em>View Applications</em>. It is also possible to navigate back to the DRS Applications page via the <em>View Applications</em> navigation at the top of the page eg. <em>Services > Digital Registration Service</em>. 
+                      <li class="govuk-body">User selects "Go to View Applications" from action dropdown and Application <em>BT21456</em> is now accessible (via drop down) in <em>View Applications</em>. It is also possible to navigate back to the DRS Applications page via the <em>View Applications</em> navigation at the top of the page eg. <em>Services > Digital Registration Service</em>.
                       </li>
-                      
+
                   </ol>
                 </div>
             </details>
@@ -211,7 +302,7 @@
             <h3 class="govuk-heading-s">
               Test B:
             </h3>
-          
+
             <!-- Scenario 1 -->
             <details class="govuk-details" data-module="govuk-details">
                 <summary class="govuk-details__summary">
@@ -237,7 +328,7 @@
                       <li class="govuk-body">User selects "Open" from action dropdown</li>
                       <li class="govuk-body">Routes to "Application submitted" confirmation page with links to View Applications for detailed information
                       </li>
-                      <li class="govuk-body">User selects "Go to View Applications" from action dropdown and Application <em>BT21456</em> is now accessible (via drop down) in <em>View Applications</em>. It is also possible to navigate back to the DRS Applications page via the <em>View Applications</em> navigation at the top of the page eg. <em>Services > Digital Registration Service</em>. 
+                      <li class="govuk-body">User selects "Go to View Applications" from action dropdown and Application <em>BT21456</em> is now accessible (via drop down) in <em>View Applications</em>. It is also possible to navigate back to the DRS Applications page via the <em>View Applications</em> navigation at the top of the page eg. <em>Services > Digital Registration Service</em>.
                       </li>
                   </ol>
                   </div>
@@ -387,7 +478,7 @@
         </div>
       </div>
     </div>
-  
+
   </div>
 </div>
 

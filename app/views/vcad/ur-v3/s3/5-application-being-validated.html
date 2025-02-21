@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">
+                Your application is being validated
+            </h1>
+            <div class="hods-loading-spinner">
+               <div class="hods-loading-spinner__spinner"></div>
+               <div class="hods-loading-spinner__content">
+                 <h2 class="govuk-heading-s">Processing your request...</h2>
+               </div>
+             </div>
+            <p>
+                We’re validating your application and checking that the information does not contain any errors. Validation may take a while. Click ‘Return to applications’ to go back to the Applications page where you can see the status of all of your applications. 
+            </p>
+            <br>
+
+            {{ govukButton({
+                text: "Return to applications",
+                href: "/vcad/ur-v1/s3/3-saved-applications"
+            }) }}
+        </div> <!-- ./govuk-grid-column-two-thirds -->
+    </div> <!-- ./govuk-grid-row -->
+
+</div> <!-- ./govuk-width-container -->
+
+
+{% endblock %}
