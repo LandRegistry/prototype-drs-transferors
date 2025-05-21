@@ -9,9 +9,17 @@
   GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
 {% block content %}
 <div class="govuk-width-container">
-  <a href="/ssa/v4/how-many-titles" class="govuk-back-link">Return to application</a>
+
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
