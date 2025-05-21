@@ -1,0 +1,89 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <!-- Stack row: heading + textarea -->
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">Enter your title numbers</h1>
+    </div>
+  </div>
+
+  <!-- Split row: guidance vs help -->
+  <div class="govuk-grid-row">
+
+    <!-- Main content (2/3 width) -->
+    <div class="govuk-grid-column-two-thirds">
+
+      <p class="govuk-body">
+        You can use this page if you need to add between 26 and 199 titles. If you have less than 26, go back to the
+        <a href="/ssa/v4/how-many-titles" class="govuk-link">How many titles do you want to add?</a> page and select the ‘1 to 25’ option.
+      </p>
+
+      <p class="govuk-body">
+        Enter all the title numbers in this application (for example, A123 or XY5678) in the box. You can paste the numbers from a document,
+        or enter them one at a time. They must be separated by either:
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a new line</li>
+        <li>a comma</li>
+        <li>a semicolon</li>
+      </ul>
+
+      {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+      {{ govukInsetText({
+        html: '
+          If your application contains one these title types, you cannot submit it through this service and you will have to send the application by post:
+          <ul class="govuk-list govuk-list--bullet">
+            <li>pending title</li>
+            <li>franchise title</li>
+            <li>title with a multi-district code</li>
+            <li>closed title number</li>
+            <li>caution title number</li>
+            <li>scheme title number</li>
+          </ul>
+        '
+      }) }}
+
+      <form action="/ssa/v4/manage-titles" method="post">
+        <div class="govuk-form-group">
+          <textarea class="govuk-textarea" id="title-numbers" name="title-numbers" rows="10" aria-describedby="title-numbers-info"></textarea>
+        </div>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+
+    <!-- Sidebar (1/3 width) -->
+    <div class="govuk-grid-column-one-third">
+      {% from "govuk/components/details/macro.njk" import govukDetails %}
+      {{ govukDetails({
+        summaryText: "Help with multi-transactional applications",
+        html: '
+          <p>If you need help because your application has more than one transaction, you can contact the customer support team using 
+          <a href="https://customerhelp.landregistry.gov.uk/bulkapplicationswebform/" target="_blank" class="govuk-link">this online form</a>.</p>
+          <p>A member of the team will be in touch within 5 days to give you advice on how to complete your application.</p>
+        '
+      }) }}
+    </div>
+
+  </div>
+</div>
+ <!-- ./govuk-width-container -->
+
+
+{% endblock %}

@@ -12,6 +12,126 @@
       <div class="govuk-accordion__section">
         <div class="govuk-accordion__section-header">
           <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-SSA">
+              Small scale applications (SSA)
+            </span>
+          </h2>
+        </div>
+        <div id="accordion-default-content-SSA" class="govuk-accordion__section-content">
+
+          <h2 class="govuk-heading-m">Overview</h2>
+          <p class="govuk-body">
+            This prototype introduces a new journey for small scale applications, based on how many title numbers a user wants to add. Users are asked to choose between ‘1 to 25’ or ‘26 to 199’. If they select ‘1 to 25’, they continue through the current application journey. If they select ‘26 to 199’, they are taken down a new route designed to make bulk entry and processing more efficient.
+          </p>
+
+          <p class="govuk-body">
+            In this new journey, users can paste in all their title numbers at once. The service then checks these against internal records and automatically extracts key information, such as property addresses and any restrictions. The results are displayed on a new ‘Manage titles’ page, where users can review and confirm the details.
+          </p>
+
+           <p class="govuk-body">
+            This page also introduces a change to how part transfers are handled. If a user selects ‘part’ for any title, they are now asked to enter the required additional information directly within the same screen. Previously, this step happened later in the journey on a separate page. Bringing it forward reduces duplication and avoids displaying a large list of titles again later on.
+          </p>
+
+           <p class="govuk-body">
+            Once users confirm everything is correct, they move to the ‘Disclosable overriding interests’ page. From that point, the rest of the application journey follows the existing service.
+          </p>
+
+          <h2 class="govuk-heading-m">
+            SSA Prototype v1
+          </h2>
+
+          <!-- Scenario 1 -->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                SSA: (S1) 
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ol class="govuk-list govuk-list--number">
+                <li>Start on the <a href="ssa/v4/s1/1-digital-registration-service" class="govuk-link" target="_blank">Digital Registration Service start page</a></li>
+                <li>Paste in a list of 30 valid title numbers</li>
+                <li>Proceed to the Manage titles screen and continue the journey successfully</li>
+                <li>
+                  <a href="/public/docs/s1-titles-list-30.txt" download class="govuk-link">Download test data (30 titles)</a>
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <!-- Scenario 2 -->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                SSA: (S2)
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ol class="govuk-list govuk-list--number">
+                <li>Start on the <a href="ssa/v4/s2/1-digital-registration-service" class="govuk-link" target="_blank">Digital Registration Service start page</a></li>
+                <li>Paste in a list of 25 titles to trigger a validation error (you must enter between 26 and 199 titles)</li>
+                <li>Retry with a new list of 30 valid titles to continue the journey</li>
+                <li>
+                  <a href="/public/docs/s2A-titles-list-25.txt" download class="govuk-link">Download test data (25 titles)
+                  </a>
+                </li>
+                 <li>
+                    <a href="/public/docs/s2B-titles-list-30.txt" download class="govuk-link">Download test data (30 titles)</a>
+                  </li>
+              </ol>
+            </div>
+          </details>
+
+          <!-- Scenario 3 -->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                SSA: (S3)
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ol class="govuk-list govuk-list--number">
+                <li>Start on the <a href="ssa/v4/s3/1-digital-registration-service" class="govuk-link" target="_blank">Digital Registration Service start page</a></li>
+                <li>Paste in a list of 30 titles, including 3 that are unrecognised or unsupported</li>
+                <li>See an error page showing the failed titles, with instructions to re-enter all title numbers</li>
+                <li>Retry with a corrected list of 27 valid titles and continue the journey via S1</li>
+                <li>
+                  <a href="/public/docs/s3A-titles-list-30-3E.txt" download class="govuk-link">Download test data (30 titles, 3 errors)</a>
+                </li>
+                <li>
+                  <a href="/public/docs/s3B-titles-list-27.txt" download class="govuk-link">Download test data (corrected list of 27 titles)</a>
+                </li>
+              </ol>
+            </div>
+          </details>
+          <hr>
+          <br>
+
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                SSA: Data details (for internal reference)
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ul class="govuk-list govuk-list--bullet">
+                <li><strong>s1-titles-list-30.txt</strong>: 30 valid titles (happy path)</li>
+                <li><strong>s2A-titles-list-25.txt</strong>: 25 titles – triggers minimum title validation error</li>
+                <li><strong>s2B-titles-list-30.txt</strong>: Corrected version of S2 with 30 valid titles</li>
+                <li><strong>s3A-titles-list-30-3E.txt</strong>: 30 titles including 3 invalid or unsupported titles</li>
+                <li><strong>s3B-titles-list-27.txt</strong>: Corrected version of S3 with 27 valid titles</li>
+              </ul>
+            </div>
+          </details>
+
+
+        </div>
+      </div>
+
+
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
             <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
               Implementation of VCAD Validation Flow (Part 1)
             </span>

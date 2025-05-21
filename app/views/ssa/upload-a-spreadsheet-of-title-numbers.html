@@ -1,0 +1,68 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+
+<div class="govuk-width-container">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            
+          <form method="post" action="/upload-csv">
+
+            <div class="govuk-form-group">
+              <h1 class="govuk-heading-l">
+                Upload a spreadsheet of title numbers
+              </h1>
+
+              <p class="govuk-body">
+                You can upload a CSV file with up to 199 title numbers. 
+                The spreadsheet must follow the template provided.
+              </p>
+
+              <div class="govuk-inset-text">
+                <a class="govuk-link" href="/path/to/template.csv" download>
+                  Download the CSV template
+                </a>
+              </div>
+
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="upload-file">
+                  Upload your completed file
+                </label>
+                <div id="upload-file-hint" class="govuk-hint">
+                  The file must be a CSV (.csv) and under 5MB.
+                </div>
+                <input class="govuk-file-upload" id="upload-file" name="uploadFile" type="file" aria-describedby="upload-file-hint">
+              </div>
+
+              <div class="govuk-!-margin-top-6">
+                <button class="govuk-button" data-module="govuk-button">
+                  Continue
+                </button>
+              </div>
+            </div>
+          </form>
+
+
+
+
+
+            <!-- main content here -->
+            
+        </div> <!-- ./govuk-grid-column-two-thirds -->
+    </div> <!-- ./govuk-grid-row -->
+
+</div> <!-- ./govuk-width-container -->
+
+
+{% endblock %}

@@ -1,0 +1,318 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+<h1 class="govuk-heading-xl">
+                Manage your titles
+            </h1>
+<p class="govuk-body">
+                Check the title numbers you’ve added. You can amend or remove individual rows, or upload a new spreadsheet to replace this list.
+            </p>
+<div class="govuk-inset-text">
+<a class="govuk-link" href="#">Upload a new spreadsheet</a><br/>
+<a class="govuk-link" href="#">Remove all titles</a>
+</div>
+</div>
+</div> <!-- ./govuk-grid-row -->
+<div id="search-panel">
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-one-quarter search-container">
+<label class="govuk-label" for="find-application">Find title</label>
+<div class="input-wrapper">
+<div class="input-with-button">
+<input class="govuk-input" id="find-application" name="find-application" type="text"/>
+<button class="search-btn" type="button">
+<!-- <span class="search-text">Search</span> -->
+<svg aria-hidden="true" class="search-icon" fill="none" focusable="false" height="24" viewbox="0 0 27 27" width="24" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12.0161" cy="12.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+<line stroke="currentColor" stroke-width="3" x1="17.8668" x2="26.4475" y1="17.3587" y2="25.9393"></line>
+</svg>
+</button>
+</div>
+</div>
+</div> <!-- /.govuk-grid-column-one-quarter search-container -->
+<div class="govuk-grid-column-one-quarter">
+<label class="govuk-label" for="filter-status">
+<strong>Filter by status</strong>
+</label>
+<select class="govuk-select full-width" id="filter-status">
+<option selected="" value="all">All Statuses</option>
+<option value="draft">Draft</option>
+<option value="accepted">Accepted</option>
+<option value="validating">In submission</option>
+</select>
+</div> <!-- .govuk-grid-column-one-quarter -->
+ <!-- .govuk-grid-column-one-quarter -->
+<div class="govuk-grid-column-one-quarter">
+<div class="govuk-button-group full-width-buttons">
+<button class="govuk-button full-width" id="apply-filters" type="button">Filter</button>
+<button class="govuk-button govuk-button--secondary full-width" id="clear-search" type="button">Clear all</button>
+</div>
+</div>
+<!-- .govuk-grid-column-one-quarter -->
+</div> <!-- /.govuk-grid-row -->
+</div> <!-- /#search-panel -->
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-full">
+<div class="table-container">
+<div aria-labelledby="Caption01" role="region" tabindex="0">
+<table class="govuk-table">
+<thead class="govuk-table__head">
+<tr class="govuk-table__row">
+<th class="govuk-table__header" scope="col">Title number</th>
+<th class="govuk-table__header" scope="col">Property address</th>
+<th class="govuk-table__header" scope="col">Whole or part</th>
+<th class="govuk-table__header" scope="col">Actions</th>
+</tr></thead>
+<tbody class="govuk-table__body">
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">AB1000</td>
+<td class="govuk-table__cell">82 Example Street, City 1, AB0 9CD</td>
+<td class="govuk-table__cell">Whole</td>
+<td class="govuk-table__cell">
+<a class="govuk-link" href="#">Amend</a> | <a class="govuk-link" href="#">Remove</a>
+</td>
+</tr>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">AB1001</td>
+<td class="govuk-table__cell">21 Example Street, City 2, AB1 1CD</td>
+<td class="govuk-table__cell">Whole</td>
+<td class="govuk-table__cell">
+<a class="govuk-link" href="#">Amend</a> | <a class="govuk-link" href="#">Remove</a>
+</td>
+</tr>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">AB1002</td>
+<td class="govuk-table__cell">44 Example Street, City 3, AB2 3CD</td>
+<td class="govuk-table__cell">Whole</td>
+<td class="govuk-table__cell">
+<a class="govuk-link" href="#">Amend</a> | <a class="govuk-link" href="#">Remove</a>
+</td>
+</tr>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">AB1003</td>
+<td class="govuk-table__cell">91 Example Street, City 4, AB3 7CD</td>
+<td class="govuk-table__cell">Whole</td>
+<td class="govuk-table__cell">
+<a class="govuk-link" href="#">Amend</a> | <a class="govuk-link" href="#">Remove</a>
+</td>
+</tr>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">AB1004</td>
+<td class="govuk-table__cell">166 Example Street, City 5, AB4 9CD</td>
+<td class="govuk-table__cell">Part</td>
+<td class="govuk-table__cell">
+<a class="govuk-link" href="#">Amend</a> | <a class="govuk-link" href="#">Remove</a>
+</td>
+</tr>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">AB1005</td>
+<td class="govuk-table__cell">141 Example Street, City 6, AB5 1CD</td>
+<td class="govuk-table__cell">Part</td>
+<td class="govuk-table__cell">
+<a class="govuk-link" href="#">Amend</a> | <a class="govuk-link" href="#">Remove</a>
+</td>
+</tr>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">AB1006</td>
+<td class="govuk-table__cell">79 Example Street, City 7, AB6 2CD</td>
+<td class="govuk-table__cell">Part</td>
+<td class="govuk-table__cell">
+<a class="govuk-link" href="#">Amend</a> | <a class="govuk-link" href="#">Remove</a>
+</td>
+</tr>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">AB1007</td>
+<td class="govuk-table__cell">63 Example Street, City 8, AB7 7CD</td>
+<td class="govuk-table__cell">Part</td>
+<td class="govuk-table__cell">
+<a class="govuk-link" href="#">Amend</a> | <a class="govuk-link" href="#">Remove</a>
+</td>
+</tr>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">AB1008</td>
+<td class="govuk-table__cell">12 Example Street, City 9, AB8 8CD</td>
+<td class="govuk-table__cell">Part</td>
+<td class="govuk-table__cell">
+<a class="govuk-link" href="#">Amend</a> | <a class="govuk-link" href="#">Remove</a>
+</td>
+</tr>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">AB1009</td>
+<td class="govuk-table__cell">12 Example Street, City 10, AB9 9CD</td>
+<td class="govuk-table__cell">Whole</td>
+<td class="govuk-table__cell">
+<a class="govuk-link" href="#">Amend</a> | <a class="govuk-link" href="#">Remove</a>
+</td>
+</tr></tbody>
+</table>
+</div> <!-- /.role="region" aria-labelledby="Caption01" tabindex="0" -->
+</div> <!-- /.table-container -->
+</div> <!-- /.govuk-grid-column-full -->
+</div> <!-- .govuk-grid-row -->
+<div id="table-footer">
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-one-half">
+<p class="govuk-body-s govuk-!-text-align-left text-align-centre-mob total-applications">Showing <strong>1</strong> to <strong>X</strong> of <strong>X</strong> applications</p>
+
+                {% from "govuk/components/pagination/macro.njk" import govukPagination %}
+                {{ govukPagination({
+                    items: [
+                        {
+                            number: 1,
+                            current: true,
+                            href: "#"
+                        }
+                    ]
+                }) }}
+
+            </div> <!-- /.govuk-grid-column-one-half -->
+<!-- Applications per page -->
+<div class="govuk-grid-column-one-half">
+<p class="govuk-body-s govuk-!-text-align-right text-align-centre-mob">
+                        Applications per page
+                    </p>
+<div class="govuk-column-full-width pagination-component pagination-component-right">
+<nav aria-label="results" class="govuk-pagination" role="navigation">
+<ul class="govuk-pagination__list">
+<li class="govuk-pagination__item govuk-pagination__item--current">
+<a aria-current="page" aria-label="Page 10" class="govuk-link govuk-pagination__link" href="#">
+                                  10
+                                </a>
+</li>
+<li class="govuk-pagination__item">
+<a aria-label="Page 20" class="govuk-link govuk-pagination__link" href="#">
+                                  20
+                                </a>
+</li>
+<li class="govuk-pagination__item">
+<a aria-label="Page 30" class="govuk-link govuk-pagination__link" href="#">
+                                  30
+                                </a>
+</li>
+</ul>
+</nav>
+</div> <!--  /.govuk-column-full-width pagination-component -->
+</div> <!-- /.govuk-grid-column-one-half -->
+</div> <!-- .govuk-grid-row -->
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-full govuk-!-margin-top-3">
+<!-- <p class="govuk-body text-align-centre-mob">
+                  <a href="#" class="govuk-link">
+                    Start a new application</a>
+                </p> -->
+                {% from "govuk/components/button/macro.njk" import govukButton %}
+
+                {{ govukButton({
+                  text: "Continue",
+                  classes: "govuk-button--primary"
+                }) }}
+            </div>
+</div> <!-- .govuk-grid-row -->
+</div> <!-- #table-footer -->
+</div> <!-- ./govuk-width-container -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const filterSelectOwner = document.getElementById('filter-applications');
+    const filterSelectStatus = document.getElementById('filter-status');
+    const searchButton = document.querySelector('.search-btn');
+    const searchInput = document.getElementById('find-application');
+    const clearSearchLink = document.getElementById('clear-search');
+    const applyFiltersButton = document.getElementById('apply-filters');
+
+    // Set default selection and apply initial filters
+    filterSelectOwner.value = 'mine';
+    applyFilters();
+
+    // Event listener for the Apply Filters button
+    applyFiltersButton.addEventListener('click', applyFilters);
+
+    // Event listener for the search button to trigger filtering as well
+    searchButton.addEventListener('click', applyFilters);
+
+    // Clear search functionality
+    clearSearchLink.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        // Reset filters and search input
+        filterSelectOwner.value = 'mine';
+        filterSelectStatus.value = 'all';
+        searchInput.value = '';
+
+        // Reset all action dropdowns to "Select action"
+        const actionDropdowns = document.querySelectorAll('.govuk-table__cell select');
+        actionDropdowns.forEach(dropdown => {
+            dropdown.selectedIndex = 0; // Reset to the first option ("Select action")
+        });
+
+        applyFilters(); // Apply default filters again
+    });
+
+    // Event listener for action buttons in the table rows
+    const actionButtons = document.querySelectorAll('.govuk-table__cell .search-btn');
+    actionButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const selectElement = button.parentElement.querySelector('select');
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const url = selectedOption ? selectedOption.getAttribute('data-url') : '';
+
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
+
+    // Filter function to display rows based on criteria
+    function applyFilters() {
+        const selectedOwner = filterSelectOwner.value;
+        const selectedStatus = filterSelectStatus.value;
+        const searchTerm = searchInput.value.trim().toLowerCase();
+
+        const tableBody = document.querySelector('.govuk-table__body');
+        const tableRows = tableBody.querySelectorAll('.govuk-table__row');
+
+        tableRows.forEach(function (row) {
+            const statusCell = row.querySelector('.govuk-table__cell:first-child');
+            const rowOwner = row.getAttribute('data-owner');
+            const refCell = row.querySelector('.govuk-table__cell:nth-child(2)');
+            const titleCell = row.querySelector('.govuk-table__cell:nth-child(3)');
+
+            const matchesOwner = selectedOwner === 'all' || rowOwner === selectedOwner;
+            const matchesStatus = selectedStatus === 'all' || statusCell.textContent.trim().toLowerCase() === selectedStatus.toLowerCase();
+            const matchesSearch = !searchTerm || refCell.textContent.trim().toLowerCase().includes(searchTerm) || titleCell.textContent.trim().toLowerCase().includes(searchTerm);
+
+            // Show row if all criteria match
+            row.style.display = matchesOwner && matchesStatus && matchesSearch ? 'table-row' : 'none';
+        });
+
+        updateRowCount();
+    }
+
+    // Row count update function
+    function updateRowCount() {
+        const tableBody = document.querySelector('.govuk-table__body');
+        const tableRows = tableBody.querySelectorAll('.govuk-table__row');
+        let visibleRowCount = 0;
+        tableRows.forEach(row => { if (row.style.display !== 'none') visibleRowCount++; });
+
+        document.querySelector('.total-applications').innerHTML = `Showing <strong>1</strong> to <strong>${visibleRowCount}</strong> of <strong>${tableRows.length}</strong> applications`;
+    }
+});
+
+
+</script>
+
+
+
+{% endblock %}

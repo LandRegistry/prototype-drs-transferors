@@ -1,0 +1,60 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Tell us what your application is about – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="/ssa/v4/s1/4-application-about" method="post">
+        {{ govukRadios({
+          name: "application-type",
+          fieldset: {
+            legend: {
+              text: "Tell us what your application is about",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--xl"
+            }
+          },
+          items: [
+            {
+              value: "change-of-ownership",
+              text: "A change of ownership (including TR1, TP1, ADV1, AS1, AS2 and AS3). Do not select this if your application concerns a lease"
+            },
+            {
+              value: "updating-specific-title-details",
+              text: "Updating, adding, removing or noting information about an existing title on the register"
+            },
+            {
+              value: "registering-lease",
+              text: "Registering a new lease"
+            },
+            {
+              value: "renewing-lease",
+              text: "Registering a lease extension (varying the term or extent of an existing lease or closing an old lease and registering a new lease for the same property to the same tenant)"
+            },
+            {
+              value: "removal-of-restriction",
+              text: "Removing a default Form A restriction (JP1)"
+            }
+          ]
+        }) }}
+
+        {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+        {{ govukWarningText({
+          text: "Select the application type carefully. Choosing the wrong application type might mean your application will lose priority and can result in a long delay in it being processed.",
+          iconFallbackText: "Warning"
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            
+
+            <div class="govuk-form-group">
+                  <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <h1 class="govuk-fieldset__heading">
+        How many titles do you need to add to this application?
+      </h1>
+    </legend>
+
+    <div class="govuk-radios" data-module="govuk-radios">
+      
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="title-count-1-10" name="titleCount" type="radio" value="1to10">
+        <label class="govuk-label govuk-radios__label" for="title-count-1-10">
+          1 to 10
+        </label>
+      </div>
+
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="title-count-11-199" name="titleCount" type="radio" value="11to199" data-aria-controls="conditional-title-method">
+        <label class="govuk-label govuk-radios__label" for="title-count-11-199">
+          11 to 199
+        </label>
+      </div>
+
+      <!-- CONDITIONAL REVEAL -->
+      <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-title-method">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="how-to-add-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              How would you like to add your titles?
+            </legend>
+            <div id="how-to-add-hint" class="govuk-hint">
+              Choose the method that works best for you.
+            </div>
+
+            <div class="govuk-radios govuk-radios--inline">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="add-method-upload" name="addMethod" type="radio" value="upload">
+                <label class="govuk-label govuk-radios__label" for="add-method-upload">
+                  Upload a spreadsheet (CSV)
+                </label>
+              </div>
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="add-method-manual" name="addMethod" type="radio" value="manual">
+                <label class="govuk-label govuk-radios__label" for="add-method-manual">
+                  Enter them one by one
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+
+    </div>
+  </fieldset>
+</div>
+<div class="govuk-!-margin-top-6">
+  <button class="govuk-button" data-module="govuk-button">
+    Continue
+  </button>
+</div>
+
+
+
+
+
+            <!-- main content here -->
+            
+        </div> <!-- ./govuk-grid-column-two-thirds -->
+    </div> <!-- ./govuk-grid-row -->
+
+</div> <!-- ./govuk-width-container -->
+
+
+{% endblock %}

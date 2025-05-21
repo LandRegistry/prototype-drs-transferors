@@ -1,0 +1,46 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+	GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <form method="post" action="/remove-all-titles-confirmed">
+          <h1 class="govuk-heading-xl">
+            Are you sure you want to remove all titles?
+          </h1>
+
+          <p class="govuk-body">
+            This will delete all title numbers currently listed. You can still add new titles afterwards.
+          </p>
+
+          <div class="govuk-button-group">
+            <button class="govuk-button" data-module="govuk-button">
+              Continue
+            </button>
+            <a class="govuk-link" href="/manage-titles">
+              Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+<!-- ./govuk-width-container -->
+
+
+
+
+
+
+{% endblock %}

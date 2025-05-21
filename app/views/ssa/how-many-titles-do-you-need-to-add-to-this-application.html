@@ -1,0 +1,65 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">How would you like to add title numbers?</h1>
+
+        <form method="post" action="/how-to-add-titles">
+
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="add-method-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                Choose a method that works best for you
+              </legend>
+
+              <!-- <div id="add-method-hint" class="govuk-hint">
+                If you’ve completed a CSV template, upload it here. Otherwise, you can add titles one by one.
+              </div> -->
+
+              <div class="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="add-method-upload" name="addMethod" type="radio" value="upload">
+                  <label class="govuk-label govuk-radios__label" for="add-method-upload">
+                    Upload a spreadsheet (CSV)
+                  </label>
+                </div>
+
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="add-method-manual" name="addMethod" type="radio" value="manual">
+                  <label class="govuk-label govuk-radios__label" for="add-method-manual">
+                    Add them one by one
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <button class="govuk-button" data-module="govuk-button">
+            Continue
+          </button>
+
+        </form>
+      </div>
+    </div>
+
+  </main>
+</div>
+ <!-- ./govuk-width-container -->
+
+
+{% endblock %}

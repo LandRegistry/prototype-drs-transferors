@@ -1,0 +1,68 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+      <form action="/ssa/v4/s2/how-many-titles" method="post">
+      
+        <h1 class="govuk-heading-xl">How many titles do you want to add?</h1>
+
+        <div class="govuk-hint">
+          You can add up to 199 titles per application.
+        </div>
+
+        {% from "govuk/components/details/macro.njk" import govukDetails %}
+        {{ govukDetails({
+          summaryText: "About applications relating to more than one title number.",
+          html: "
+            You can use this service for applications of up to 199 title numbers. In order to register multiple title numbers in one application:
+            <ul class='govuk-list govuk-list--bullet'>
+              <li>all titles must have the same proprietors registered against each title number</li>
+              <li>transferors and transferees must be the same for each title number</li>
+            </ul>
+          "
+        }) }}
+
+        {{ govukRadios({
+          name: "title-count",
+          fieldset: {
+            legend: {
+              text: "",
+              isPageHeading: false
+            }
+          },
+          items: [
+            {
+              value: "1-25",
+              text: "1 to 25"
+            },
+            {
+              value: "26-199",
+              text: "26 to 199"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+</div> <!-- ./govuk-width-container -->
+
+
+{% endblock %}

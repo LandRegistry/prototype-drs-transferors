@@ -1,0 +1,95 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = true %}
+
+{% block pageTitle %}
+  Error – Enter your title numbers – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <a href="javascript:window.history.back()" class="govuk-back-link">Return to application</a>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <!-- Error summary -->
+      {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [
+          {
+            text: "You must enter between 26 and 199 title numbers",
+            href: "#title-numbers"
+          }
+        ]
+      }) }}
+      </div>
+    </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">Enter your title numbers</h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <p class="govuk-body">
+        You can use this page if you need to add between 26 and 199 titles. If you have less than 26, go back to the
+        <a href="/ssa/v4/s2/how-many-titles" class="govuk-link">How many titles do you want to add?</a> page and select the ‘1 to 25’ option.
+      </p>
+
+      <h2 class="govuk-heading-m">Titles that cannot be entered into DRS</h2>
+      <p class="govuk-body">If your application contains any of these title types, you cannot submit it through this service and will have to send the application by post:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>pending title</li>
+        <li>franchise title</li>
+        <li>title with a multi-district code</li>
+        <li>closed title number</li>
+        <li>caution title number</li>
+        <li>scheme title number</li>
+      </ul>
+
+      <h2 class="govuk-heading-m">How to add your title numbers</h2>
+      <p class="govuk-body">Enter all the title numbers in this application (for example, A123 or XY5678) in the box. You can paste the numbers from a document, or enter them one at a time. They must be separated by either:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a new line</li>
+        <li>a comma</li>
+        <li>a semicolon</li>
+      </ul>
+
+      <form action="/ssa/v4/s1/manage-titles" method="post">
+        <div class="govuk-form-group govuk-form-group--error">
+          <!-- <label class="govuk-label" for="title-numbers">Title numbers</label> -->
+          <span id="title-numbers-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> You must enter between 26 and 199 title numbers
+          </span>
+          <textarea class="govuk-textarea govuk-textarea--error" id="title-numbers" name="title-numbers" rows="10" aria-describedby="title-numbers-error"></textarea>
+        </div>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      {% from "govuk/components/details/macro.njk" import govukDetails %}
+      {{ govukDetails({
+        summaryText: "Help with multi-transactional applications",
+        html: '
+          <p>If you need help because your application has more than one transaction, you can contact the customer support team using 
+          <a href="https://customerhelp.landregistry.gov.uk/bulkapplicationswebform/" target="_blank" class="govuk-link">this online form</a>.</p>
+          <p>A member of the team will be in touch within 5 days to give you advice on how to complete your application.</p>
+        '
+      }) }}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirm the new lease has a term of 7 years or more – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Enter your reference</h1>
+
+      <form action="#" method="post">
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+
+        {{ govukInput({
+          label: {
+            text: "Type in your reference for this application"
+          },
+          id: "application-reference",
+          name: "applicationReference",
+          classes: "govuk-input--width-20"
+        }) }}
+
+        {{ govukButton({
+          text: "Continue",
+          href: "/ssa/v4/s2/3-are-you-a-conveyancer"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

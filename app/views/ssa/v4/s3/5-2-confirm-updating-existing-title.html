@@ -1,0 +1,53 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirm you are updating details for an existing title – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Confirm you are updating details for an existing title</h1>
+      
+      <p class="govuk-body">
+        Use this application if you are updating, adding, removing or noting information related to a title on the register. This might include:
+      </p>
+      
+      <ul class="govuk-list govuk-list--bullet">
+        <li>charges</li>
+        <li>deed or release of easement</li>
+        <li>deed of release of covenant</li>
+        <li>deed varying a registered title which does not increase the term of a lease</li>
+        <li>noting a lease</li>
+        <li>variations</li>
+        <li>rectifications</li>
+        <li>notices and restrictions</li>
+      </ul>
+      
+      {{ govukInsetText({
+        html: "If your application concerns a deed of variation affecting the term or extent of an existing lease, go back and select ‘Registering a lease extension (varying the term or extent of an existing lease or closing an old lease and registering a new lease for the same property to the same tenant)’.
+        <br>
+        <br>
+        If your application concerns adverse possession (form ADV1) go back and select ‘A change of ownership’.
+        <br>
+        <br>
+        Do not use this application for transfers of whole (form TR1 or TR2) or part (form TP1 or TP2)."
+      }) }}
+      
+      <form action="/ssa/v4/s3/task-list" method="post">
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -503,3 +503,30 @@ Apply a narrower width to the first column */
     }
 }
 
+
+#table-myt td {
+    vertical-align: top !important;
+}
+#table-myt th.table-restrictions.govuk-table__header {
+    width: 22%;
+}
+
+@media (min-width: 40.0625em) {
+    #table-myt .govuk-warning-text {
+        margin-bottom: 0 !important;
+        font-size: 1rem;
+        line-height: 1.4rem;
+    }
+}
+
+#table-myt .govuk-radios__item,
+#table-myt .govuk-radios__input, {
+  vertical-align: top;
+}
+
+@media (min-width: 40.0625em) {
+    .govuk-label {
+        font-size: 1rem;
+        line-height: 1.3157894737;
+    }
+}

@@ -344,4 +344,287 @@ router.post('/application-about/v1-2/renewing-lease', function (req, res) {
   }
 });
 
+// SSA v1.1
+router.post('/how-to-add-titles', function (req, res) {
+  const method = req.session.data['addMethod'];
+
+  if (method === 'upload') {
+    return res.redirect('/ssa/upload-a-spreadsheet-of-title-numbers');
+  } else if (method === 'manual') {
+    return res.redirect('/ssa/manage-titles-008-op-E');
+  } else {
+    return res.redirect('/how-to-add-titles'); // fallback if no option selected
+  }
+});
+
+
+router.post('/upload-csv', function (req, res) {
+  res.redirect('/ssa/manage-titles-008-op-C');
+});
+
+
+// SSA
+// application about v4
+router.post('/ssa/v4/4-application-about', function (req, res) {
+  const applicationType = req.body['application-type'];
+  switch (applicationType) {
+    case 'change-of-ownership':
+      res.redirect('/ssa/v4/5-1-transferring-whole-or-part');
+      break;
+    case 'updating-specific-title-details':
+      res.redirect('/ssa/v4/5-2-confirm-updating-existing-title');
+      break;
+    case 'registering-lease':
+      res.redirect('/ssa/v4/5-3-confirm-new-lease-term');
+      break;
+    case 'renewing-lease':
+      res.redirect('/ssa/v4/5-4-confirm-renewing-existing-lease');
+      break;
+    case 'removal-of-restriction':
+      req.session.data['selectedRoute'] = 'JP1';
+      res.redirect('/ssa/v4/task-list');
+      break;
+    default:
+      res.redirect('/ssa/v4/4-application-about');
+  }
+});
+
+// follow-ups for each path
+router.post('/ssa/v4/5-1-transferring-whole-or-part', function (req, res) {
+  const transferType = req.body['transfer-type'];
+  if (transferType === 'whole') {
+    req.session.data['selectedRoute'] = 'RU';
+  } else if (transferType === 'part') {
+    req.session.data['selectedRoute'] = 'TP';
+  }
+  res.redirect('/ssa/v4/task-list');
+});
+
+router.post('/ssa/v4/5-2-confirm-updating-existing-title', function (req, res) {
+  req.session.data['selectedRoute'] = 'RU';
+  res.redirect('/ssa/v4/task-list');
+});
+
+router.post('/ssa/v4/5-3-confirm-new-lease-term', function (req, res) {
+  req.session.data['selectedRoute'] = 'NL';
+  res.redirect('/ssa/v4/task-list');
+});
+
+router.post('/ssa/v4/5-4-confirm-renewing-existing-lease', function (req, res) {
+  req.session.data['selectedRoute'] = 'LE';
+  res.redirect('/ssa/v4/task-list');
+});
+
+router.post('/ssa/v4/how-many-titles', function (req, res) {
+  const count = req.body['title-count'];
+  if (count === '1-25') {
+    res.redirect('/ssa/v4/enter-title-numbers-non-ssa');
+  } else if (count === '26-199') {
+    res.redirect('/ssa/v4/enter-title-numbers');
+  } else {
+    res.redirect('/ssa/v4/how-many-titles'); // fallback if no option selected
+  }
+});
+
+router.post('/ssa/v4/disclosable-overriding-interests', function (req, res) {
+  const interest = req.body['overriding-interests'];
+
+  // Optionally store the answer in session
+  req.session.data['overriding-interests'] = interest;
+
+  // Redirect regardless of Yes or No
+  res.redirect('/ssa/v4/select-transactions');
+});
+
+
+
+
+
+
+// SSA Scenario's
+// =====================
+
+// Scenario 1: happy path
+// ---------------------
+router.post('/ssa/v4/s1/4-application-about', function (req, res) {
+  const applicationType = req.body['application-type'];
+
+  switch (applicationType) {
+    case 'change-of-ownership':
+      res.redirect('/ssa/v4/s1/5-1-transferring-whole-or-part');
+      break;
+    case 'updating-specific-title-details':
+      res.redirect('/ssa/v4/s1/5-2-confirm-updating-existing-title');
+      break;
+    case 'registering-lease':
+      res.redirect('/ssa/v4/s1/5-3-confirm-new-lease-term');
+      break;
+    case 'renewing-lease':
+      res.redirect('/ssa/v4/s1/5-4-confirm-renewing-existing-lease');
+      break;
+    case 'removal-of-restriction':
+      req.session.data['selectedRoute'] = 'JP1';
+      res.redirect('/ssa/v4/s1/task-list');
+      break;
+    default:
+      res.redirect('/ssa/v4/s1/4-application-about');
+  }
+});
+
+router.post('/ssa/v4/s1/5-1-transferring-whole-or-part', function (req, res) {
+  const transferType = req.body['transfer-type'];
+
+  if (transferType === 'whole') {
+    req.session.data['selectedRoute'] = 'RU';
+  } else if (transferType === 'part') {
+    req.session.data['selectedRoute'] = 'TP';
+  }
+
+  res.redirect('/ssa/v4/s1/task-list');
+});
+
+router.post('/ssa/v4/s1/how-many-titles', function (req, res) {
+  const count = req.body['title-count'];
+
+  if (count === '1-25') {
+    res.redirect('/ssa/v4/s1/enter-title-numbers-non-ssa');
+  } else if (count === '26-199') {
+    res.redirect('/ssa/v4/s1/enter-title-numbers');
+  } else {
+    // fallback if nothing selected
+    res.redirect('/ssa/v4/s1/how-many-titles');
+  }
+});
+
+router.post('/ssa/v4/s1/disclosable-overriding-interests', function (req, res) {
+  const interest = req.body['overriding-interests'];
+
+  // Optionally store the answer in session
+  req.session.data['overriding-interests'] = interest;
+
+  // Redirect regardless of Yes or No
+  res.redirect('/ssa/v4/s1/select-transactions');
+});
+
+// Scenario 2: too few titles
+// ---------------------
+router.post('/ssa/v4/s2/4-application-about', function (req, res) {
+  const applicationType = req.body['application-type'];
+
+  switch (applicationType) {
+    case 'change-of-ownership':
+      res.redirect('/ssa/v4/s2/5-1-transferring-whole-or-part');
+      break;
+    case 'updating-specific-title-details':
+      res.redirect('/ssa/v4/s2/5-2-confirm-updating-existing-title');
+      break;
+    case 'registering-lease':
+      res.redirect('/ssa/v4/s2/5-3-confirm-new-lease-term');
+      break;
+    case 'renewing-lease':
+      res.redirect('/ssa/v4/s2/5-4-confirm-renewing-existing-lease');
+      break;
+    case 'removal-of-restriction':
+      req.session.data['selectedRoute'] = 'JP1';
+      res.redirect('/ssa/v4/s2/task-list');
+      break;
+    default:
+      res.redirect('/ssa/v4/s2/4-application-about');
+  }
+});
+
+router.post('/ssa/v4/s2/5-1-transferring-whole-or-part', function (req, res) {
+  const transferType = req.body['transfer-type'];
+
+  if (transferType === 'whole') {
+    req.session.data['selectedRoute'] = 'RU';
+  } else if (transferType === 'part') {
+    req.session.data['selectedRoute'] = 'TP';
+  }
+
+  res.redirect('/ssa/v4/s2/task-list');
+});
+
+router.post('/ssa/v4/s2/how-many-titles', function (req, res) {
+  const count = req.body['title-count'];
+
+  if (count === '1-25') {
+    res.redirect('/ssa/v4/s2/enter-title-numbers-non-ssa');
+  } else if (count === '26-199') {
+    res.redirect('/ssa/v4/s2/enter-title-numbers');
+  } else {
+    res.redirect('/ssa/v4/s2/how-many-titles');
+  }
+});
+
+router.post('/ssa/v4/s2/remove-all-titles-confirm', function (req, res) {
+  res.redirect('/ssa/v4/s2/enter-title-numbers');
+});
+
+
+// Scenario 3: some titles invalid
+// -------------------------------
+router.post('/ssa/v4/s3/4-application-about', function (req, res) {
+  const applicationType = req.body['application-type'];
+
+  switch (applicationType) {
+    case 'change-of-ownership':
+      res.redirect('/ssa/v4/s3/5-1-transferring-whole-or-part');
+      break;
+    case 'updating-specific-title-details':
+      res.redirect('/ssa/v4/s3/5-2-confirm-updating-existing-title');
+      break;
+    case 'registering-lease':
+      res.redirect('/ssa/v4/s3/5-3-confirm-new-lease-term');
+      break;
+    case 'renewing-lease':
+      res.redirect('/ssa/v4/s3/5-4-confirm-renewing-existing-lease');
+      break;
+    case 'removal-of-restriction':
+      req.session.data['selectedRoute'] = 'JP1';
+      res.redirect('/ssa/v4/s3/task-list');
+      break;
+    default:
+      res.redirect('/ssa/v4/s3/4-application-about');
+  }
+});
+
+router.post('/ssa/v4/s3/5-1-transferring-whole-or-part', function (req, res) {
+  const transferType = req.body['transfer-type'];
+
+  if (transferType === 'whole') {
+    req.session.data['selectedRoute'] = 'RU';
+  } else if (transferType === 'part') {
+    req.session.data['selectedRoute'] = 'TP';
+  }
+
+  res.redirect('/ssa/v4/s3/task-list');
+});
+
+router.post('/ssa/v4/s3/how-many-titles', function (req, res) {
+  const count = req.body['title-count'];
+
+  if (count === '1-25') {
+    res.redirect('/ssa/v4/s3/enter-title-numbers-non-ssa');
+  } else if (count === '26-199') {
+    res.redirect('/ssa/v4/s3/enter-title-numbers');
+  } else {
+    res.redirect('/ssa/v4/s3/how-many-titles');
+  }
+});
+
+router.post('/ssa/v4/s3/disclosable-overriding-interests', function (req, res) {
+  const interest = req.body['overriding-interests'];
+  req.session.data['overriding-interests'] = interest;
+  res.redirect('/ssa/v4/s3/select-transactions');
+});
+
+router.post('/ssa/v4/s3/remove-all-titles-confirm', function (req, res) {
+  res.redirect('/ssa/v4/s3/enter-title-numbers');
+});
+
+
+
+
+
 module.exports = router;
