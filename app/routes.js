@@ -624,6 +624,21 @@ router.post('/ssa/v4/s3/remove-all-titles-confirm', function (req, res) {
 });
 
 
+// Route to handle the form POST
+router.post('/ssa/v4/s2/enter-title-numbers-non-ssa', function (req, res) {
+  const titleNumbers = req.body['title-number'].trim()
+  const titles = titleNumbers.split(/[,; ]+/).filter(Boolean)
+
+  if (titles.length === 1) {
+    req.session.data['single-title'] = titles[0]  // save to session
+    res.redirect('/ssa/v4/s2/enter-title-numbers-non-ssa-added-1')
+  } else {
+    res.redirect('/ssa/v4/s2/enter-title-numbers-non-ssa-error')
+  }
+})
+
+
+
 
 
 

@@ -15,17 +15,23 @@
     text: "Back",
     href: "javascript:window.history.back()"
   }) }}
-{% endblock %}
 
+{% endblock %}
 
 {% block content %}
 <div class="govuk-width-container">
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-
-      <form class="form" action="/ssa/v4/s2/enter-title-numbers-non-ssa" method="post">
-
+      <form action="/ssa/v4/s2/enter-title-numbers-non-ssa" method="post">
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: [
+            {
+              text: "You can only add one title number at a time on this page",
+              href: "#title-number"
+            }
+          ]
+        }) }}
 
         <h1 class="govuk-heading-xl">Enter title numbers</h1>
 
@@ -44,21 +50,21 @@
             </ul>'
         }) }}
 
-        <div class="govuk-form-group">
-          <!-- <label class="govuk-label" for="title-number">
-            Title number
-          </label> -->
-
-          {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+        {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 
           {{ govukWarningText({
             text: "Enter your title numbers one at a time. Cut and paste bulk upload is only available for applications with 26 to 199 titles.",
             iconFallbackText: "Warning"
           }) }}
+
+        <div class="govuk-form-group govuk-form-group--error">
           <div id="title-number-hint" class="govuk-hint">
             For example, "A123" or "XY5678"
           </div>
-          <input class="govuk-input govuk-input--width-20" id="title-number" name="title-number" type="text" aria-describedby="title-number-hint">
+          <p id="title-number-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> You can only add one title number at a time on this page
+          </p>
+          <input class="govuk-input govuk-input--width-20" id="title-number" name="title-number" type="text" aria-describedby="title-number-hint title-number-error">
         </div>
 
         {{ govukButton({
@@ -76,14 +82,11 @@
         }) }}
 
       </form>
-
     </div>
   </div>
 </div>
 
- <!-- ./govuk-width-container -->
-
- <script>
+<script>
   document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
     const input = document.getElementById("title-number");
@@ -102,7 +105,4 @@
     // });
   });
 </script>
-
-
-
 {% endblock %}

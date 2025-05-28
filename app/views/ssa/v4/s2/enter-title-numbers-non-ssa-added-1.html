@@ -24,8 +24,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <form class="form" action="/ssa/v4/s2/enter-title-numbers-non-ssa" method="post">
-
+      <form action="/ssa/v4/enter-title-numbers-non-ssa" method="post">
 
         <h1 class="govuk-heading-xl">Enter title numbers</h1>
 
@@ -66,6 +65,24 @@
           classes: "govuk-button govuk-button--secondary"
         }) }}
 
+        <h2 class="govuk-heading-m govuk-!-margin-top-6">Titles in this application</h2>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Title number</th>
+              <th scope="col" class="govuk-table__header">Property description</th>
+              <th scope="col" class="govuk-table__header">Options</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{ data['single-title'] }}</td>
+              <td class="govuk-table__cell">1 High Street, Plymouth</td>
+              <td class="govuk-table__cell"><a class="govuk-link" href="#">Remove</a></td>
+            </tr>
+          </tbody>
+        </table>
+
         {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
         {{ govukInsetText({
           text: "You can amend title numbers later."
@@ -85,21 +102,11 @@
 
  <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("form");
-    const input = document.getElementById("title-number");
-
-    // form.addEventListener("submit", function (e) {
-    //   e.preventDefault();
-    //   const value = input.value.trim();
-    //   const split = value.split(/[,; ]+/).filter(Boolean);
-
-    //   if (split.length === 1) {
-    //     const encoded = encodeURIComponent(split[0]);
-    //     window.location.href = `/ssa/v4/s2/enter-title-numbers-non-ssa-added-1.html?title=${encoded}`;
-    //   } else {
-    //     window.location.href = `/ssa/v4/s2/enter-title-numbers-non-ssa-error.html`;
-    //   }
-    // });
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get("title");
+    if (title) {
+      document.getElementById("dynamic-title-number").textContent = title;
+    }
   });
 </script>
 
