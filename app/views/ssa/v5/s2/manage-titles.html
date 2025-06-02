@@ -9,6 +9,14 @@
 	GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
 {% block content %}
 <div class="govuk-width-container">
 
@@ -18,7 +26,7 @@
 			
 			<h2 class="govuk-heading-s govuk-!-margin-bottom-2">Check title details</h2>
 				<p class="govuk-body">
-				  Your title numbers are displayed in the table - check the details carefully. Tell us if the titles affect the whole or part of the property and enter the required additional information for titles affecting the part.
+				  Your title numbers are displayed in the table - check the details carefully. If the title only affects part of the property, select ‘Part’ and enter the  additional information.
 				</p>
 				<p class="govuk-body">
 				  Select ’Continue’ when you're happy that the details are correct.
@@ -26,11 +34,23 @@
 
 				<h2 class="govuk-heading-s govuk-!-margin-bottom-2">Adding or removing titles</h2>
 				<p class="govuk-body">
-				  If you need to make changes (for example adding or removing a title), select ‘Remove all titles’ on this page. All titles will be removed and you can then enter the new title numbers on the Enter your title numbers page.
+				  You can remove and add title numbers using the radio buttons in the table. Remember there is an upper limit of 199 and a lower limit of 26.
 				</p>
 
-
 		</div> <!-- /.govuk-grid-column-two-thirds -->
+
+		<!-- Manage list actions (right column) -->
+	    <div class="govuk-grid-column-one-third">
+			<h2 class="govuk-heading-m">Title list options</h2>
+			<ul class="govuk-list">
+				<li>
+				<a href="#" id="download-list" class="govuk-link">Download this list</a>
+				</li>
+				<li>
+				<a href="#" class="govuk-link">Remove all titles</a>
+				</li>
+			</ul>
+		</div> <!-- /.govuk-grid-column-one-third -->
 
 	</div><!-- /.govuk-grid-row -->
 
@@ -39,7 +59,7 @@
 <br>
 	<div class="govuk-grid-row">
 	
-		<div class="govuk-grid-column-two-thirds">
+		<div class="govuk-grid-column-two-thirds search-container">
 
 			<h2 class="govuk-heading-m">Find a title in your list</h2>
 
@@ -68,7 +88,26 @@
 
 		</div> <!-- /.govuk-grid-column-two-thirds -->
 
-		<div class="govuk-grid-column-one-third search-container">
+		<div class="govuk-grid-column-one-third add-to-list-container">
+
+			<h2 class="govuk-heading-m">Add another title</h2>
+			<!-- <p class="govuk-body">Add a title manually if you forgot to include it in your spreadsheet.</p> -->
+
+			<div class="govuk-form-group">
+				<label class="govuk-label" for="manual-title-number">Title number</label>
+				<div class="input-wrapper">
+					<div class="input-with-button">
+						<input class="govuk-input govuk-input--width-9" id="manual-title-number" name="manual-title-number" type="text">
+						<button
+							class="govuk-button govuk-button--secondary"
+							id="add-manual-title"
+							type="button"
+							style="margin-bottom: 0; margin-top: -2px;">
+							Add to list
+						</button>
+					</div>
+				</div>
+			</div> <!-- ./govuk-form-group -->
 			
 		</div> <!-- /.govuk-grid-column-one-third -->
 
@@ -76,7 +115,7 @@
 
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-full">
-   
+   		<br>
 			<h2 class="govuk-heading-m"><span id="title-h2-count">30</span> Titles in this application</h2>
 
 		    <div class="table-container">
@@ -87,101 +126,91 @@
 						  <tr class="govuk-table__row">
 						    <th class="govuk-table__header" scope="col" style="width: 10%;">Title number</th>
 						    <th class="govuk-table__header" scope="col" style="width: 25%;">Property address</th>
-						    <th class="govuk-table__header" scope="col" style="width: 40%;">Whole or part</th>
+						    <th class="govuk-table__header" scope="col" style="width: 30%;">Whole or part</th>
 						    <th class="govuk-table__header" scope="col" style="width: 20%;">Restrictions</th>
+						    <th class="govuk-table__header" scope="col" style="width: 10%;">Actions</th>
 						  </tr>
 						</thead>
 
-						<tbody class="govuk-table__body">
+						<tbody class="govuk-table__body" id="titles-table-body">
 						  {% for i in range(1, 31) %}
-						  <tr class="govuk-table__row">
-						    <td class="govuk-table__cell">AB{{ 1000 + i }}</td>
-						    <td class="govuk-table__cell">{{ 10 + i }} Example Street, City {{ i }}, AB{{ i }}{{ i }}CD</td>
+						    {% set titleNumber = "AB" + (1000 + i).toString() %}
+						    <tr class="govuk-table__row">
+						      <td class="govuk-table__cell">{{ titleNumber }}</td>
+						      <td class="govuk-table__cell">{{ 10 + i }} Example Street, City {{ i }}, AB{{ i }}{{ i }}CD</td>
 
-						    <td class="govuk-table__cell" style="vertical-align: top;">
-						      <div style="max-width: 340px;">
-						        <div class="govuk-form-group">
-						          <fieldset class="govuk-fieldset" aria-describedby="whole-part-hint-{{ i }}">
-						            <legend class="govuk-visually-hidden">Whole or part for AB{{ 1000 + i }}</legend>
+						      <td class="govuk-table__cell" style="vertical-align: top;">
+						        <div style="max-width: 340px;">
+						          <div class="govuk-form-group">
+						            <fieldset class="govuk-fieldset" aria-describedby="whole-part-hint-{{ i }}">
+						              <legend class="govuk-visually-hidden">Whole or part for {{ titleNumber }}</legend>
 
-						            <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-						              <div class="govuk-radios__item">
-						                <input class="govuk-radios__input" id="whole-{{ i }}" name="whole-part-{{ i }}" type="radio" value="Whole" checked>
-						                <label class="govuk-label govuk-radios__label" for="whole-{{ i }}">Whole</label>
-						              </div>
+						              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+						                <div class="govuk-radios__item">
+						                  <input class="govuk-radios__input" id="whole-{{ i }}" name="whole-part-{{ i }}" type="radio" value="Whole" checked>
+						                  <label class="govuk-label govuk-radios__label" for="whole-{{ i }}">Whole</label>
+						                </div>
 
-						              <div class="govuk-radios__item">
-						                <input class="govuk-radios__input" id="part-{{ i }}" name="whole-part-{{ i }}" type="radio" value="Part" data-aria-controls="conditional-part-{{ i }}">
-						                <label class="govuk-label govuk-radios__label" for="part-{{ i }}">Part</label>
-						              </div>
+						                <div class="govuk-radios__item">
+						                  <input class="govuk-radios__input" id="part-{{ i }}" name="whole-part-{{ i }}" type="radio" value="Part" data-aria-controls="conditional-part-{{ i }}">
+						                  <label class="govuk-label govuk-radios__label" for="part-{{ i }}">Part</label>
+						                </div>
 
-						              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-part-{{ i }}">
-						                <div class="govuk-form-group">
-						                  <label class="govuk-label" for="part-description-{{ i }}">Describe the parts affected</label>
-						                  <span id="part-description-hint-{{ i }}" class="govuk-hint">
-						                    For example, "Edged red on the plan dated DD/MM/YYYY."
-						                  </span>
-						                  <textarea class="govuk-textarea js-character-count"
-						                            id="part-description-{{ i }}"
-						                            name="part-description-{{ i }}"
-						                            rows="3"
-						                            aria-describedby="part-description-hint-{{ i }} part-description-info-{{ i }}"
-						                            maxlength="100"></textarea>
-						                  <div id="part-description-info-{{ i }}" class="govuk-hint govuk-character-count__message">
-						                    You have 100 characters remaining
+						                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-part-{{ i }}">
+						                  <div class="govuk-form-group">
+						                    <label class="govuk-label" for="part-description-{{ i }}">Describe the parts affected</label>
+						                    <span id="part-description-hint-{{ i }}" class="govuk-hint">
+						                      For example, "Edged red on the plan dated DD/MM/YYYY."
+						                    </span>
+						                    <textarea class="govuk-textarea js-character-count"
+						                              id="part-description-{{ i }}"
+						                              name="part-description-{{ i }}"
+						                              rows="3"
+						                              aria-describedby="part-description-hint-{{ i }} part-description-info-{{ i }}"
+						                              maxlength="100"></textarea>
+						                    <div id="part-description-info-{{ i }}" class="govuk-hint govuk-character-count__message">
+						                      You have 100 characters remaining
+						                    </div>
+						                  </div>
+						                  <div class="govuk-inset-text">
+						                    You'll need to upload the plan later.
 						                  </div>
 						                </div>
-						                <div class="govuk-inset-text">
-						                  You'll need to upload the plan later.
-						                </div>
 						              </div>
-						            </div>
-						          </fieldset>
-						        </div>
-						      </div>
-						    </td>
-
-						    <!-- RESTRICTIONS -->
-						    <td class="govuk-table__cell">
-						      {% if i == 3 or i == 7 %}
-						        <div class="govuk-warning-text govuk-warning-text--small-icon govuk-!-margin-bottom-1">
-						          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-						          <strong class="govuk-warning-text__text">
-						            <span class="govuk-visually-hidden">Warning</span>
-						            Restrictions
-						          </strong>
-						        </div>
-						        <div class="govuk-warning-text govuk-warning-text--small-icon">
-						          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-						          <strong class="govuk-warning-text__text">
-						            <span class="govuk-visually-hidden">Warning</span>
-						            Lender restriction
-						          </strong>
-						        </div>
-						      {% else %}
-						        <span class="govuk-body-s govuk-!-colour-muted" style="display: block; padding-top: 0.7em;">None</span>
-						      {% endif %}
-						    </td>
-
-						    <!-- DOI removed -->
-						    <!-- <td class="govuk-table__cell">
-						      <fieldset class="govuk-fieldset govuk-fieldset--inline" aria-describedby="doi-{{ i }}-hint">
-						        <legend class="govuk-visually-hidden">Disclosable overriding interests for AB{{ 1000 + i }}</legend>
-						        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-						          <div class="govuk-radios__item">
-						            <input class="govuk-radios__input" id="doi-none-{{ i }}" name="doi-{{ i }}" type="radio" value="None" checked>
-						            <label class="govuk-label govuk-radios__label" for="doi-none-{{ i }}">No</label>
-						          </div>
-						          <div class="govuk-radios__item">
-						            <input class="govuk-radios__input" id="doi-yes-{{ i }}" name="doi-{{ i }}" type="radio" value="Present">
-						            <label class="govuk-label govuk-radios__label" for="doi-yes-{{ i }}">Yes</label>
+						            </fieldset>
 						          </div>
 						        </div>
-						      </fieldset>
-						    </td> -->
-						  </tr>
+						      </td>
+
+						      <td class="govuk-table__cell">
+						        {% if i == 3 or i == 7 %}
+						          <div class="govuk-warning-text govuk-warning-text--small-icon govuk-!-margin-bottom-1">
+						            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+						            <strong class="govuk-warning-text__text">
+						              <span class="govuk-visually-hidden">Warning</span>
+						              Restrictions
+						            </strong>
+						          </div>
+						          <div class="govuk-warning-text govuk-warning-text--small-icon">
+						            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+						            <strong class="govuk-warning-text__text">
+						              <span class="govuk-visually-hidden">Warning</span>
+						              Lender restriction
+						            </strong>
+						          </div>
+						        {% else %}
+						          <span class="govuk-body-s govuk-!-colour-muted" style="display: block; padding-top: 0.7em;">None</span>
+						        {% endif %}
+						      </td>
+
+						      <td class="govuk-table__cell">
+						        <a class="govuk-link remove-title" href="#" data-title="{{ titleNumber }}">Remove</a>
+						      </td>
+						    </tr>
 						  {% endfor %}
 						</tbody>
+
+						
 						</table>
 		      </div>
 		    </div>
@@ -237,13 +266,15 @@ document.addEventListener('DOMContentLoaded', function () {
 	const searchInput = document.getElementById('find-title');
 	const clearSearchButton = document.getElementById('clear-search');
 	const tableBody = document.querySelector('.govuk-table__body');
-	const tableRows = tableBody.querySelectorAll('.govuk-table__row');
 	const rowCountText = document.getElementById('title-count-display');
 	const h2CountText = document.getElementById('title-h2-count');
 
 	function applySearch() {
 		const searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
 		let visibleCount = 0;
+
+		// Fresh list of rows each time to include any manually added ones
+		const tableRows = tableBody.querySelectorAll('tr');
 
 		tableRows.forEach(row => {
 			const titleCell = row.querySelector('td:nth-child(1)');
@@ -260,8 +291,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		const totalCount = tableRows.length;
 
-		// Update the line below the table
-		// Update the line below the table
+		// Update the line below the table (search result summary)
 		if (visibleCount > 0) {
 			const showingText = visibleCount === totalCount
 				? `Showing <strong>1</strong> to <strong>${totalCount}</strong> of <strong>${totalCount}</strong> titles`
@@ -271,11 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			rowCountText.innerHTML = `No matching titles found – showing 0 of ${totalCount} titles`;
 		}
 
-
-		// Update the H2 counter
-		if (h2CountText) {
-			h2CountText.textContent = visibleCount;
-		}
+		// ❌ Do not update h2 title count here — only total titles, handled elsewhere
 	}
 
 	if (searchButton && searchInput) {
@@ -301,10 +327,166 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
+
 <script src="/govuk-frontend/govuk/all.js"></script>
 <script>
   window.GOVUKFrontend.initAll()
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const addButton = document.getElementById('add-manual-title');
+  const inputField = document.getElementById('manual-title-number');
+  const tableBody = document.getElementById('titles-table-body');
+  const h2CountText = document.getElementById('title-h2-count');
+  const countDisplay = document.getElementById('title-count-display');
+
+  function updateCounts() {
+    const rowCount = tableBody.querySelectorAll('tr').length;
+    h2CountText.textContent = rowCount;
+    countDisplay.innerHTML = `Showing <strong>1</strong> to <strong>${rowCount}</strong> of <strong>${rowCount}</strong> titles`;
+  }
+
+  function removeRow(titleNumber) {
+    const rows = tableBody.querySelectorAll('tr');
+    rows.forEach(row => {
+      const titleCell = row.querySelector('td:first-child');
+      if (titleCell && titleCell.textContent === titleNumber) {
+        tableBody.removeChild(row);
+      }
+    });
+    updateCounts();
+  }
+
+  addButton.addEventListener('click', function () {
+    const title = inputField.value.trim().toUpperCase();
+    if (!title) return;
+
+    // Extract number from title (e.g. AB1030 → 30), then format the postcode
+		const numberMatch = title.match(/\d+/);
+		const number = numberMatch ? Number(numberMatch[0]) : null;
+
+		const shortCode = number !== null
+		  ? String(number).slice(-2) // get last 2 digits only
+		  : '00';
+
+		const address = number !== null
+		  ? `${number} Example Street, City ${number}, AB${shortCode}${shortCode}CD`
+		  : '[Enter address manually]';
+
+
+    // Use timestamp as unique ID to avoid input name/id clashes
+    const uid = Date.now();
+
+    const newRow = document.createElement('tr');
+    newRow.className = 'govuk-table__row';
+    newRow.innerHTML = `
+      <td class="govuk-table__cell">${title}</td>
+      <td class="govuk-table__cell">${address}</td>
+      <td class="govuk-table__cell" style="vertical-align: top;">
+        <div style="max-width: 340px;">
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="whole-part-hint-${uid}">
+              <legend class="govuk-visually-hidden">Whole or part for ${title}</legend>
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="whole-${uid}" name="whole-part-${uid}" type="radio" value="Whole" checked>
+                  <label class="govuk-label govuk-radios__label" for="whole-${uid}">Whole</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="part-${uid}" name="whole-part-${uid}" type="radio" value="Part" data-aria-controls="conditional-part-${uid}">
+                  <label class="govuk-label govuk-radios__label" for="part-${uid}">Part</label>
+                </div>
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-part-${uid}">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="part-description-${uid}">Describe the parts affected</label>
+                    <span id="part-description-hint-${uid}" class="govuk-hint">
+                      For example, "Edged red on the plan dated DD/MM/YYYY."
+                    </span>
+                    <textarea class="govuk-textarea js-character-count"
+                              id="part-description-${uid}"
+                              name="part-description-${uid}"
+                              rows="3"
+                              aria-describedby="part-description-hint-${uid} part-description-info-${uid}"
+                              maxlength="100"></textarea>
+                    <div id="part-description-info-${uid}" class="govuk-hint govuk-character-count__message">
+                      You have 100 characters remaining
+                    </div>
+                  </div>
+                  <div class="govuk-inset-text">
+                    You'll need to upload the plan later.
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell">
+        <span class="govuk-body-s govuk-!-colour-muted" style="display: block; padding-top: 0.7em;">None</span>
+      </td>
+      <td class="govuk-table__cell">
+        <a href="#" class="govuk-link remove-title" data-title="${title}">Remove</a>
+      </td>
+    `;
+
+    tableBody.appendChild(newRow);
+    inputField.value = '';
+    updateCounts();
+
+    // Re-init GOV.UK radios & conditional reveals
+    window.GOVUKFrontend.initAll();
+  });
+
+  tableBody.addEventListener('click', function (e) {
+    if (e.target.classList.contains('remove-title')) {
+      e.preventDefault();
+      const title = e.target.getAttribute('data-title');
+      removeRow(title);
+    }
+  });
+
+  // Initial render state
+  updateCounts();
+});
+</script>
+
+<script type="text/javascript">
+	document.getElementById('download-list').addEventListener('click', function (e) {
+	e.preventDefault();
+
+	const rows = document.querySelectorAll('#titles-table-body tr');
+	let csvContent = "data:text/csv;charset=utf-8,";
+	csvContent += "Title number,Property address,Whole or Part,Restrictions\n";
+
+	rows.forEach(row => {
+		const title = row.querySelector('td:nth-child(1)').innerText.trim();
+		const address = row.querySelector('td:nth-child(2)').innerText.trim();
+
+		// Get selected radio
+		const radioInputs = row.querySelectorAll('input[type="radio"]');
+		let wholeOrPart = '';
+		radioInputs.forEach(input => {
+			if (input.checked) wholeOrPart = input.value;
+		});
+
+		const restrictions = row.querySelector('td:nth-child(4)').innerText.trim();
+
+		csvContent += `"${title}","${address}","${wholeOrPart}","${restrictions}"\n`;
+	});
+
+	const encodedUri = encodeURI(csvContent);
+	const link = document.createElement("a");
+	link.setAttribute("href", encodedUri);
+	link.setAttribute("download", "titles-list.csv");
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+});
+
+</script>
+
+
 
 
 
