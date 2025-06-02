@@ -1,0 +1,131 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+<div class="govuk-width-container">
+
+  <a href="javascript:window.history.back()" class="govuk-back-link">Back</a>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">Select transactions</h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <p class="govuk-body">Select your transactions in priority order.</p>
+      <p class="govuk-body">You can apply for up to 10 transactions.</p>
+
+      <h2 class="govuk-heading-m">Transactions</h2>
+
+      {% from "govuk/components/select/macro.njk" import govukSelect %}
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {% from "govuk/components/details/macro.njk" import govukDetails %}
+
+      {{ govukSelect({
+        id: "transaction-1",
+        name: "transaction-1",
+        label: {
+          text: "Priority 1"
+        },
+        hint: {
+          text: "Select from the list"
+        },
+        items: [
+          { value: "", text: "Select a transaction from the list" },
+          { value: "adv1", text: "1st notice of adverse possession (ADV1)" },
+          { value: "rtm", text: "Acquisition of right to manage" },
+          { value: "ch3", text: "Agreed maximum amount of security (CH3)" }
+        ]
+      }) }}
+
+      {{ govukSelect({
+        id: "transaction-2",
+        name: "transaction-2",
+        label: {
+          text: "Priority 2 (optional)"
+        },
+        hint: {
+          text: "Select from the list"
+        },
+        items: [
+          { value: "", text: "Select a transaction from the list" },
+          { value: "adv1", text: "1st notice of adverse possession (ADV1)" },
+          { value: "rtm", text: "Acquisition of right to manage" },
+          { value: "ch3", text: "Agreed maximum amount of security (CH3)" }
+        ]
+      }) }}
+
+      {{ govukSelect({
+        id: "transaction-3",
+        name: "transaction-3",
+        label: {
+          text: "Priority 3 (optional)"
+        },
+        hint: {
+          text: "Select from the list"
+        },
+        items: [
+          { value: "", text: "Select a transaction from the list" },
+          { value: "adv1", text: "1st notice of adverse possession (ADV1)" },
+          { value: "rtm", text: "Acquisition of right to manage" },
+          { value: "ch3", text: "Agreed maximum amount of security (CH3)" }
+        ]
+      }) }}
+
+      {{ govukSelect({
+        id: "transaction-4",
+        name: "transaction-4",
+        label: {
+          text: "Priority 4 (optional)"
+        },
+        hint: {
+          text: "Select from the list"
+        },
+        items: [
+          { value: "", text: "Select a transaction from the list" },
+          { value: "adv1", text: "1st notice of adverse possession (ADV1)" },
+          { value: "rtm", text: "Acquisition of right to manage" },
+          { value: "ch3", text: "Agreed maximum amount of security (CH3)" }
+        ]
+      }) }}
+
+      <p><a href="#" class="govuk-link">Add another transaction</a></p>
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      {{ govukDetails({
+        summaryText: "Help with lease determinations",
+        html: '
+          <p>For a full breakdown of lease determinations, take a look at
+          <a href="https://www.gov.uk/government/publications/leases-determination" class="govuk-link" target="_blank" rel="noopener noreferrer">
+            practice guide 26 (opens in new tab)</a>.</p>'
+      }) }}
+    </div>
+  </div>
+
+</div>
+
+ <!-- ./govuk-width-container -->
+
+
+{% endblock %}

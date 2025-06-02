@@ -1,0 +1,86 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <!-- <a href="/s3/enter-title-numbers" class="govuk-back-link">Return to application</a> -->
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">You need to re-enter all title numbers in this application</h1>
+
+            <p class="govuk-body">
+              Because your application has between 26 and 199 titles, and one or more of the titles couldn’t be uploaded, you need to re-enter all title numbers. Limitations in the service mean you cannot remove or edit individual titles.
+            </p>
+
+            {{ govukInsetText({
+              text: "To continue with your application, you’ll need to go to the Re-enter your title numbers page, remove or fix the failed title numbers and re-enter all the other titles in this application."
+            }) }}
+
+            <p class="govuk-body">
+              The table on this page tells you why each title upload failed and what you need to do.
+            </p>
+            <p class="govuk-body">
+              Select ‘Go to Re-enter your title numbers’ when you are ready to re-enter all your title numbers.
+            </p>
+                </div> <!-- ./govuk-grid-column-two-thirds -->
+            </div> <!-- ./govuk-grid-row -->
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                   
+                    <table class="govuk-table">
+                      <thead class="govuk-table__head">
+                        <tr class="govuk-table__row">
+                          <th scope="col" class="govuk-table__header">Title number</th>
+                          <th scope="col" class="govuk-table__header">Property address</th>
+                          <th scope="col" class="govuk-table__header">Reason title upload failed</th>
+                          <th scope="col" class="govuk-table__header">What you need to do</th>
+                        </tr>
+                      </thead>
+                      <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row">
+                          <td class="govuk-table__cell">AB102W</td>
+                          <td class="govuk-table__cell">11 Example Street, City 1, AB0 1CD</td>
+                          <td class="govuk-table__cell">This title number could not be found.</td>
+                          <td class="govuk-table__cell">
+                            Check that the title number is correct. If you are sure it is, contact [what should users do in this instance – is there somewhere to signpost them to?]
+                          </td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                          <td class="govuk-table__cell">AB102K</td>
+                          <td class="govuk-table__cell">11 Example Street, City 1, AB0 1CD</td>
+                          <td class="govuk-table__cell">This is a closed title number. Applications containing closed title numbers must be sent by post.</td>
+                          <td class="govuk-table__cell">You’ll need to submit this application by post.</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                          <td class="govuk-table__cell">AB102E</td>
+                          <td class="govuk-table__cell">11 Example Street, City 1, AB0 1CD</td>
+                          <td class="govuk-table__cell">This is a closed title number. Applications containing closed title numbers must be sent by post.</td>
+                          <td class="govuk-table__cell">You’ll need to submit this application by post.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    {{ govukButton({
+                      text: "Re-enter your title numbers",
+                      href: "/ssa/v5/s3/enter-title-numbers-2"
+                    }) }}
+
+                </div> <!-- ./govuk-grid-column-full -->
+            </div> <!-- ./govuk-grid-row -->
+
+
+</div> <!-- ./govuk-width-container -->
+
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirm you are renewing an existing lease – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        Confirm you are registering a lease extension
+      </h1>
+      <p>
+        Select ‘Confirm’ if you are applying to either:
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          close the old lease and register the new deed or lease for the same property to the same tenants
+        </li>
+        <li>
+          vary the extent or term of an existing lease
+        </li>
+      </ul>
+      <div class="govuk-inset-text">
+        If your application concerns noting a lease with a term of 7 years or less, go back and select ‘Updating, adding, removing or noting information about an existing title on the register’.
+      </div>
+      <form action="/ssa/v5/s3/task-list" method="post">
+
+        {{ govukButton({
+          text: "Confirm"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

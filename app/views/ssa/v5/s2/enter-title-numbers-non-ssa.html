@@ -1,0 +1,108 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form class="form" action="/ssa/v5/s2/enter-title-numbers-non-ssa" method="post">
+
+
+        <h1 class="govuk-heading-xl">Enter title numbers</h1>
+
+        <div class="govuk-hint">
+          You can add up to 25 titles per application.
+        </div>
+
+        {% from "govuk/components/details/macro.njk" import govukDetails %}
+        {{ govukDetails({
+          summaryText: "About applications relating to more than one title number",
+          html: '
+            <p>You can use this service for applications of up to 25 title numbers. In order to register multiple title numbers in one application:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>all titles must have the same proprietors registered against each title number</li>
+              <li>transferors and transferees must be the same for each title number</li>
+            </ul>'
+        }) }}
+
+        <div class="govuk-form-group">
+          <!-- <label class="govuk-label" for="title-number">
+            Title number
+          </label> -->
+
+          {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+          {{ govukWarningText({
+            text: "Enter your title numbers one at a time. Cut and paste bulk upload is only available for applications with 26 to 199 titles.",
+            iconFallbackText: "Warning"
+          }) }}
+          <div id="title-number-hint" class="govuk-hint">
+            For example, "A123" or "XY5678"
+          </div>
+          <input class="govuk-input govuk-input--width-20" id="title-number" name="title-number" type="text" aria-describedby="title-number-hint">
+        </div>
+
+        {{ govukButton({
+          text: "Add to application",
+          classes: "govuk-button govuk-button--secondary"
+        }) }}
+
+        {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+        {{ govukInsetText({
+          text: "You can amend title numbers later."
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+ <!-- ./govuk-width-container -->
+
+ <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    const input = document.getElementById("title-number");
+
+    // form.addEventListener("submit", function (e) {
+    //   e.preventDefault();
+    //   const value = input.value.trim();
+    //   const split = value.split(/[,; ]+/).filter(Boolean);
+
+    //   if (split.length === 1) {
+    //     const encoded = encodeURIComponent(split[0]);
+    //     window.location.href = `/ssa/v5/s2/enter-title-numbers-non-ssa-added-1.html?title=${encoded}`;
+    //   } else {
+    //     window.location.href = `/ssa/v5/s2/enter-title-numbers-non-ssa-error.html`;
+    //   }
+    // });
+  });
+</script>
+
+
+
+{% endblock %}

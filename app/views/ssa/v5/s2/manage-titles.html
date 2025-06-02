@@ -1,0 +1,313 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+	GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">Manage your titles</h1>
+			
+			<h2 class="govuk-heading-s govuk-!-margin-bottom-2">Check title details</h2>
+				<p class="govuk-body">
+				  Your title numbers are displayed in the table - check the details carefully. Tell us if the titles affect the whole or part of the property and enter the required additional information for titles affecting the part.
+				</p>
+				<p class="govuk-body">
+				  Select ’Continue’ when you're happy that the details are correct.
+				</p>
+
+				<h2 class="govuk-heading-s govuk-!-margin-bottom-2">Adding or removing titles</h2>
+				<p class="govuk-body">
+				  If you need to make changes (for example adding or removing a title), select ‘Remove all titles’ on this page. All titles will be removed and you can then enter the new title numbers on the Enter your title numbers page.
+				</p>
+
+
+		</div> <!-- /.govuk-grid-column-two-thirds -->
+
+	</div><!-- /.govuk-grid-row -->
+
+<hr>
+
+<br>
+	<div class="govuk-grid-row">
+	
+		<div class="govuk-grid-column-two-thirds">
+
+			<h2 class="govuk-heading-m">Find a title in your list</h2>
+
+			<div class="govuk-form-group" style="margin-bottom: 0;">
+				<label class="govuk-label" for="find-title">Find title</label>
+				<div style="display: flex; gap: 8px; align-items: flex-start;">
+
+					<!-- Input and spyglass grouped tightly -->
+					<div style="display: flex; align-items: flex-start;">
+						<input class="govuk-input" id="find-title" name="find-title" type="text" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+						<button class="search-btn" type="button" style="margin-bottom: 0; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+							<svg aria-hidden="true" class="search-icon" fill="none" focusable="false" height="24" viewBox="0 0 27 27" width="24" xmlns="http://www.w3.org/2000/svg">
+								<circle cx="12.0161" cy="12.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+								<line stroke="currentColor" stroke-width="3" x1="17.8668" x2="26.4475" y1="17.3587" y2="25.9393"></line>
+							</svg>
+						</button>
+					</div>
+
+					<!-- Clear button sits separately with gap -->
+					<button class="govuk-button govuk-button--secondary" id="clear-search" type="button" style="margin-bottom: 0;">
+						Clear
+					</button>
+				</div>
+			</div> <!-- /.govuk-form-group -->
+			<br>
+
+		</div> <!-- /.govuk-grid-column-two-thirds -->
+
+		<div class="govuk-grid-column-one-third search-container">
+			
+		</div> <!-- /.govuk-grid-column-one-third -->
+
+	</div><!-- /.govuk-grid-row -->
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full">
+   
+			<h2 class="govuk-heading-m"><span id="title-h2-count">30</span> Titles in this application</h2>
+
+		    <div class="table-container">
+		      <div aria-labelledby="Caption01" role="region" tabindex="0">
+
+		      	<table id="table-myt" class="govuk-table">
+						  <thead class="govuk-table__head">
+						  <tr class="govuk-table__row">
+						    <th class="govuk-table__header" scope="col" style="width: 10%;">Title number</th>
+						    <th class="govuk-table__header" scope="col" style="width: 25%;">Property address</th>
+						    <th class="govuk-table__header" scope="col" style="width: 40%;">Whole or part</th>
+						    <th class="govuk-table__header" scope="col" style="width: 20%;">Restrictions</th>
+						  </tr>
+						</thead>
+
+						<tbody class="govuk-table__body">
+						  {% for i in range(1, 31) %}
+						  <tr class="govuk-table__row">
+						    <td class="govuk-table__cell">AB{{ 1000 + i }}</td>
+						    <td class="govuk-table__cell">{{ 10 + i }} Example Street, City {{ i }}, AB{{ i }}{{ i }}CD</td>
+
+						    <td class="govuk-table__cell" style="vertical-align: top;">
+						      <div style="max-width: 340px;">
+						        <div class="govuk-form-group">
+						          <fieldset class="govuk-fieldset" aria-describedby="whole-part-hint-{{ i }}">
+						            <legend class="govuk-visually-hidden">Whole or part for AB{{ 1000 + i }}</legend>
+
+						            <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+						              <div class="govuk-radios__item">
+						                <input class="govuk-radios__input" id="whole-{{ i }}" name="whole-part-{{ i }}" type="radio" value="Whole" checked>
+						                <label class="govuk-label govuk-radios__label" for="whole-{{ i }}">Whole</label>
+						              </div>
+
+						              <div class="govuk-radios__item">
+						                <input class="govuk-radios__input" id="part-{{ i }}" name="whole-part-{{ i }}" type="radio" value="Part" data-aria-controls="conditional-part-{{ i }}">
+						                <label class="govuk-label govuk-radios__label" for="part-{{ i }}">Part</label>
+						              </div>
+
+						              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-part-{{ i }}">
+						                <div class="govuk-form-group">
+						                  <label class="govuk-label" for="part-description-{{ i }}">Describe the parts affected</label>
+						                  <span id="part-description-hint-{{ i }}" class="govuk-hint">
+						                    For example, "Edged red on the plan dated DD/MM/YYYY."
+						                  </span>
+						                  <textarea class="govuk-textarea js-character-count"
+						                            id="part-description-{{ i }}"
+						                            name="part-description-{{ i }}"
+						                            rows="3"
+						                            aria-describedby="part-description-hint-{{ i }} part-description-info-{{ i }}"
+						                            maxlength="100"></textarea>
+						                  <div id="part-description-info-{{ i }}" class="govuk-hint govuk-character-count__message">
+						                    You have 100 characters remaining
+						                  </div>
+						                </div>
+						                <div class="govuk-inset-text">
+						                  You'll need to upload the plan later.
+						                </div>
+						              </div>
+						            </div>
+						          </fieldset>
+						        </div>
+						      </div>
+						    </td>
+
+						    <!-- RESTRICTIONS -->
+						    <td class="govuk-table__cell">
+						      {% if i == 3 or i == 7 %}
+						        <div class="govuk-warning-text govuk-warning-text--small-icon govuk-!-margin-bottom-1">
+						          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+						          <strong class="govuk-warning-text__text">
+						            <span class="govuk-visually-hidden">Warning</span>
+						            Restrictions
+						          </strong>
+						        </div>
+						        <div class="govuk-warning-text govuk-warning-text--small-icon">
+						          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+						          <strong class="govuk-warning-text__text">
+						            <span class="govuk-visually-hidden">Warning</span>
+						            Lender restriction
+						          </strong>
+						        </div>
+						      {% else %}
+						        <span class="govuk-body-s govuk-!-colour-muted" style="display: block; padding-top: 0.7em;">None</span>
+						      {% endif %}
+						    </td>
+
+						    <!-- DOI removed -->
+						    <!-- <td class="govuk-table__cell">
+						      <fieldset class="govuk-fieldset govuk-fieldset--inline" aria-describedby="doi-{{ i }}-hint">
+						        <legend class="govuk-visually-hidden">Disclosable overriding interests for AB{{ 1000 + i }}</legend>
+						        <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+						          <div class="govuk-radios__item">
+						            <input class="govuk-radios__input" id="doi-none-{{ i }}" name="doi-{{ i }}" type="radio" value="None" checked>
+						            <label class="govuk-label govuk-radios__label" for="doi-none-{{ i }}">No</label>
+						          </div>
+						          <div class="govuk-radios__item">
+						            <input class="govuk-radios__input" id="doi-yes-{{ i }}" name="doi-{{ i }}" type="radio" value="Present">
+						            <label class="govuk-label govuk-radios__label" for="doi-yes-{{ i }}">Yes</label>
+						          </div>
+						        </div>
+						      </fieldset>
+						    </td> -->
+						  </tr>
+						  {% endfor %}
+						</tbody>
+						</table>
+		      </div>
+		    </div>
+		</div> <!-- /.govuk-grid-column-full -->
+	</div> <!-- /.govuk-grid-row -->
+
+
+	
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-one-half">
+			<div id="table-footer">
+				<p class="govuk-body-s govuk-!-text-align-left text-align-centre-mob" id="title-count-display" data-total="30">
+				  Showing <strong>1</strong> to <strong>30</strong> of <strong>30</strong> titles
+				</p>
+
+			</div><!-- #table-footer -->
+		</div> <!-- /.govuk-grid-column-one-half -->
+		
+		<div class="govuk-grid-column-one-half">
+			
+		</div><!-- /.govuk-grid-column-one-half -->
+	</div><!-- .govuk-grid-row -->
+
+	<hr>
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full govuk-!-margin-top-3">
+			<!-- {% from "govuk/components/button/macro.njk" import govukButton %} {{ govukButton({ text: "Continue", classes: "govuk-button--primary" }) }} -->
+			{% from "govuk/components/button/macro.njk" import govukButton %}
+
+				<div class="govuk-button-group">
+				  {{ govukButton({
+				    text: "Remove all titles",
+				    href: "/ssa/v5/s1/remove-all-titles",
+				    classes: "govuk-button--warning"
+				  }) }}
+
+				  {{ govukButton({
+				    text: "Save and continue",
+				    href: "/ssa/v5/s1/disclosable-overriding-interests"
+				  }) }}
+				</div>
+
+
+		</div> <!-- .govuk-grid-column-full -->
+	</div><!-- .govuk-grid-row -->
+
+</div><!-- ./govuk-width-container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	const searchButton = document.querySelector('.search-btn');
+	const searchInput = document.getElementById('find-title');
+	const clearSearchButton = document.getElementById('clear-search');
+	const tableBody = document.querySelector('.govuk-table__body');
+	const tableRows = tableBody.querySelectorAll('.govuk-table__row');
+	const rowCountText = document.getElementById('title-count-display');
+	const h2CountText = document.getElementById('title-h2-count');
+
+	function applySearch() {
+		const searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
+		let visibleCount = 0;
+
+		tableRows.forEach(row => {
+			const titleCell = row.querySelector('td:nth-child(1)');
+			const addressCell = row.querySelector('td:nth-child(2)');
+			const matches = (
+				titleCell.textContent.toLowerCase().includes(searchTerm) ||
+				addressCell.textContent.toLowerCase().includes(searchTerm)
+			);
+
+			const shouldShow = matches || !searchTerm;
+			row.style.display = shouldShow ? 'table-row' : 'none';
+			if (shouldShow) visibleCount++;
+		});
+
+		const totalCount = tableRows.length;
+
+		// Update the line below the table
+		// Update the line below the table
+		if (visibleCount > 0) {
+			const showingText = visibleCount === totalCount
+				? `Showing <strong>1</strong> to <strong>${totalCount}</strong> of <strong>${totalCount}</strong> titles`
+				: `Showing <strong>${visibleCount}</strong> of <strong>${totalCount}</strong> titles`;
+			rowCountText.innerHTML = showingText;
+		} else {
+			rowCountText.innerHTML = `No matching titles found – showing 0 of ${totalCount} titles`;
+		}
+
+
+		// Update the H2 counter
+		if (h2CountText) {
+			h2CountText.textContent = visibleCount;
+		}
+	}
+
+	if (searchButton && searchInput) {
+		searchButton.addEventListener('click', applySearch);
+		searchInput.addEventListener('keypress', function (e) {
+			if (e.key === 'Enter') {
+				e.preventDefault();
+				applySearch();
+			}
+		});
+	}
+
+	if (clearSearchButton) {
+		clearSearchButton.addEventListener('click', () => {
+			if (searchInput) searchInput.value = '';
+			applySearch();
+		});
+	}
+
+	// Initial update when the page loads
+	applySearch();
+});
+</script>
+
+
+<script src="/govuk-frontend/govuk/all.js"></script>
+<script>
+  window.GOVUKFrontend.initAll()
+</script>
+
+
+
+
+
+{% endblock %}

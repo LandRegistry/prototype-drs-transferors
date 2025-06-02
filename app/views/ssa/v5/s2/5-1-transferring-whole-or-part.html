@@ -1,0 +1,91 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Are you transferring the whole or part of a title? – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h1 class="govuk-heading-xl">
+            Are you changing the ownership of the whole or part of the title?
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="/ssa/v5/s2/5-1-transferring-whole-or-part" method="post">
+
+        {{ govukRadios({
+          name: "transfer-type",
+          fieldset: {
+            legend: {
+              text: "",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          hint: {
+            html: "
+              <p>Select 'Whole' if your application involves the whole of a title including:</p>
+              <ul class='govuk-list govuk-list--bullet'>
+                <li>a transfer (TR1 or TR2)</li>
+                <li>an assent (AS1 or AS2)</li>
+                <li>a deed of an appointment or retirement of trustees</li>
+                <li>a transfer by operation of law</li>
+              </ul>
+              <p>Select ‘Part’ if your application involves a transfer of part of the title including:</p>
+              <ul class='govuk-list govuk-list--bullet'>
+                <li>a transfer (TP1 or TP2)</li>
+                <li>an assent (AS3)</li>
+                <li>adverse possession (ADV1)</li>
+              </ul>
+            "
+          },
+          items: [
+            {
+              value: "whole",
+              text: "Whole"
+            },
+            {
+              value: "part",
+              text: "Part"
+            }
+          ]
+        }) }}
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+     <div class="govuk-grid-column-one-third">
+        {% from "govuk/components/details/macro.njk" import govukDetails %}
+        {{ govukDetails({
+          summaryText: "Guidance on transfer forms",
+          html: '
+          <ul class="govuk-list govuk-list--bullet">
+            <li>
+              <a href="https://www.gov.uk/government/collections/hm-land-registry-forms" class="govuk-link" target="_blank">HM Land Registry forms</a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/playlist?list=PLrY9B8h0rdXi-bALhj6rWDM3VlmMWO-40" target="_blank" class="govuk-link">Videos on how to complete HM Land Registry forms.</a>
+            </li>
+          </ul>',
+          open: false
+        }) }}
+      </div>
+  </div>
+{% endblock %}

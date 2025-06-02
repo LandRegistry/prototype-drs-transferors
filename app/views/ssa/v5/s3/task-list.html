@@ -1,0 +1,113 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Apply to register or update a title - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Apply to register or update a title</h1>
+    <p class="govuk-body govuk-!-margin-bottom-4"><b>Application incomplete</b></p>
+    <p class="govuk-body">You have completed 0 of 2 sections</p>
+
+    <h2 class="govuk-heading-m">1. Application details</h2>
+    <ul class="govuk-task-list">
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          <a href="#" class="govuk-link">Enter your reference</a>
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag">COMPLETED</strong>
+        </div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          <a href="/ssa/v5/s3/how-many-titles" class="govuk-link">Enter title numbers</a>
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag govuk-tag--grey">NOT COMPLETE</strong>
+        </div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          Select transactions
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag govuk-tag--grey">CANNOT START YET</strong>
+        </div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          Link transactions and title numbers
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag govuk-tag--grey">CANNOT START YET</strong>
+        </div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          Fees
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag govuk-tag--grey">CANNOT START YET</strong>
+        </div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          <a href="#" class="govuk-link">Add applicant details</a>
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag govuk-tag--grey">NOT COMPLETE</strong>
+        </div>
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">2. Transaction details</h2>
+    <p>You must complete all tasks in 'Application details' before you can edit 'Transaction details'.</p>
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    {{ govukButton({
+      text: "Review application"
+    }) }}
+
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+    {{ govukInsetText({
+      text: "To avoid requisitions, attach all relevant documents."
+    }) }}
+
+  </div> <!-- ./govuk-grid-column-two-thirds -->
+
+  <div class="govuk-grid-column-one-third">
+    <ul class="govuk-list task-list-side-bar">
+      <li>
+        <strong>Your Reference</strong>
+        <br>
+        AKR105652
+      </li>
+      <li>
+        <strong>Title numbers</strong>
+        <br>
+        DU163665
+      </li>
+      <li>
+        <a class="govuk-link" href="#">Save application and exit</a>
+      </li>
+    </ul>
+  </div> <!-- ./govuk-grid-column-one-third -->
+   
+</div> <!-- ./govuk-grid-row -->
+
+{% endblock %}

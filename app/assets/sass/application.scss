@@ -60,6 +60,8 @@
   }
 }
 
+
+
 @media (min-width: 48.0625em) {
     .govuk-header__content {
         padding-left: 0;
@@ -530,3 +532,16 @@ Apply a narrower width to the first column */
         line-height: 1.3157894737;
     }
 }
+
+@media (min-width: 40.0625em) {
+    #table-myt {
+        .govuk-form-group {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.govuk-input--width-9 {
+    max-width: 9.5em;
+}
+

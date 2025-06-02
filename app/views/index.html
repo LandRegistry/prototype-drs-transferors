@@ -37,7 +37,78 @@
           </p>
 
           <h2 class="govuk-heading-m">
-            SSA Prototype v1
+            SSA Prototype v5
+          </h2>
+
+          <!-- Scenario 1 -->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                SSA: (S1) 
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ol class="govuk-list govuk-list--number">
+                <li>Start on the <a href="ssa/v5/s1/1-digital-registration-service" class="govuk-link" target="_blank">Digital Registration Service start page</a></li>
+                <li>Paste in a list of 30 valid title numbers</li>
+                <li>Proceed to the Manage titles screen and continue the journey successfully</li>
+                <li>
+                  <a href="/public/docs/s1-titles-list-30.txt" download class="govuk-link">Download test data (30 titles)</a>
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <!-- Scenario 2 -->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                SSA: (S2)
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ol class="govuk-list govuk-list--number">
+                <li>Start on the <a href="ssa/v5/s2/1-digital-registration-service" class="govuk-link" target="_blank">Digital Registration Service start page</a></li>
+                <li>Paste in a list of 25 titles to trigger a validation error (you must enter between 26 and 199 titles)</li>
+                <li>Retry with a new list of 30 valid titles to continue the journey</li>
+                <li>
+                  <a href="/public/docs/s2A-titles-list-25.txt" download class="govuk-link">Download test data (25 titles)
+                  </a>
+                </li>
+                 <li>
+                    <a href="/public/docs/s2B-titles-list-30.txt" download class="govuk-link">Download test data (30 titles)</a>
+                  </li>
+              </ol>
+            </div>
+          </details>
+
+          <!-- Scenario 3 -->
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                SSA: (S3)
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ol class="govuk-list govuk-list--number">
+                <li>Start on the <a href="ssa/v5/s3/1-digital-registration-service" class="govuk-link" target="_blank">Digital Registration Service start page</a></li>
+                <li>Paste in a list of 30 titles, including 3 that are unrecognised or unsupported</li>
+                <li>See an error page showing the failed titles, with instructions to re-enter all title numbers</li>
+                <li>Retry with a corrected list of 27 valid titles and continue the journey via S1</li>
+                <li>
+                  <a href="/public/docs/s3A-titles-list-30-3E.txt" download class="govuk-link">Download test data (30 titles, 3 errors)</a>
+                </li>
+                <li>
+                  <a href="/public/docs/s3B-titles-list-27.txt" download class="govuk-link">Download test data (corrected list of 27 titles)</a>
+                </li>
+              </ol>
+            </div>
+          </details>
+          <hr>
+          <br>
+
+          <h2 class="govuk-heading-m">
+            SSA Prototype v4
           </h2>
 
           <!-- Scenario 1 -->
