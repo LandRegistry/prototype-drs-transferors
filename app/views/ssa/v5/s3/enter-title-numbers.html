@@ -65,6 +65,10 @@
         '
       }) }}
 
+      <!-- 
+      ----------------------------------------------------------
+      Error trigger (code in js but not used for this scenario)
+      ----------------------------------------------------------
       <form action="/ssa/v5/s3/enter-title-numbers" method="post">
         <div class="govuk-form-group">
           <textarea class="govuk-textarea"
@@ -72,6 +76,17 @@
           name="title-numbers"
           rows="10"
           aria-describedby="title-numbers-info">{{ data['title-numbers'] or '' }}</textarea>
+
+        </div>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form> -->
+
+      <form action="/ssa/v5/s3/title-error-invalid" method="post">
+        <div class="govuk-form-group">
+          <textarea class="govuk-textarea" id="title-numbers" name="title-numbers" rows="10" aria-describedby="title-numbers-info"></textarea>
 
         </div>
 

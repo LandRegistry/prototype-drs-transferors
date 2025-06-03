@@ -16,21 +16,21 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">You need to re-enter all title numbers in this application</h1>
+            <h1 class="govuk-heading-xl">
+              Some of your titles could not be validated
+            </h1>
 
             <p class="govuk-body">
-              Because your application has between 26 and 199 titles, and one or more of the titles couldn’t be uploaded, you need to re-enter all title numbers. Limitations in the service mean you cannot remove or edit individual titles.
-            </p>
-
-            {{ govukInsetText({
-              text: "To continue with your application, you’ll need to go to the Re-enter your title numbers page, remove or fix the failed title numbers and re-enter all the other titles in this application."
-            }) }}
-
-            <p class="govuk-body">
-              The table on this page tells you why each title upload failed and what you need to do.
+              We have not been able to validate some of your titles. This could be because there is an error in the title number or because you have included a title that is not supported by DRS.
             </p>
             <p class="govuk-body">
-              Select ‘Go to Re-enter your title numbers’ when you are ready to re-enter all your title numbers.
+             All these title numbers will be removed from your application (make a note of them now for your reference).
+            </p>
+            <h2 class="govuk-heading-m">
+              What you need to do 
+            </h1>
+            <p class="govuk-body">
+             The table on this page tells you why validation failed and what you need to do. Read this carefully - you can add new or replacement title numbers on the Manage your titles page.  
             </p>
                 </div> <!-- ./govuk-grid-column-two-thirds -->
             </div> <!-- ./govuk-grid-row -->
@@ -43,7 +43,7 @@
                         <tr class="govuk-table__row">
                           <th scope="col" class="govuk-table__header">Title number</th>
                           <th scope="col" class="govuk-table__header">Property address</th>
-                          <th scope="col" class="govuk-table__header">Reason title upload failed</th>
+                          <th scope="col" class="govuk-table__header">Reason validation failed</th>
                           <th scope="col" class="govuk-table__header">What you need to do</th>
                         </tr>
                       </thead>
@@ -53,27 +53,27 @@
                           <td class="govuk-table__cell">11 Example Street, City 1, AB0 1CD</td>
                           <td class="govuk-table__cell">This title number could not be found.</td>
                           <td class="govuk-table__cell">
-                            Check that the title number is correct. If you are sure it is, contact [what should users do in this instance – is there somewhere to signpost them to?]
+                            Check that the title number is correct. If you are sure it is, contact [contact details]
                           </td>
                         </tr>
                         <tr class="govuk-table__row">
                           <td class="govuk-table__cell">AB102K</td>
                           <td class="govuk-table__cell">11 Example Street, City 1, AB0 1CD</td>
-                          <td class="govuk-table__cell">This is a closed title number. Applications containing closed title numbers must be sent by post.</td>
-                          <td class="govuk-table__cell">You’ll need to submit this application by post.</td>
+                          <td class="govuk-table__cell">This is not a valid title number.</td>
+                          <td class="govuk-table__cell">If there was an error in the title number, correct it and add the corrected title number on the Manage your titles page.</td>
                         </tr>
                         <tr class="govuk-table__row">
                           <td class="govuk-table__cell">AB102E</td>
                           <td class="govuk-table__cell">11 Example Street, City 1, AB0 1CD</td>
-                          <td class="govuk-table__cell">This is a closed title number. Applications containing closed title numbers must be sent by post.</td>
-                          <td class="govuk-table__cell">You’ll need to submit this application by post.</td>
+                          <td class="govuk-table__cell">This is a Pending title which is not supported by DRS.</td>
+                          <td class="govuk-table__cell">If this title has to be included in the application, you’ll have to submit the whole application by post.</td>
                         </tr>
                       </tbody>
                     </table>
 
                     {{ govukButton({
-                      text: "Re-enter your title numbers",
-                      href: "/ssa/v5/s3/enter-title-numbers-2"
+                      text: "Continue to Manage your titles page",
+                      href: "/ssa/v5/s3/manage-titles"
                     }) }}
 
                 </div> <!-- ./govuk-grid-column-full -->
