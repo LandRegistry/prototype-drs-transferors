@@ -60,13 +60,19 @@
         <li>a semicolon</li>
       </ul>
 
-      <form action="/ssa/v5/s1/manage-titles" method="post">
+      <form action="/ssa/v5/s1/enter-title-numbers" method="post">
         <div class="govuk-form-group govuk-form-group--error">
           <!-- <label class="govuk-label" for="title-numbers">Title numbers</label> -->
           <span id="title-numbers-error" class="govuk-error-message">
             <span class="govuk-visually-hidden">Error:</span> You must enter between 26 and 199 title numbers
           </span>
-          <textarea class="govuk-textarea govuk-textarea--error" id="title-numbers" name="title-numbers" rows="10" aria-describedby="title-numbers-error"></textarea>
+          <textarea class="govuk-textarea govuk-textarea--error"
+          id="title-numbers"
+          name="title-numbers"
+          rows="10"
+          aria-describedby="title-numbers-error">{{ data['title-numbers'] or '' }}</textarea>
+
+
         </div>
 
         {{ govukButton({

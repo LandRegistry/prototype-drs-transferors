@@ -641,6 +641,69 @@ router.post('/ssa/v4/s2/enter-title-numbers-non-ssa', function (req, res) {
 // SSA Scenario's v5
 // =====================
 
+// SSA S1 title list validation and routing
+router.post('/ssa/v5/s1/enter-title-numbers', function (req, res) {
+  const raw = req.body['title-numbers'] || ''
+  const titles = raw
+    .split(/[\n,;]+/)
+    .map(t => t.trim())
+    .filter(t => t.length > 0)
+
+  const count = titles.length
+
+  // Exact match for valid entry: 2, 6, or 26–199
+  const isValid = count === 2 || count === 6 || (count >= 26 && count <= 199)
+
+  if (!isValid) {
+    return res.redirect('/ssa/v5/s1/enter-title-numbers-error-too-few')
+  }
+
+  // Save to session if needed: req.session.data['entered-titles'] = titles
+  res.redirect('/ssa/v5/s1/manage-titles')
+})
+
+// SSA S2 title list validation and routing
+router.post('/ssa/v5/s2/enter-title-numbers', function (req, res) {
+  const raw = req.body['title-numbers'] || ''
+  const titles = raw
+    .split(/[\n,;]+/)
+    .map(t => t.trim())
+    .filter(t => t.length > 0)
+
+  const count = titles.length
+  const isValid = count === 2 || count === 6 || (count >= 26 && count <= 199)
+
+  if (!isValid) {
+    return res.render('ssa/v5/s2/enter-title-numbers-error-too-few', {
+      data: { 'title-numbers': raw }
+    })
+  }
+
+  res.redirect('/ssa/v5/s2/manage-titles')
+})
+
+// SSA S3 title list validation and routing
+router.post('/ssa/v5/s3/enter-title-numbers', function (req, res) {
+  const raw = req.body['title-numbers'] || ''
+  const titles = raw
+    .split(/[\n,;]+/)
+    .map(t => t.trim())
+    .filter(t => t.length > 0)
+
+  const count = titles.length
+  const isValid = count === 2 || count === 6 || (count >= 26 && count <= 199)
+
+  if (!isValid) {
+    return res.render('ssa/v5/s3/enter-title-numbers-error-too-few', {
+      data: { 'title-numbers': raw }
+    })
+  }
+
+  res.redirect('/ssa/v5/s3/manage-titles')
+})
+
+
+
 // Scenario 1: happy path
 // ---------------------
 router.post('/ssa/v5/s1/4-application-about', function (req, res) {

@@ -65,9 +65,15 @@
         '
       }) }}
 
-      <form action="/ssa/v5/s2/enter-title-numbers-error-too-few" method="post">
+      <form action="/ssa/v5/s1/enter-title-numbers" method="post">
+
         <div class="govuk-form-group">
-          <textarea class="govuk-textarea" id="title-numbers" name="title-numbers" rows="10" aria-describedby="title-numbers-info"></textarea>
+          <textarea class="govuk-textarea"
+          id="title-numbers"
+          name="title-numbers"
+          rows="10"
+          aria-describedby="title-numbers-info">{{ data['title-numbers'] or '' }}</textarea>
+
         </div>
 
         {{ govukButton({
