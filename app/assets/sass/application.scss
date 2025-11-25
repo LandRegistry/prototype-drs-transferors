@@ -548,3 +548,11 @@ Apply a narrower width to the first column */
 .custom-input--width-add {
     max-width: 9.1em !important;
 }
+
+/* Transactions - select width fix */
+
+@media (min-width: 40.0625em) {
+    .container-transactions .govuk-select {
+        width: 100%;
+    }
+}

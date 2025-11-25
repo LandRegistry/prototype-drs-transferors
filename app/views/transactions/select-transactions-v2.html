@@ -1,0 +1,980 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+<div class="govuk-width-container container-transactions">
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">
+        Select transactions
+      </h1>
+    </div> <!-- ./govuk-grid-column-full -->
+  </div> <!-- ./govuk-grid-row -->
+  
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body">
+        Select your transactions in priority order.
+      </p>
+      <p class="govuk-body">
+        You can apply for up to 10 transactions.
+      </p>
+       <p class="govuk-body">
+       The three most common transactions appear at the top of the transactions list.
+      </p>
+    </div> <!-- ./govuk-grid-column-two-thirds -->
+
+    <div class="govuk-grid-column-one-third">
+      {{ govukDetails({
+        summaryText: "Help with lease determinations",
+        html: '
+          <p>For a full breakdown of lease determinations, take a look at
+          <a href="https://www.gov.uk/government/publications/leases-determination" class="govuk-link" target="_blank" rel="noopener noreferrer">
+            practice guide 26 (opens in new tab)</a>.</p>'
+      }) }}
+    </div> <!-- ./govuk-grid-column-one-third -->
+
+  </div> <!-- ./govuk-grid-row -->
+
+
+    <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-m">
+        Transactions
+      </h2>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="sort">
+          Priority 1
+        </label>
+      
+         <select class="govuk-select" id="sort" name="sort">
+          <option selected value="">
+            Select a transaction from the list
+          </option>
+          <optgroup label="Most selected transactions">
+            <option value="c">
+              Charge
+            </option>
+            <option value="dis">
+              Discharge of charge
+            </option>
+            <option value="t">
+              Transfer for value
+            </option>
+          </optgroup>
+          <optgroup label="All transactions">
+            <option value="adv1">
+              1st notice of adverse possession (ADV1)
+            </option>
+            <option value="rtm">
+              Acquisition of right to manage
+            </option>
+            <option value="ch3">
+              Agreed maximum amount of security (CH3)
+            </option>
+            <option value="agn">
+              Agreed notice (AN1)
+            </option>
+            <option value="aml">
+              Amalgamation
+            </option>
+            <option value="aun">
+              Amendment of unilateral notice (UN3)
+            </option>
+            <option value="atp">
+              Amendment to title plan
+            </option>
+            <option value="aplco">
+              Appointment of liquidator (compulsory winding up)
+            </option>
+            <option value="aplc">
+              Appointment of liquidator (creditor's voluntary winding up)
+            </option>
+            <option value="aplm">
+              Appointment of liquidator (members' voluntary winding up)
+            </option>
+            <option value="apt">
+              Appointment of new trustee
+            </option>
+            <option value="apr">
+              Apportionment of rent
+            </option>
+            <option value="arc">
+              Apportionment of rent charge (AP1)
+            </option>
+            <option value="astt">
+              Assent
+            </option>
+            <option value="astc">
+              Assent of charge
+            </option>
+            <option value="bkn">
+              Bankruptcy notice/Creditors' notice
+            </option>
+            <option value="bkr">
+              Bankruptcy restriction/Bankruptcy inhibition
+            </option>
+            <option value="cct">
+              Cancellation of a caution (CCD)
+            </option>
+            <option value="cnl">
+              Cancellation of an unregistered noted lease (CN1)
+            </option>
+            <option value="cbkn">
+              Cancellation of bankruptcy notice
+            </option>
+            <option value="cbkr">
+              Cancellation of bankruptcy restriction
+            </option>
+            <option value="chr">
+              Cancellation of home rights (HR4)
+            </option>
+            <option value="cani">
+              Cancellation of inhibition (RX3)
+            </option>
+            <option value="cag">
+              Cancellation of notice (not unilateral) (CN1)
+            </option>
+            <option value="cur">
+              Cancellation of notice of unreg. Rentcharge
+            </option>
+            <option value="canr">
+              Cancellation of restriction (RX3)
+            </option>
+            <option value="canu">
+              Cancellation of unilateral notice (UN4)
+            </option>
+            <option value="nct">
+              Caution amendment, new cautioner
+            </option>
+            <option value="coa">
+              Change of address for service
+            </option>
+            <option value="coac">
+              Change of address for service - chargee
+            </option>
+            <option value="cn">
+              Change of name
+            </option>
+            <option value="cnc">
+              Change of name - chargee
+            </option>
+            <option value="cpd">
+              Change of property description
+            </option>
+            <option value="cop">
+              Charge of part
+            </option>
+            <option value="choa">
+              Charging order - Agreed notice (AN1)
+            </option>
+            <option value="chou">
+              Charging order - Unilateral notice (UN1)
+            </option>
+            <option value="ctd">
+              Commonhold transitional dealing
+            </option>
+            <option value="cpvk">
+              Compulsory purchase (property value known)
+            </option>
+            <option value="cpvu">
+              Compulsory purchase (property value unknown)
+            </option>
+            <option value="con">
+              Consolidation of charge
+            </option>
+            <option value="djp">
+              Death of a joint proprietor (DJP)
+            </option>
+            <option value="dsp">
+              Death of a sole proprietor
+            </option>
+            <option value="deb">
+              Debenture
+            </option>
+            <option value="dog">
+              Deed of grant of easement
+            </option>
+            <option value="rfn">
+              Deed of rectification
+            </option>
+            <option value="dss">
+              Deed of substituted security
+            </option>
+            <option value="vlap">
+              Deed of variation of a lease - not increasing the term of or adding new land to the extent demised
+            </option>
+            <option value="dft">
+              Defect in title s64(1) LRA 2002
+            </option>
+            <option value="db">
+              Determined boundary (DB)
+            </option>
+            <option value="dmr">
+              Disapplication of restriction (RX2)
+            </option>
+            <option value="dp">
+              Discharge of part
+            </option>
+            <option value="dclv">
+              Disclaimer - notice
+            </option>
+            <option value="dcln">
+              Disclaimer - notification
+            </option>
+            <option value="ex1">
+              Exempt information document registration (EX1)
+            </option>
+            <option value="exr">
+              Extinguishment of rentcharge
+            </option>
+            <option value="rxl">
+              Form ll restriction entered - simple request
+            </option>
+            <option value="lcbd">
+              Lease closure - by disclaimer
+            </option>
+            <option value="lcbet">
+              Lease closure - by effluxion of time
+            </option>
+            <option value="lcbn">
+              Lease closure - by notice
+            </option>
+            <option value="lcf">
+              Lease closure - forfeiture
+            </option>
+            <option value="lcmre">
+              Lease closure - merger with reversionary estate
+            </option>
+            <option value="lcatco">
+              Lease closure - of assured tenancies following court order
+            </option>
+            <option value="lcoe">
+              Lease closure - on enlargement
+            </option>
+            <option value="lcof">
+              Lease closure - on frustration
+            </option>
+            <option value="lcsdm">
+              Lease closure - surrender by deed
+            </option>
+            <option value="lcsd">
+              Lease closure - surrender by deed (not for value or reverse premium)
+            </option>
+            <option value="lcsdmwt">
+              Lease closure - surrender by deed (together with transfer)
+            </option>
+            <option value="lcsdwt">
+              Lease closure - surrender by deed with a transfer (not for value or reverse premium)
+            </option>
+            <option value="lcsolm">
+              Lease closure - surrender by operation of law
+            </option>
+            <option value="lcsol">
+              Lease closure - surrender by operation of law (not for value or reverse premium)
+            </option>
+            <option value="mdr">
+              Modify a restriction (RX2)
+            </option>
+            <option value="nopsc">
+              Note overriding priority of a statutory charge (Form SC)
+            </option>
+            <option value="hr">
+              Notice of home rights (HR1)
+            </option>
+            <option value="nrt">
+              Notice of rentcharge
+            </option>
+            <option value="ndc">
+              Notification of dissolution of company
+            </option>
+            <option value="nol">
+              Noting a lease
+            </option>
+            <option value="noe">
+              Noting an easement
+            </option>
+            <option value="nfr">
+              Noting of an affecting franchise
+            </option>
+            <option value="npr">
+              Noting of a profit
+            </option>
+            <option value="ch2">
+              Obligation to make further advances (CH2)
+            </option>
+            <option value="per">
+              Personal covenants
+            </option>
+            <option value="pc">
+              Postponement of charge
+            </option>
+            <option value="pro">
+              Provisions
+            </option>
+            <option value="re">
+              Registration of easement
+            </option>
+            <option value="rrc">
+              Registration of rent charge
+            </option>
+            <option value="roca">
+              Release of covenants - agreed notice (AN1)
+            </option>
+            <option value="rocc">
+              Release of covenants - cancellation (CN1)
+            </option>
+            <option value="rocu">
+              Release of covenants - unilateral notice (UN1)
+            </option>
+            <option value="roe">
+              Release of easements
+            </option>
+            <option value="rrd">
+              Removal of a right to determine
+            </option>
+            <option value="run">
+              Removal of unilateral notice (UN2)
+            </option>
+            <option value="ex3">
+              Remove exemption of document registration (EX3)
+            </option>
+            <option value="rhr">
+              Renewal of home rights (HR2)
+            </option>
+            <option value="rxn">
+              Restriction (non-standard wording) (RX1)
+            </option>
+            <option value="rxs">
+              Restriction (standard wording) (RX1)
+            </option>
+            <option value="rc">
+              Restrictive covenants - entry of
+            </option>
+            <option value="atr">
+              Rule 130 Alteration of Title Register
+            </option>
+            <option value="sjt">
+              Severance of joint tenancy (SEV, RX1)
+            </option>
+            <option value="sho">
+              Shared ownership - additional share
+            </option>
+            <option value="stvc">
+              Statutory vestings charge
+            </option>
+            <option value="stvl">
+              Statutory vestings land
+            </option>
+            <option value="sbc">
+              Sub charge
+            </option>
+            <option value="sot">
+              Subdivision of title
+            </option>
+            <option value="trc">
+              Termination of commonhold
+            </option>
+            <option value="trm">
+              Transfer by operation of law on death
+            </option>
+            <option value="tvr">
+              Transfer for value RTB/RTA
+            </option>
+            <option value="tnv">
+              Transfer (not for value or reverse premium)
+            </option>
+            <option value="toc">
+              Transfer of charge
+            </option>
+            <option value="tosv">
+              Transfer of share for value
+            </option>
+            <option value="tosnv">
+              Transfer of share (not for value or reverse premium)
+            </option>
+            <option value="tscv">
+              Transfer subject to a charge for value
+            </option>
+            <option value="tscnv">
+              Transfer subject to a charge (not for value or reverse premium)
+            </option>
+            <option value="tps">
+              Transfer under power of sale
+            </option>
+            <option value="unn">
+              Unilateral notice (UN1)
+            </option>
+            <option value="upt">
+              Upgrade class of title (UT1)
+            </option>
+            <option value="vrc">
+              Variation of a rent charge (AP1)
+            </option>
+            <option value="vc">
+              Variation of charge
+            </option>
+            <option value="voc">
+              Variation of covenants
+            </option>
+            <option value="voca">
+              Variation of covenants - agreed notice (AN1)
+            </option>
+            <option value="vocu">
+              Variation of covenants - unilateral notice (UN1)
+            </option>
+            <option value="voe">
+              Variation of easements
+            </option>
+            <option value="voea">
+              Variation of easements - agreed notice (AN1)
+            </option>
+            <option value="voeu">
+              Variation of easements - unilateral notice (UN1)
+            </option>
+            <option value="vlan">
+              Variation of lease - agreed notice (AN1)
+            </option>
+            <option value="vlun">
+              Variation of lease - unilateral notice (UN1)
+            </option>
+            <option value="vo">
+              Vesting order
+            </option>
+            <option value="wct">
+              Withdrawal of caution (WCT)
+            </option>
+            <option value="wdr">
+              Withdraw a restriction (RX4)
+            </option>
+          </optgroup>
+        </select>
+      </div> <!-- ./govuk-form-group -->
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="all_transactions-1-transaction">
+          Priority 2 (optional)
+        </label>
+
+        <select class="govuk-select transaction-select"
+                id="all_transactions-1-transaction"
+                name="all_transactions-1-transaction">
+
+          <option value="" selected>Select a transaction from the list</option>
+
+          <!-- Correct top 3 for Transfer of part -->
+          <optgroup label="Most selected transactions">
+            <option value="c">Charge</option>
+            <option value="t">Transfer for value</option>
+            <option value="tnv">Transfer (not for value or reverse premium)</option>
+          </optgroup>
+
+          <optgroup label="All transactions">
+            <option value="adv1">1st notice of adverse possession (ADV1)</option>
+            <option value="rtm">Acquisition of right to manage</option>
+            <option value="ch3">Agreed maximum amount of security (CH3)</option>
+            <option value="agn">Agreed notice (AN1)</option>
+            <option value="aml">Amalgamation</option>
+            <option value="aun">Amendment of unilateral notice (UN3)</option>
+            <option value="atp">Amendment to title plan</option>
+            <option value="aplco">Appointment of liquidator (compulsory winding up)</option>
+            <option value="aplc">Appointment of liquidator (creditor's voluntary winding up)</option>
+            <option value="aplm">Appointment of liquidator (members' voluntary winding up)</option>
+            <option value="apt">Appointment of new trustee</option>
+            <option value="apr">Apportionment of rent</option>
+            <option value="arc">Apportionment of rent charge (AP1)</option>
+            <option value="astt">Assent</option>
+            <option value="astc">Assent of charge</option>
+            <option value="bkn">Bankruptcy notice/Creditors' notice</option>
+            <option value="bkr">Bankruptcy restriction/Bankruptcy inhibition</option>
+            <option value="cct">Cancellation of a caution (CCD)</option>
+            <option value="cnl">Cancellation of an unregistered noted lease (CN1)</option>
+            <option value="cbkn">Cancellation of bankruptcy notice</option>
+            <option value="cbkr">Cancellation of bankruptcy restriction</option>
+            <option value="chr">Cancellation of home rights (HR4)</option>
+            <option value="cani">Cancellation of inhibition (RX3)</option>
+            <option value="cag">Cancellation of notice (not unilateral) (CN1)</option>
+            <option value="cur">Cancellation of notice of unreg. Rentcharge</option>
+            <option value="canr">Cancellation of restriction (RX3)</option>
+            <option value="canu">Cancellation of unilateral notice (UN4)</option>
+            <option value="nct">Caution amendment, new cautioner</option>
+            <option value="coa">Change of address for service</option>
+            <option value="coac">Change of address for service - chargee</option>
+            <option value="cn">Change of name</option>
+            <option value="cnc">Change of name - chargee</option>
+            <option value="cpd">Change of property description</option>
+
+            <!-- charge (c) removed because it's in top 3 -->
+
+            <option value="cop">Charge of part</option>
+            <option value="choa">Charging order - Agreed notice (AN1)</option>
+            <option value="chou">Charging order - Unilateral notice (UN1)</option>
+            <option value="ctd">Commonhold transitional dealing</option>
+            <option value="cpvk">Compulsory purchase (property value known)</option>
+            <option value="cpvu">Compulsory purchase (property value unknown)</option>
+            <option value="con">Consolidation of charge</option>
+            <option value="djp">Death of a joint proprietor (DJP)</option>
+            <option value="dsp">Death of a sole proprietor</option>
+            <option value="deb">Debenture</option>
+            <option value="dog">Deed of grant of easement</option>
+            <option value="rfn">Deed of rectification</option>
+            <option value="dss">Deed of substituted security</option>
+            <option value="vlap">Deed of variation of a lease</option>
+            <option value="dft">Defect in title s64(1) LRA 2002</option>
+            <option value="db">Determined boundary (DB)</option>
+            <option value="dmr">Disapplication of restriction (RX2)</option>
+
+            <!-- discharge of charge (dis) remains because NOT a top 3 item for ToP -->
+
+            <option value="dis">Discharge of charge</option>
+
+            <option value="dp">Discharge of part</option>
+            <option value="dclv">Disclaimer - notice</option>
+            <option value="dcln">Disclaimer - notification</option>
+            <option value="ex1">Exempt information document registration (EX1)</option>
+            <option value="exr">Extinguishment of rentcharge</option>
+            <option value="rxl">Form ll restriction entered</option>
+            <option value="lcbd">Lease closure - by disclaimer</option>
+            <option value="lcbet">Lease closure - by effluxion of time</option>
+            <option value="lcbn">Lease closure - by notice</option>
+            <option value="lcf">Lease closure - forfeiture</option>
+            <option value="lcmre">Lease closure - merger with reversionary estate</option>
+            <option value="lcatco">Lease closure - assured tenancies court order</option>
+            <option value="lcoe">Lease closure - on enlargement</option>
+            <option value="lcof">Lease closure - on frustration</option>
+            <option value="lcsdm">Lease closure - surrender by deed</option>
+            <option value="lcsd">Lease closure - surrender by deed (not for value)</option>
+            <option value="lcsdmwt">Lease closure - surrender with transfer</option>
+            <option value="lcsdwt">Lease closure - surrender with transfer (not for value)</option>
+            <option value="lcsolm">Lease closure - surrender by operation of law</option>
+            <option value="lcsol">Lease closure - surrender (not for value)</option>
+            <option value="mdr">Modify a restriction (RX2)</option>
+            <option value="nopsc">Note overriding priority of statutory charge</option>
+            <option value="hr">Notice of home rights (HR1)</option>
+            <option value="nrt">Notice of rentcharge</option>
+            <option value="ndc">Notification of dissolution of company</option>
+            <option value="nol">Noting a lease</option>
+            <option value="noe">Noting an easement</option>
+            <option value="nfr">Noting of an affecting franchise</option>
+            <option value="npr">Noting of a profit</option>
+            <option value="ch2">Obligation to make further advances (CH2)</option>
+            <option value="per">Personal covenants</option>
+            <option value="pc">Postponement of charge</option>
+            <option value="pro">Provisions</option>
+            <option value="re">Registration of easement</option>
+            <option value="rrc">Registration of rent charge</option>
+            <option value="roca">Release of covenants - agreed notice</option>
+            <option value="rocc">Release of covenants - cancellation</option>
+            <option value="rocu">Release of covenants - unilateral notice</option>
+            <option value="roe">Release of easements</option>
+            <option value="rrd">Removal of a right to determine</option>
+            <option value="run">Removal of unilateral notice (UN2)</option>
+            <option value="ex3">Remove exemption of document registration (EX3)</option>
+            <option value="rhr">Renewal of home rights (HR2)</option>
+            <option value="rxn">Restriction (non-standard wording)</option>
+            <option value="rxs">Restriction (standard wording)</option>
+            <option value="rc">Restrictive covenants - entry</option>
+            <option value="atr">Rule 130 Alteration of Title Register</option>
+            <option value="sjt">Severance of joint tenancy (SEV, RX1)</option>
+            <option value="sho">Shared ownership - additional share</option>
+            <option value="stvc">Statutory vestings charge</option>
+            <option value="stvl">Statutory vestings land</option>
+            <option value="sbc">Sub charge</option>
+            <option value="sot">Subdivision of title</option>
+            <option value="trc">Termination of commonhold</option>
+            <option value="trm">Transfer by operation of law on death</option>
+
+            <!-- Transfer for value (t) removed due to top 3 -->
+
+            <option value="tvr">Transfer for value RTB/RTA</option>
+
+            <!-- Transfer (not for value) removed due to top 3 -->
+
+            <option value="toc">Transfer of charge</option>
+            <option value="tosv">Transfer of share for value</option>
+            <option value="tosnv">Transfer of share (not for value)</option>
+            <option value="tscv">Transfer subject to charge for value</option>
+            <option value="tscnv">Transfer subject to charge (not for value)</option>
+            <option value="tps">Transfer under power of sale</option>
+
+            <option value="unn">Unilateral notice (UN1)</option>
+            <option value="upt">Upgrade class of title (UT1)</option>
+            <option value="vrc">Variation of a rent charge (AP1)</option>
+            <option value="vc">Variation of charge</option>
+            <option value="voc">Variation of covenants</option>
+            <option value="voca">Variation of covenants - agreed notice</option>
+            <option value="vocu">Variation of covenants - unilateral notice</option>
+            <option value="voe">Variation of easements</option>
+            <option value="voea">Variation of easements - agreed notice</option>
+            <option value="voeu">Variation of easements - unilateral notice</option>
+            <option value="vlan">Variation of lease - agreed notice</option>
+            <option value="vlun">Variation of lease - unilateral notice</option>
+            <option value="vo">Vesting order</option>
+            <option value="wct">Withdrawal of caution (WCT)</option>
+            <option value="wdr">Withdraw a restriction (RX4)</option>
+          </optgroup>
+
+        </select>
+      </div> <!-- ./govuk-form-group -->
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="all_transactions-2-transaction">
+          Priority 3 (optional)
+        </label>
+
+        <select class="govuk-select transaction-select"
+                id="all_transactions-2-transaction"
+                name="all_transactions-2-transaction">
+
+          <option value="" selected>Select a transaction from the list</option>
+
+          <!-- Alphabetised top 3 for First lease -->
+          <optgroup label="Most selected transactions">
+            <option value="c">Charge</option>
+            <option value="nl">New lease other</option>
+            <option value="nls">New lease - shared ownership</option>
+          </optgroup>
+
+          <!-- Full remaining list (top 3 removed) -->
+          <optgroup label="All transactions">
+            <option value="adv1">1st notice of adverse possession (ADV1)</option>
+            <option value="rtm">Acquisition of right to manage</option>
+            <option value="ch3">Agreed maximum amount of security (CH3)</option>
+            <option value="agn">Agreed notice (AN1)</option>
+            <option value="aml">Amalgamation</option>
+            <option value="aun">Amendment of unilateral notice (UN3)</option>
+            <option value="atp">Amendment to title plan</option>
+            <option value="aplco">Appointment of liquidator (compulsory winding up)</option>
+            <option value="aplc">Appointment of liquidator (creditor's voluntary winding up)</option>
+            <option value="aplm">Appointment of liquidator (members' voluntary winding up)</option>
+            <option value="apt">Appointment of new trustee</option>
+            <option value="apr">Apportionment of rent</option>
+            <option value="arc">Apportionment of rent charge (AP1)</option>
+            <option value="astt">Assent</option>
+            <option value="astc">Assent of charge</option>
+            <option value="bkn">Bankruptcy notice/Creditors notice</option>
+            <option value="bkr">Bankruptcy restriction/Bankruptcy inhibition</option>
+            <option value="cct">Cancellation of a caution (CCD)</option>
+            <option value="cnl">Cancellation of an unregistered noted lease (CN1)</option>
+            <option value="cbkn">Cancellation of bankruptcy notice</option>
+            <option value="cbkr">Cancellation of bankruptcy restriction</option>
+            <option value="chr">Cancellation of home rights (HR4)</option>
+            <option value="cani">Cancellation of inhibition (RX3)</option>
+            <option value="cag">Cancellation of notice (not unilateral) (CN1)</option>
+            <option value="cur">Cancellation of notice of unreg. rentcharge</option>
+            <option value="canr">Cancellation of restriction (RX3)</option>
+            <option value="canu">Cancellation of unilateral notice (UN4)</option>
+            <option value="nct">Caution amendment, new cautioner</option>
+            <option value="coa">Change of address for service</option>
+            <option value="coac">Change of address for service - chargee</option>
+            <option value="cn">Change of name</option>
+            <option value="cnc">Change of name - chargee</option>
+            <option value="cpd">Change of property description</option>
+
+            <!-- charge removed -->
+
+            <option value="cop">Charge of part</option>
+            <option value="choa">Charging order - Agreed notice (AN1)</option>
+            <option value="chou">Charging order - Unilateral notice (UN1)</option>
+            <option value="ctd">Commonhold transitional dealing</option>
+            <option value="cpvk">Compulsory purchase (property value known)</option>
+            <option value="cpvu">Compulsory purchase (property value unknown)</option>
+            <option value="con">Consolidation of charge</option>
+            <option value="djp">Death of a joint proprietor (DJP)</option>
+            <option value="dsp">Death of a sole proprietor</option>
+            <option value="deb">Debenture</option>
+            <option value="dog">Deed of grant of easement</option>
+            <option value="rfn">Deed of rectification</option>
+            <option value="dss">Deed of substituted security</option>
+            <option value="vlap">Deed of variation of a lease</option>
+            <option value="dft">Defect in title s64(1) LRA 2002</option>
+            <option value="db">Determined boundary (DB)</option>
+            <option value="dmr">Disapplication of restriction (RX2)</option>
+            <option value="dis">Discharge of charge</option>
+            <option value="dp">Discharge of part</option>
+            <option value="dclv">Disclaimer - notice</option>
+            <option value="dcln">Disclaimer - notification</option>
+            <option value="ex1">Exempt information document registration (EX1)</option>
+            <option value="exr">Extinguishment of rentcharge</option>
+            <option value="rxl">Form ll restriction entered</option>
+            <option value="lcbd">Lease closure - by disclaimer</option>
+            <option value="lcbet">Lease closure - by effluxion of time</option>
+            <option value="lcbn">Lease closure - by notice</option>
+            <option value="lcf">Lease closure - forfeiture</option>
+            <option value="lcmre">Lease closure - merger with reversionary estate</option>
+            <option value="lcatco">Lease closure - assured tenancies court order</option>
+            <option value="lcoe">Lease closure - on enlargement</option>
+            <option value="lcof">Lease closure - on frustration</option>
+            <option value="lcsdm">Lease closure - surrender by deed</option>
+            <option value="lcsd">Lease closure - surrender by deed (not for value)</option>
+            <option value="lcsdmwt">Lease closure - surrender with transfer</option>
+            <option value="lcsdwt">Lease closure - surrender with transfer (not for value)</option>
+            <option value="lcsolm">Lease closure - surrender by operation of law</option>
+            <option value="lcsol">Lease closure - surrender (not for value)</option>
+            <option value="mdr">Modify a restriction (RX2)</option>
+            <option value="nopsc">Note overriding priority of a statutory charge</option>
+            <option value="hr">Notice of home rights (HR1)</option>
+            <option value="nrt">Notice of rentcharge</option>
+            <option value="ndc">Notification of dissolution of company</option>
+            <option value="nol">Noting a lease</option>
+            <option value="noe">Noting an easement</option>
+            <option value="nfr">Noting of an affecting franchise</option>
+            <option value="npr">Noting of a profit</option>
+            <option value="ch2">Obligation to make further advances (CH2)</option>
+            <option value="per">Personal covenants</option>
+            <option value="pc">Postponement of charge</option>
+            <option value="pro">Provisions</option>
+            <option value="re">Registration of easement</option>
+            <option value="rrc">Registration of rent charge</option>
+            <option value="roca">Release of covenants - agreed notice (AN1)</option>
+            <option value="rocc">Release of covenants - cancellation (CN1)</option>
+            <option value="rocu">Release of covenants - unilateral notice (UN1)</option>
+            <option value="roe">Release of easements</option>
+            <option value="rrd">Removal of a right to determine</option>
+            <option value="run">Removal of unilateral notice (UN2)</option>
+            <option value="ex3">Remove exemption of document registration (EX3)</option>
+            <option value="rhr">Renewal of home rights (HR2)</option>
+            <option value="rxn">Restriction (non standard wording) (RX1)</option>
+            <option value="rxs">Restriction (standard wording) (RX1)</option>
+            <option value="rc">Restrictive covenants - entry</option>
+            <option value="atr">Rule 130 Alteration of Title Register</option>
+            <option value="sjt">Severance of joint tenancy (SEV, RX1)</option>
+            <option value="sho">Shared ownership - additional share</option>
+            <option value="stvc">Statutory vestings charge</option>
+            <option value="stvl">Statutory vestings land</option>
+            <option value="sbc">Sub charge</option>
+            <option value="sot">Subdivision of title</option>
+            <option value="trc">Termination of commonhold</option>
+            <option value="trm">Transfer by operation of law on death</option>
+            <option value="t">Transfer for value</option>
+            <option value="tvr">Transfer for value RTB/RTA</option>
+            <option value="tnv">Transfer (not for value or reverse premium)</option>
+            <option value="toc">Transfer of charge</option>
+            <option value="tosv">Transfer of share for value</option>
+            <option value="tosnv">Transfer of share (not for value)</option>
+            <option value="tscv">Transfer subject to a charge for value</option>
+            <option value="tscnv">Transfer subject to a charge (not for value)</option>
+            <option value="tps">Transfer under power of sale</option>
+            <option value="unn">Unilateral notice (UN1)</option>
+            <option value="upt">Upgrade class of title (UT1)</option>
+            <option value="vrc">Variation of a rent charge (AP1)</option>
+            <option value="vc">Variation of charge</option>
+            <option value="voc">Variation of covenants</option>
+            <option value="voca">Variation of covenants - agreed notice</option>
+            <option value="vocu">Variation of covenants - unilateral notice</option>
+            <option value="voe">Variation of easements</option>
+            <option value="voea">Variation of easements - agreed notice</option>
+            <option value="voeu">Variation of easements - unilateral notice</option>
+            <option value="vlan">Variation of lease - agreed notice</option>
+            <option value="vlun">Variation of lease - unilateral notice</option>
+            <option value="vo">Vesting order</option>
+            <option value="wct">Withdrawal of caution (WCT)</option>
+            <option value="wdr">Withdraw a restriction (RX4)</option>
+          </optgroup>
+
+        </select>
+      </div> <!-- ./govuk-form-group -->
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="all_transactions-3-transaction">
+          Priority 4 (optional)
+        </label>
+
+        <select class="govuk-select transaction-select"
+                id="all_transactions-3-transaction"
+                name="all_transactions-3-transaction">
+
+          <option value="" selected>Select a transaction from the list</option>
+
+          <!-- Alphabetised top 3 for Lease extension -->
+          <optgroup label="Most selected transactions">
+            <option value="cn">Change of name</option>
+            <option value="dftl">Dispositionary first lease extension of a term</option>
+            <option value="run">Removal of a unilateral notice (UN2)</option>
+          </optgroup>
+
+          <!-- Full remaining list (top 3 removed) -->
+          <optgroup label="All transactions">
+            <option value="adv1">1st notice of adverse possession (ADV1)</option>
+            <option value="rtm">Acquisition of right to manage</option>
+            <option value="ch3">Agreed maximum amount of security (CH3)</option>
+            <option value="agn">Agreed notice (AN1)</option>
+            <option value="aml">Amalgamation</option>
+            <option value="aun">Amendment of unilateral notice (UN3)</option>
+            <option value="atp">Amendment to title plan</option>
+            <option value="aplco">Appointment of liquidator (compulsory winding up)</option>
+            <option value="aplc">Appointment of liquidator (creditor's voluntary winding up)</option>
+            <option value="aplm">Appointment of liquidator (members' voluntary winding up)</option>
+            <option value="apt">Appointment of new trustee</option>
+            <option value="apr">Apportionment of rent</option>
+            <option value="arc">Apportionment of rent charge (AP1)</option>
+            <option value="astt">Assent</option>
+            <option value="astc">Assent of charge</option>
+            <option value="bkn">Bankruptcy notice/Creditors notice</option>
+            <option value="bkr">Bankruptcy restriction/Bankruptcy inhibition</option>
+            <option value="cct">Cancellation of a caution (CCD)</option>
+            <option value="cnl">Cancellation of an unregistered noted lease (CN1)</option>
+            <option value="cbkn">Cancellation of bankruptcy notice</option>
+            <option value="cbkr">Cancellation of bankruptcy restriction</option>
+            <option value="chr">Cancellation of home rights (HR4)</option>
+            <option value="cani">Cancellation of inhibition (RX3)</option>
+            <option value="cag">Cancellation of notice (not unilateral) (CN1)</option>
+            <option value="cur">Cancellation of notice of unreg. rentcharge</option>
+            <option value="canr">Cancellation of restriction (RX3)</option>
+            <option value="canu">Cancellation of unilateral notice (UN4)</option>
+            <option value="nct">Caution amendment, new cautioner</option>
+            <option value="coa">Change of address for service</option>
+            <option value="coac">Change of address for service - chargee</option>
+
+            <!-- change of name removed -->
+
+            <option value="cnc">Change of name - chargee</option>
+            <option value="cpd">Change of property description</option>
+            <option value="c">Charge</option>
+            <option value="cop">Charge of part</option>
+            <option value="choa">Charging order - Agreed notice (AN1)</option>
+            <option value="chou">Charging order - Unilateral notice (UN1)</option>
+            <option value="ctd">Commonhold transitional dealing</option>
+            <option value="cpvk">Compulsory purchase (property value known)</option>
+            <option value="cpvu">Compulsory purchase (property value unknown)</option>
+            <option value="con">Consolidation of charge</option>
+            <option value="djp">Death of a joint proprietor (DJP)</option>
+            <option value="dsp">Death of a sole proprietor</option>
+            <option value="deb">Debenture</option>
+            <option value="dog">Deed of grant of easement</option>
+            <option value="rfn">Deed of rectification</option>
+            <option value="dss">Deed of substituted security</option>
+            <option value="vlap">Deed of variation of a lease</option>
+            <option value="dft">Defect in title s64(1) LRA 2002</option>
+            <option value="db">Determined boundary (DB)</option>
+            <option value="dmr">Disapplication of restriction (RX2)</option>
+            <option value="dis">Discharge of charge</option>
+            <option value="dp">Discharge of part</option>
+            <option value="dclv">Disclaimer - notice</option>
+            <option value="dcln">Disclaimer - notification</option>
+            <option value="ex1">Exempt information document registration (EX1)</option>
+            <option value="exr">Extinguishment of rentcharge</option>
+            <option value="rxl">Form ll restriction entered</option>
+            <option value="lcbd">Lease closure - by disclaimer</option>
+            <option value="lcbet">Lease closure - by effluxion of time</option>
+            <option value="lcbn">Lease closure - by notice</option>
+            <option value="lcf">Lease closure - forfeiture</option>
+            <option value="lcmre">Lease closure - merger with reversionary estate</option>
+            <option value="lcatco">Lease closure - assured tenancies court order</option>
+            <option value="lcoe">Lease closure - on enlargement</option>
+            <option value="lcof">Lease closure - on frustration</option>
+            <option value="lcsdm">Lease closure - surrender by deed</option>
+            <option value="lcsd">Lease closure - surrender by deed (not for value)</option>
+            <option value="lcsdmwt">Lease closure - surrender with transfer</option>
+            <option value="lcsdwt">Lease closure - surrender with transfer (not for value)</option>
+            <option value="lcsolm">Lease closure - surrender by operation of law</option>
+            <option value="lcsol">Lease closure - surrender (not for value)</option>
+            <option value="mdr">Modify a restriction (RX2)</option>
+            <option value="nopsc">Note overriding priority of a statutory charge</option>
+            <option value="hr">Notice of home rights (HR1)</option>
+            <option value="nrt">Notice of rentcharge</option>
+            <option value="ndc">Notification of dissolution of company</option>
+            <option value="nol">Noting a lease</option>
+            <option value="noe">Noting an easement</option>
+            <option value="nfr">Noting of an affecting franchise</option>
+            <option value="npr">Noting of a profit</option>
+            <option value="ch2">Obligation to make further advances (CH2)</option>
+            <option value="per">Personal covenants</option>
+            <option value="pc">Postponement of charge</option>
+            <option value="pro">Provisions</option>
+            <option value="re">Registration of easement</option>
+            <option value="rrc">Registration of rent charge</option>
+            <option value="roca">Release of covenants - agreed notice (AN1)</option>
+            <option value="rocc">Release of covenants - cancellation (CN1)</option>
+            <option value="rocu">Release of covenants - unilateral notice (UN1)</option>
+            <option value="roe">Release of easements</option>
+            <option value="rrd">Removal of a right to determine</option>
+
+            <!-- removal of unilateral notice removed -->
+
+            <option value="ex3">Remove exemption of document registration (EX3)</option>
+            <option value="rhr">Renewal of home rights (HR2)</option>
+            <option value="rxn">Restriction (non standard wording) (RX1)</option>
+            <option value="rxs">Restriction (standard wording) (RX1)</option>
+            <option value="rc">Restrictive covenants - entry</option>
+            <option value="atr">Rule 130 Alteration of Title Register</option>
+            <option value="sjt">Severance of joint tenancy (SEV, RX1)</option>
+            <option value="sho">Shared ownership - additional share</option>
+            <option value="stvc">Statutory vestings charge</option>
+            <option value="stvl">Statutory vestings land</option>
+            <option value="sbc">Sub charge</option>
+            <option value="sot">Subdivision of title</option>
+            <option value="trc">Termination of commonhold</option>
+            <option value="trm">Transfer by operation of law on death</option>
+            <option value="t">Transfer for value</option>
+            <option value="tvr">Transfer for value RTB/RTA</option>
+            <option value="tnv">Transfer (not for value or reverse premium)</option>
+            <option value="toc">Transfer of charge</option>
+            <option value="tosv">Transfer of share for value</option>
+            <option value="tosnv">Transfer of share (not for value)</option>
+            <option value="tscv">Transfer subject to a charge for value</option>
+            <option value="tscnv">Transfer subject to a charge (not for value)</option>
+            <option value="tps">Transfer under power of sale</option>
+            <option value="unn">Unilateral notice (UN1)</option>
+            <option value="upt">Upgrade class of title (UT1)</option>
+            <option value="vrc">Variation of a rent charge (AP1)</option>
+            <option value="vc">Variation of charge</option>
+            <option value="voc">Variation of covenants</option>
+            <option value="voca">Variation of covenants - agreed notice</option>
+            <option value="vocu">Variation of covenants - unilateral notice</option>
+            <option value="voe">Variation of easements</option>
+            <option value="voea">Variation of easements - agreed notice</option>
+            <option value="voeu">Variation of easements - unilateral notice</option>
+            <option value="vlan">Variation of lease - agreed notice</option>
+            <option value="vlun">Variation of lease - unilateral notice</option>
+            <option value="vo">Vesting order</option>
+            <option value="wct">Withdrawal of caution (WCT)</option>
+            <option value="wdr">Withdraw a restriction (RX4)</option>
+          </optgroup>
+
+        </select>
+      </div> <!-- ./govuk-form-group -->
+
+      <p class="govuk-!-margin-bottom-8">
+        <a href="#" class="govuk-link">Add another transaction</a>
+      </p>
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+   </div> <!-- ./govuk-grid-column-two-thirds -->
+
+  </div> <!-- ./govuk-grid-row -->
+
+</div> <!-- ./govuk-width-container" -->
+ 
+
+
+{% endblock %}
