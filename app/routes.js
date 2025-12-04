@@ -923,6 +923,122 @@ router.post('/ssa/v5/s3/enter-title-numbers-non-ssa', function (req, res) {
   }
 })
 
+// ---------------------------------------------------------
+// SSA v6 (S1) ROUTES
+// ---------------------------------------------------------
+
+// 1. Digital Registration Service start page
+router.get('/ssa/v6/s1/1-digital-registration-service', function (req, res) {
+  res.render('ssa/v6/s1/1-digital-registration-service');
+});
+
+// 2. Application reference
+router.get('/ssa/v6/s1/2-application-reference', function (req, res) {
+  res.render('ssa/v6/s1/2-application-reference');
+});
+
+router.post('/ssa/v6/s1/2-application-reference', function (req, res) {
+  res.redirect('/ssa/v6/s1/3-are-you-a-conveyancer');
+});
+
+// 3. Are you a conveyancer
+router.get('/ssa/v6/s1/3-are-you-a-conveyancer', function (req, res) {
+  res.render('ssa/v6/s1/3-are-you-a-conveyancer');
+});
+
+router.post('/ssa/v6/s1/3-are-you-a-conveyancer', function (req, res) {
+  res.redirect('/ssa/v6/s1/4-application-about');
+});
+
+// 4. What is the application about
+router.get('/ssa/v6/s1/4-application-about', function (req, res) {
+  res.render('ssa/v6/s1/4-application-about');
+});
+
+router.post('/ssa/v6/s1/4-application-about', function (req, res) {
+  // Radio 1 routes to Whole or Part question
+  res.redirect('/ssa/v6/s1/5-1-transferring-whole-or-part');
+});
+
+// 5. Whole or part
+router.get('/ssa/v6/s1/5-1-transferring-whole-or-part', function (req, res) {
+  res.render('ssa/v6/s1/5-1-transferring-whole-or-part');
+});
+
+router.post('/ssa/v6/s1/5-1-transferring-whole-or-part', function (req, res) {
+  const answer = req.session.data['transfer-type']; // must match HTML
+
+  console.log("User selected:", answer); // optional debug
+
+  if (answer === 'part') {
+    // Transfer of Part → NEW v6 SSA journey
+    res.redirect('/ssa/v6/s1/task-list');
+  } else if (answer === 'whole') {
+    // Whole → OLD v5 SSA journey
+    res.redirect('/ssa/v5/s1/task-list');
+  } else {
+    // No selection → stay on page (or add page-level validation later)
+    res.redirect('/ssa/v6/s1/5-1-transferring-whole-or-part');
+  }
+});
+
+
+// 6. Task List
+router.get('/ssa/v6/s1/task-list', function (req, res) {
+  res.render('ssa/v6/s1/task-list');
+});
+
+// 7. How many titles
+router.post('/ssa/v6/s1/how-many-titles', function (req, res) {
+  const count = req.session.data['title-count']; // must match HTML name
+
+  if (count === '26-199') {
+    // SSA route
+    res.redirect('/ssa/v6/s1/enter-title-numbers');
+  } else if (count === '1-25') {
+    // non-SSA route
+    res.redirect('/ssa/v6/s1/enter-title-numbers-non-ssa');
+  } else {
+    // no selection
+    res.redirect('/ssa/v6/s1/how-many-titles');
+  }
+});
+
+
+// 8. Enter title numbers (pasted list)
+router.get('/ssa/v6/s1/enter-title-numbers', function (req, res) {
+  res.render('ssa/v6/s1/enter-title-numbers');
+});
+
+router.post('/ssa/v6/s1/enter-title-numbers', function (req, res) {
+  res.redirect('/ssa/v6/s1/manage-titles');
+});
+
+// 9. Manage titles (new version with validation)
+router.get('/ssa/v6/s1/manage-titles', function (req, res) {
+  res.render('ssa/v6/s1/manage-titles');
+});
+
+router.post('/ssa/v6/s1/manage-titles', function (req, res) {
+  // Client-side JS manages validation; this just progresses
+  res.redirect('/ssa/v6/s1/disclosable-overriding-interests');
+});
+
+// 10. Disclosable overriding interests
+router.get('/ssa/v6/s1/disclosable-overriding-interests', function (req, res) {
+  res.render('ssa/v6/s1/disclosable-overriding-interests');
+});
+
+router.post('/ssa/v6/s1/disclosable-overriding-interests', function (req, res) {
+  res.redirect('/ssa/v6/s1/select-transactions');
+});
+
+// 11. Select transactions
+router.get('/ssa/v6/s1/select-transactions', function (req, res) {
+  res.render('ssa/v6/s1/select-transactions');
+});
+
+
 
 
 

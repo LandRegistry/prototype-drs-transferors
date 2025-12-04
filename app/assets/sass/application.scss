@@ -1,6 +1,6 @@
 //
 // For guidance on how to add CSS and SCSS see:
-// https://prototype-kit.service.gov.uk/docs/adding-css-javascript-and-images
+// https://prototype-kit.service.govuk/docs/adding-css-javascript-and-images
 // 
 
 // Add extra styles here
@@ -541,6 +541,11 @@ Apply a narrower width to the first column */
     }
 }
 
+/* Custom error (MTY TP) */
+#table-myt td.govuk-table__cell.govuk-form-group--error {
+    padding-left: 15px;
+}
+
 .govuk-input--width-9 {
     max-width: 9.5em;
 }
@@ -555,4 +560,33 @@ Apply a narrower width to the first column */
     .container-transactions .govuk-select {
         width: 100%;
     }
+}
+
+/* --- FIXES FOR MANAGE TITLES ERROR STYLING --- */
+
+/* Transferor Error: Outer border and padding for the table wrapper */
+.error-table-container.govuk-form-group--error {
+  border-left: 5px solid #d4351c; /* GDS Red */
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Ensure the table itself doesn't inherit padding from the wrapper */
+.error-table-container.govuk-form-group--error > .table-container {
+  margin-bottom: 0;
+}
+
+/* Related (Part) Error: Apply GOV.UK error styling to the nested form group */
+.govuk-table .govuk-form-group.govuk-form-group--error {
+  padding-left: 15px;
+  border-left: 5px solid #d4351c; /* GDS Red */
+}
+
+/* FIX: Remove only the default padding from the "Title type" cell. 
+ * 'border: 0;' was removed to preserve table row borders.
+ */
+#table-myt td[data-title-type] {
+  padding: 0; 
 }
