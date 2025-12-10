@@ -1,0 +1,714 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  Manage your titles – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <style>
+    .titles-error-wrapper {
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    .titles-error-wrapper.titles-has-transferor-error {
+      border-left: 5px solid #d4351c;
+      padding-left: 15px;
+      margin-left: 0;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    .search-btn {
+      border: 1px solid #0b0c0c;
+      padding: 6px 10px;
+      background: #f3f2f1;
+      cursor: pointer;
+    }
+
+    .search-btn:hover {
+      background: #dbdad9;
+    }
+
+    .search-icon {
+      vertical-align: middle;
+    }
+
+    .js-part-description {
+      resize: vertical;
+    }
+  </style>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Manage your titles</h1>
+
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Check title details</h2>
+      <p class="govuk-body">
+        Your title numbers are displayed in the table – check the details carefully. If the title only affects part of the property, select <strong>Related (part)</strong> and enter the additional information.
+      </p>
+      <p class="govuk-body">
+        Select <strong>Save and continue</strong> when you are happy that the details are correct.
+      </p>
+
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Adding or removing titles</h2>
+      <p class="govuk-body">
+        You can remove and add title numbers using the options on this page. Remember there is an upper limit of 199 and a lower limit of 26.
+      </p>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-m">Title list options</h2>
+      <ul class="govuk-list">
+        <li>
+          <a href="#" id="download-list" class="govuk-link">Download this list</a>
+        </li>
+        <li>
+          <a href="#" id="remove-all-titles" class="govuk-link">Remove all titles</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <hr>
+
+  <br>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds search-container">
+      <h2 class="govuk-heading-m">Find a title in your list</h2>
+
+      <div class="govuk-form-group" style="margin-bottom: 0;">
+        <label class="govuk-label" for="find-title">Find title</label>
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+
+          <div style="display: flex; align-items: flex-start;">
+            <input class="govuk-input" id="find-title" name="find-title" type="text" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+            <button class="search-btn" type="button" style="margin-bottom: 0; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+              <svg aria-hidden="true" class="search-icon" fill="none" focusable="false" height="24" viewBox="0 0 27 27" width="24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12.0161" cy="12.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                <line stroke="currentColor" stroke-width="3" x1="17.8668" x2="26.4475" y1="17.3587" y2="25.9393"></line>
+              </svg>
+            </button>
+          </div>
+
+          <button class="govuk-button govuk-button--secondary" id="clear-search" type="button" style="margin-bottom: 0;">
+            Clear
+          </button>
+        </div>
+      </div>
+      <br>
+    </div>
+
+    <div class="govuk-grid-column-one-third add-to-list-container">
+      <h2 class="govuk-heading-m">Add another title</h2>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="manual-title-number">Title number</label>
+        <div class="input-wrapper">
+          <div class="input-with-button">
+            <input class="govuk-input govuk-input--width-9" id="manual-title-number" name="manual-title-number" type="text">
+            <button
+              class="govuk-button govuk-button--secondary"
+              id="add-manual-title"
+              type="button"
+              style="margin-bottom: 0; margin-top: -2px;">
+              Add to list
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ERROR SUMMARY -->
+  <div id="titles-error-summary"
+       class="govuk-error-summary"
+       data-module="govuk-error-summary"
+       role="alert"
+       aria-labelledby="titles-error-summary-title"
+       tabindex="-1"
+       style="display:none;">
+    <h2 class="govuk-error-summary__title" id="titles-error-summary-title">
+      There is a problem
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <li id="error-summary-transferor" style="display:none;">
+          <a href="#transferor-error">You must select at least one transferor title</a>
+        </li>
+        <li id="error-summary-part" style="display:none;">
+          <a href="#first-part-error">Enter details for each title where you selected Related (part)</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <!-- Wrapper that gets the red border when transferor is missing -->
+      <div id="titles-error-wrapper" class="titles-error-wrapper">
+
+        <!-- Inline transferor error above the heading -->
+        <div id="transferor-error-container" class="govuk-form-group" style="display:none;">
+          <p class="govuk-error-message" id="transferor-error">
+            <span class="govuk-visually-hidden">Error:</span> You must select at least one transferor title
+          </p>
+        </div>
+
+        <h2 class="govuk-heading-m">
+          <span id="title-h2-count">30</span> titles in this application
+        </h2>
+
+        <div class="table-container">
+          <div aria-labelledby="Caption01" role="region" tabindex="0">
+
+            <table id="table-myt" class="govuk-table">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="col" style="width: 10%;">Title number</th>
+                  <th class="govuk-table__header" scope="col" style="width: 25%;">Property address</th>
+                  <th class="govuk-table__header" scope="col" style="width: 30%;">Title type</th>
+                  <th class="govuk-table__header" scope="col" style="width: 20%;">Restrictions</th>
+                  <th class="govuk-table__header" scope="col" style="width: 10%;">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody class="govuk-table__body" id="titles-table-body">
+                {% for i in range(1, 31) %}
+                  {% set titleNumber = "AB" + (1000 + i).toString() %}
+                  <tr class="govuk-table__row" data-row-index="{{ i }}">
+                    <td class="govuk-table__cell">{{ titleNumber }}</td>
+                    <td class="govuk-table__cell">{{ 10 + i }} Example Street, City {{ i }}, AB{{ i }}{{ i }}CD</td>
+
+                    <td class="govuk-table__cell" style="vertical-align: top;">
+                      <div class="govuk-form-group js-title-type-group">
+
+                        <fieldset class="govuk-fieldset">
+                          <legend class="govuk-visually-hidden">Title type for {{ titleNumber }}</legend>
+
+                          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                              <input class="govuk-radios__input"
+                                     id="transferor-{{ i }}"
+                                     name="title-type-{{ i }}"
+                                     type="radio"
+                                     value="transferor">
+                              <label class="govuk-label govuk-radios__label" for="transferor-{{ i }}">
+                                Transferor
+                              </label>
+                            </div>
+
+                            <div class="govuk-radios__item">
+                              <input class="govuk-radios__input"
+                                     id="related-whole-{{ i }}"
+                                     name="title-type-{{ i }}"
+                                     type="radio"
+                                     value="related-whole"
+                                     checked>
+                              <label class="govuk-label govuk-radios__label" for="related-whole-{{ i }}">
+                                Related (whole)
+                              </label>
+                            </div>
+
+                            <div class="govuk-radios__item">
+                              <input class="govuk-radios__input"
+                                     id="related-part-{{ i }}"
+                                     name="title-type-{{ i }}"
+                                     type="radio"
+                                     value="related-part"
+                                     data-aria-controls="conditional-related-part-{{ i }}">
+                              <label class="govuk-label govuk-radios__label" for="related-part-{{ i }}">
+                                Related (part)
+                              </label>
+                            </div>
+
+                            <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                 id="conditional-related-part-{{ i }}">
+                              <div class="govuk-form-group js-part-form-group">
+                                <label class="govuk-label" for="part-description-{{ i }}">
+                                  Describe the part affected
+                                </label>
+                                <span class="govuk-hint">
+                                  For example, "Edged red on the plan dated DD/MM/YYYY."
+                                </span>
+                                <textarea
+                                  class="govuk-textarea js-part-description"
+                                  id="part-description-{{ i }}"
+                                  name="part-description-{{ i }}"
+                                  rows="3"
+                                  maxlength="200"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+
+                      </div>
+                    </td>
+
+                    <td class="govuk-table__cell">
+                      {% if i == 3 or i == 7 %}
+                        <div class="govuk-warning-text govuk-warning-text--small-icon govuk-!-margin-bottom-1">
+                          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                          <strong class="govuk-warning-text__text">
+                            <span class="govuk-visually-hidden">Warning</span>
+                            Restrictions
+                          </strong>
+                        </div>
+                        <div class="govuk-warning-text govuk-warning-text--small-icon">
+                          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                          <strong class="govuk-warning-text__text">
+                            <span class="govuk-visually-hidden">Warning</span>
+                            Lender restriction
+                          </strong>
+                        </div>
+                      {% else %}
+                        <span class="govuk-body-s govuk-!-colour-muted" style="display: block; padding-top: 0.7em;">None</span>
+                      {% endif %}
+                    </td>
+
+                    <td class="govuk-table__cell">
+                      <a class="govuk-link remove-title" href="#" data-title="{{ titleNumber }}">Remove</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> <!-- /.titles-error-wrapper -->
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <div id="table-footer">
+        <p class="govuk-body-s govuk-!-text-align-left text-align-centre-mob" id="title-count-display" data-total="30">
+          Showing <strong>1</strong> to <strong>30</strong> of <strong>30</strong> titles
+        </p>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-half">
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-!-margin-top-3">
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Remove all titles",
+          href: "#",
+          classes: "govuk-button--warning",
+          attributes: {
+            id: "remove-all-titles-button"
+          }
+        }) }}
+
+        {{ govukButton({
+          text: "Save and continue",
+          href: "/ssa/v5/s1/disclosable-overriding-interests",
+          attributes: {
+            id: "save-and-continue"
+          }
+        }) }}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="/govuk-frontend/govuk/all.js"></script>
+<script>
+  window.GOVUKFrontend.initAll();
+</script>
+
+<script>
+  (function() {
+    var searchButton = document.querySelector('.search-btn');
+    var searchInput = document.getElementById('find-title');
+    var clearSearchButton = document.getElementById('clear-search');
+    var tableBody = document.getElementById('titles-table-body');
+    var rowCountText = document.getElementById('title-count-display');
+    var h2CountText = document.getElementById('title-h2-count');
+
+    function applySearch() {
+      var searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      var visibleCount = 0;
+      var rows = tableBody.querySelectorAll('tr');
+
+      rows.forEach(function(row) {
+        var titleCell = row.querySelector('td:nth-child(1)');
+        var addressCell = row.querySelector('td:nth-child(2)');
+        var matches = (
+          titleCell.textContent.toLowerCase().includes(searchTerm) ||
+          addressCell.textContent.toLowerCase().includes(searchTerm)
+        );
+
+        var shouldShow = matches || !searchTerm;
+        row.style.display = shouldShow ? 'table-row' : 'none';
+        if (shouldShow) visibleCount++;
+      });
+
+      var totalCount = rows.length;
+
+      if (visibleCount > 0) {
+        var showingText = visibleCount === totalCount
+          ? 'Showing <strong>1</strong> to <strong>' + totalCount + '</strong> of <strong>' + totalCount + '</strong> titles'
+          : 'Showing <strong>' + visibleCount + '</strong> of <strong>' + totalCount + '</strong> titles';
+        rowCountText.innerHTML = showingText;
+      } else {
+        rowCountText.innerHTML = 'No matching titles found – showing 0 of ' + totalCount + ' titles';
+      }
+    }
+
+    if (searchButton && searchInput) {
+      searchButton.addEventListener('click', applySearch);
+      searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          applySearch();
+        }
+      });
+    }
+
+    if (clearSearchButton) {
+      clearSearchButton.addEventListener('click', function() {
+        if (searchInput) searchInput.value = '';
+        applySearch();
+      });
+    }
+
+    applySearch();
+
+    // Add / remove titles
+    var addButton = document.getElementById('add-manual-title');
+    var inputField = document.getElementById('manual-title-number');
+
+    function updateCounts() {
+      var rows = tableBody.querySelectorAll('tr');
+      var rowCount = rows.length;
+      h2CountText.textContent = rowCount;
+      rowCountText.innerHTML = 'Showing <strong>1</strong> to <strong>' + rowCount + '</strong> of <strong>' + rowCount + '</strong> titles';
+    }
+
+    function removeRowByElement(row) {
+      if (row && row.parentNode === tableBody) {
+        tableBody.removeChild(row);
+      }
+      updateCounts();
+    }
+
+    function buildAddressFromTitle(title) {
+      var numberMatch = title.match(/\d+/);
+      var number = numberMatch ? Number(numberMatch[0]) : null;
+      var shortCode = number !== null ? String(number).slice(-2) : '00';
+
+      return number !== null
+        ? number + ' Example Street, City ' + number + ', AB' + shortCode + shortCode + 'CD'
+        : '[Enter address manually]';
+    }
+
+    function createTitleRow(title) {
+      var uid = Date.now();
+      var address = buildAddressFromTitle(title);
+
+      var tr = document.createElement('tr');
+      tr.className = 'govuk-table__row';
+      tr.setAttribute('data-row-index', uid);
+
+      tr.innerHTML = ''
+        + '<td class="govuk-table__cell">' + title + '</td>'
+        + '<td class="govuk-table__cell">' + address + '</td>'
+        + '<td class="govuk-table__cell" style="vertical-align: top;">'
+        + '  <div class="govuk-form-group js-title-type-group">'
+        + '    <fieldset class="govuk-fieldset">'
+        + '      <legend class="govuk-visually-hidden">Title type for ' + title + '</legend>'
+        + '      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">'
+        + '        <div class="govuk-radios__item">'
+        + '          <input class="govuk-radios__input"'
+        + '                 id="transferor-' + uid + '"'
+        + '                 name="title-type-' + uid + '"'
+        + '                 type="radio"'
+        + '                 value="transferor">'
+        + '          <label class="govuk-label govuk-radios__label" for="transferor-' + uid + '">Transferor</label>'
+        + '        </div>'
+        + '        <div class="govuk-radios__item">'
+        + '          <input class="govuk-radios__input"'
+        + '                 id="related-whole-' + uid + '"'
+        + '                 name="title-type-' + uid + '"'
+        + '                 type="radio"'
+        + '                 value="related-whole"'
+        + '                 checked>'
+        + '          <label class="govuk-label govuk-radios__label" for="related-whole-' + uid + '">Related (whole)</label>'
+        + '        </div>'
+        + '        <div class="govuk-radios__item">'
+        + '          <input class="govuk-radios__input"'
+        + '                 id="related-part-' + uid + '"'
+        + '                 name="title-type-' + uid + '"'
+        + '                 type="radio"'
+        + '                 value="related-part"'
+        + '                 data-aria-controls="conditional-related-part-' + uid + '">'
+        + '          <label class="govuk-label govuk-radios__label" for="related-part-' + uid + '">Related (part)</label>'
+        + '        </div>'
+        + '        <div class="govuk-radios__conditional govuk-radios__conditional--hidden"'
+        + '             id="conditional-related-part-' + uid + '">'
+        + '          <div class="govuk-form-group js-part-form-group">'
+        + '            <label class="govuk-label" for="part-description-' + uid + '">Describe the part affected</label>'
+        + '            <span class="govuk-hint">For example, "Edged red on the plan dated DD/MM/YYYY."</span>'
+        + '            <textarea class="govuk-textarea js-part-description"'
+        + '                      id="part-description-' + uid + '"'
+        + '                      name="part-description-' + uid + '"'
+        + '                      rows="3"'
+        + '                      maxlength="200"></textarea>'
+        + '          </div>'
+        + '        </div>'
+        + '      </div>'
+        + '    </fieldset>'
+        + '  </div>'
+        + '</td>'
+        + '<td class="govuk-table__cell">'
+        + '  <span class="govuk-body-s govuk-!-colour-muted" style="display: block; padding-top: 0.7em;">None</span>'
+        + '</td>'
+        + '<td class="govuk-table__cell">'
+        + '  <a href="#" class="govuk-link remove-title" data-title="' + title + '">Remove</a>'
+        + '</td>';
+
+      return tr;
+    }
+
+    if (addButton && inputField) {
+      addButton.addEventListener('click', function() {
+        var title = inputField.value.trim().toUpperCase();
+        if (!title) return;
+
+        var newRow = createTitleRow(title);
+        tableBody.appendChild(newRow);
+        inputField.value = '';
+        updateCounts();
+        window.GOVUKFrontend.initAll();
+      });
+    }
+
+    tableBody.addEventListener('click', function(e) {
+      if (e.target.classList.contains('remove-title')) {
+        e.preventDefault();
+        var row = e.target.closest('tr');
+        removeRowByElement(row);
+      }
+    });
+
+    updateCounts();
+
+    // Remove all titles (link and button)
+    var removeAllLink = document.getElementById('remove-all-titles');
+    var removeAllButton = document.getElementById('remove-all-titles-button');
+
+    function removeAllTitles() {
+      var rows = Array.prototype.slice.call(tableBody.querySelectorAll('tr'));
+      rows.forEach(function(row) {
+        tableBody.removeChild(row);
+      });
+      updateCounts();
+    }
+
+    if (removeAllLink) {
+      removeAllLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        removeAllTitles();
+      });
+    }
+
+    if (removeAllButton) {
+      removeAllButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        removeAllTitles();
+      });
+    }
+
+    // Download CSV
+    var downloadLink = document.getElementById('download-list');
+
+    if (downloadLink) {
+      downloadLink.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        var rows = tableBody.querySelectorAll('tr');
+        var csvContent = 'data:text/csv;charset=utf-8,';
+        csvContent += 'Title number,Property address,Title type,Part description,Restrictions\n';
+
+        rows.forEach(function(row) {
+          var title = row.querySelector('td:nth-child(1)').innerText.trim();
+          var address = row.querySelector('td:nth-child(2)').innerText.trim();
+
+          var radios = row.querySelectorAll('input.govuk-radios__input[type="radio"]');
+          var titleType = '';
+          radios.forEach(function(radio) {
+            if (radio.checked) titleType = radio.value;
+          });
+
+          var partDescEl = row.querySelector('.js-part-description');
+          var partDesc = partDescEl ? partDescEl.value.trim() : '';
+
+          var restrictions = row.querySelector('td:nth-child(4)').innerText.trim();
+
+          csvContent += '"' + title + '","' + address + '","' + titleType + '","' + partDesc + '","' + restrictions + '"\n';
+        });
+
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'titles-list.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    }
+
+    // Validation for transferor and related-part
+    var saveButton = document.getElementById('save-and-continue');
+    var errorSummary = document.getElementById('titles-error-summary');
+    var errorSummaryTransfer = document.getElementById('error-summary-transferor');
+    var errorSummaryPart = document.getElementById('error-summary-part');
+    var titlesWrapper = document.getElementById('titles-error-wrapper');
+    var transferorErrorContainer = document.getElementById('transferor-error-container');
+
+    function clearValidation() {
+      if (errorSummary) {
+        errorSummary.style.display = 'none';
+      }
+      if (errorSummaryTransfer) {
+        errorSummaryTransfer.style.display = 'none';
+      }
+      if (errorSummaryPart) {
+        errorSummaryPart.style.display = 'none';
+      }
+      if (titlesWrapper) {
+        titlesWrapper.classList.remove('titles-has-transferor-error');
+      }
+      if (transferorErrorContainer) {
+        transferorErrorContainer.style.display = 'none';
+      }
+
+      var partGroups = tableBody.querySelectorAll('.js-part-form-group');
+      partGroups.forEach(function(group) {
+        group.classList.remove('govuk-form-group--error');
+        var err = group.querySelector('.govuk-error-message');
+        if (err) {
+          err.parentNode.removeChild(err);
+        }
+      });
+    }
+
+    function validateTitles() {
+      clearValidation();
+
+      var rows = tableBody.querySelectorAll('tr');
+      var hasTransferor = false;
+      var hasPartErrors = false;
+      var firstPartErrorId = null;
+
+      rows.forEach(function(row) {
+        var radios = row.querySelectorAll('input.govuk-radios__input[type="radio"]');
+        var selectedValue = null;
+
+        radios.forEach(function(radio) {
+          if (radio.checked) {
+            selectedValue = radio.value;
+          }
+        });
+
+        if (selectedValue === 'transferor') {
+          hasTransferor = true;
+        }
+
+        if (selectedValue === 'related-part') {
+          var partGroup = row.querySelector('.js-part-form-group');
+          var textarea = partGroup ? partGroup.querySelector('.js-part-description') : null;
+
+          if (partGroup && textarea) {
+            var value = textarea.value.trim();
+            if (!value) {
+              hasPartErrors = true;
+              partGroup.classList.add('govuk-form-group--error');
+              var p = document.createElement('p');
+              p.className = 'govuk-error-message';
+              p.innerHTML = '<span class="govuk-visually-hidden">Error:</span> Enter a brief description of the part affected';
+              partGroup.insertBefore(p, partGroup.firstElementChild);
+              if (!firstPartErrorId) {
+                firstPartErrorId = textarea.id || 'first-part-error';
+                textarea.id = firstPartErrorId;
+              }
+            }
+          }
+        }
+      });
+
+      var hasErrors = false;
+
+      if (!hasTransferor) {
+        hasErrors = true;
+        if (titlesWrapper) {
+          titlesWrapper.classList.add('titles-has-transferor-error');
+        }
+        if (transferorErrorContainer) {
+          transferorErrorContainer.style.display = 'block';
+        }
+        if (errorSummaryTransfer) {
+          errorSummaryTransfer.style.display = 'list-item';
+        }
+      }
+
+      if (hasPartErrors) {
+        hasErrors = true;
+        if (errorSummaryPart) {
+          errorSummaryPart.style.display = 'list-item';
+          var link = errorSummaryPart.querySelector('a');
+          if (link && firstPartErrorId) {
+            link.setAttribute('href', '#' + firstPartErrorId);
+          }
+        }
+      }
+
+      if (hasErrors && errorSummary) {
+        errorSummary.style.display = 'block';
+        errorSummary.focus();
+      }
+
+      return !hasErrors;
+    }
+
+    if (saveButton) {
+      saveButton.addEventListener('click', function(e) {
+        var isValid = validateTitles();
+        if (!isValid) {
+          e.preventDefault();
+        }
+      });
+    }
+  })();
+</script>
+
+{% endblock %}
