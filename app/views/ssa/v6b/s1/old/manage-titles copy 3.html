@@ -1,0 +1,692 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+{% set alternativeBackLinkHref = "/saved-applications" %}
+
+{% block pageTitle %}
+  GOV.UK page template - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {# Error summary (hidden by default, shown by JS) #}
+      <div id="titles-error-summary"
+           class="govuk-error-summary"
+           data-module="govuk-error-summary"
+           style="display:none;"
+           tabindex="-1">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title">
+            There is a problem
+          </h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <li id="error-summary-transfer-item" style="display:none;">
+                <a href="#title-type-error">You must select at least one transferor title</a>
+              </li>
+              <li id="error-summary-part-item" style="display:none;">
+                <a href="#part-description-error">Give a brief description of the part affected</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h1 class="govuk-heading-xl">Manage your titles</h1>
+
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2">  Check title details
+      </h2>
+      <p class="govuk-body">
+        Your title numbers are displayed in the table - check the details carefully. You’ll need to assign at least one title as a transferor title. All the other titles must be assigned as ‘Related (whole)’ or ‘Related (part)’. If the title type is ‘Related (part) you must describe the parts affected. 
+      </p>
+      <p class="govuk-body">
+        Select ’Save and continue’ when you're happy that all the title details are correct.
+      </p>
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
+        Removing and adding titles
+      </h2>
+      <p class="govuk-body">
+        You can remove titles using the ‘Remove’ link. You can add titles using the ‘Add another title’ box. Remember there is an upper limit of 50 titles and a lower limit of 26.
+      </p>
+      <p class="govuk-body">
+        Select the ‘Remove all titles’ link if you need to replace all the titles shown here.
+      </p>
+
+    </div> <div class="govuk-grid-column-one-third">
+      <h2 class="govuk-heading-m">Title list options</h2>
+      <ul class="govuk-list">
+        <li>
+          <a href="#" id="download-list" class="govuk-link">Download this list</a>
+        </li>
+        <li>
+          <a href="#" class="govuk-link">Remove all titles</a>
+        </li>
+      </ul>
+    </div> </div><hr>
+
+  <br>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds search-container">
+
+      <h2 class="govuk-heading-m">Find a title in your list</h2>
+
+      <div class="govuk-form-group" style="margin-bottom: 0;">
+        <label class="govuk-label" for="find-title">Find title</label>
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+
+          <div style="display: flex; align-items: flex-start;">
+            <input class="govuk-input" id="find-title" name="find-title" type="text" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+            <button class="search-btn" type="button" style="margin-bottom: 0; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+              <svg aria-hidden="true" class="search-icon" fill="none" focusable="false" height="24" viewBox="0 0 27 27" width="24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12.0161" cy="12.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                <line stroke="currentColor" stroke-width="3" x1="17.8668" x2="26.4475" y1="17.3587" y2="25.9393"></line>
+              </svg>
+            </button>
+          </div>
+
+          <button class="govuk-button govuk-button--secondary" id="clear-search" type="button" style="margin-bottom: 0;">
+            Clear
+          </button>
+        </div>
+      </div> <br>
+
+    </div> <div class="govuk-grid-column-one-third add-to-list-container">
+
+      <h2 class="govuk-heading-m">Add another title</h2>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="manual-title-number">Title number</label>
+        <div class="input-wrapper">
+          <div class="input-with-button">
+            <input class="govuk-input govuk-input--width-9" id="manual-title-number" name="manual-title-number" type="text">
+            <button
+              class="govuk-button govuk-button--secondary"
+              id="add-manual-title"
+              type="button"
+              style="margin-bottom: 0; margin-top: -2px;">
+              Add to list
+            </button>
+          </div>
+        </div>
+      </div> </div> </div><div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <br>
+      <h2 class="govuk-heading-m"><span id="title-h2-count">30</span> titles in this application</h2>
+
+      {# START: FIX - Added govuk-form-group wrapper for error styling #}
+      <div id="transferor-error-group" class="govuk-form-group">
+        <p id="title-type-error" class="govuk-error-message" style="display:none;">
+          <span class="govuk-visually-hidden">Error:</span>
+          You must select at least one transferor title
+        </p>
+      {# END: FIX #}
+
+      <div class="table-container">
+        <div aria-labelledby="Caption01" role="region" tabindex="0">
+
+          <table id="table-myt" class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col" style="width: 10%;">Title number</th>
+                <th class="govuk-table__header" scope="col" style="width: 25%;">Property address</th>
+                <th class="govuk-table__header" scope="col" style="width: 30%;">
+                  Title type
+                  {# FIX - Removed the inline error message from the table header #}
+                </th>
+                <th class="govuk-table__header" scope="col" style="width: 20%;">Restrictions</th>
+                <th class="govuk-table__header" scope="col" style="width: 10%;">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody class="govuk-table__body" id="titles-table-body">
+              {% for i in range(1, 31) %}
+                {% set titleNumber = "AB" + (1000 + i).toString() %}
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">{{ titleNumber }}</td>
+                  <td class="govuk-table__cell">{{ 10 + i }} Example Street, City {{ i }}, AB{{ i }}{{ i }}CD</td>
+
+                  <td class="govuk-table__cell" style="vertical-align: top;" data-title-type>
+                    {# FIX - This govuk-form-group is where the error class needs to be applied for the radio group #}
+                    <div style="max-width: 340px;">
+                      <div class="govuk-form-group">
+                        <fieldset class="govuk-fieldset">
+                          <legend class="govuk-visually-hidden">Title type for {{ titleNumber }}</legend>
+
+                          <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                              <input class="govuk-radios__input"
+                                     id="transfer-{{ i }}"
+                                     name="title-type-{{ i }}"
+                                     type="radio"
+                                     value="Transfer">
+                              <label class="govuk-label govuk-radios__label" for="transfer-{{ i }}">Transferor</label>
+                            </div>
+
+                            <div class="govuk-radios__item">
+                              <input class="govuk-radios__input"
+                                     id="related-whole-{{ i }}"
+                                     name="title-type-{{ i }}"
+                                     type="radio"
+                                     value="Related whole"
+                                     checked>
+                              <label class="govuk-label govuk-radios__label" for="related-whole-{{ i }}">Related (whole)</label>
+                            </div>
+
+                            <div class="govuk-radios__item">
+                              <input class="govuk-radios__input"
+                                     id="related-part-{{ i }}"
+                                     name="title-type-{{ i }}"
+                                     type="radio"
+                                     value="Related part"
+                                     data-aria-controls="conditional-part-{{ i }}">
+                              <label class="govuk-label govuk-radios__label" for="related-part-{{ i }}">Related (part)</label>
+                            </div>
+
+                            <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-part-{{ i }}">
+                              {# FIX - This govuk-form-group is where the error class needs to be applied for the textarea #}
+                              <div class="govuk-form-group">
+                                <label class="govuk-label" for="part-description-{{ i }}">Describe the parts affected</label>
+                                <span id="part-description-hint-{{ i }}" class="govuk-hint">
+                                  For example, "Edged red on the plan dated DD/MM/YYYY."
+                                </span>
+                                <textarea class="govuk-textarea js-character-count"
+                                          id="part-description-{{ i }}"
+                                          name="part-description-{{ i }}"
+                                          rows="3"
+                                          aria-describedby="part-description-hint-{{ i }}"
+                                          maxlength="100"></textarea>
+                                <div id="part-description-info-{{ i }}" class="govuk-hint govuk-character-count__message">
+                                  You have 100 characters remaining
+                                </div>
+                              </div>
+                              <div class="govuk-inset-text">
+                                You will need to upload the plan later.
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td class="govuk-table__cell">
+                    {% if i == 3 or i == 7 %}
+                      <div class="govuk-warning-text govuk-warning-text--small-icon govuk-!-margin-bottom-1">
+                        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong class="govuk-warning-text__text">
+                          <span class="govuk-visually-hidden">Warning</span>
+                          Restrictions
+                        </strong>
+                      </div>
+                      <div class="govuk-warning-text govuk-warning-text--small-icon">
+                        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong class="govuk-warning-text__text">
+                          <span class="govuk-visually-hidden">Warning</span>
+                          Lender restriction
+                        </strong>
+                      </div>
+                    {% else %}
+                      <span class="govuk-body-s govuk-!-colour-muted" style="display: block; padding-top: 0.7em;">None</span>
+                    {% endif %}
+                  </td>
+
+                  <td class="govuk-table__cell">
+                    <a class="govuk-link remove-title" href="#" data-title="{{ titleNumber }}">Remove</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+      {# START: FIX - Closing the govuk-form-group wrapper #}
+      </div> 
+      {# END: FIX #}
+    </div> </div> <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <div id="table-footer">
+        <p class="govuk-body-s govuk-!-text-align-left text-align-centre-mob" id="title-count-display" data-total="30">
+          Showing <strong>1</strong> to <strong>30</strong> of <strong>30</strong> titles
+        </p>
+      </div></div> <div class="govuk-grid-column-one-half">
+      {# reserved for future pagination controls #}
+    </div></div><hr>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-!-margin-top-3">
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Remove all titles",
+          href: "/ssa/v6/s1/remove-all-titles",
+          classes: "govuk-button--warning"
+        }) }}
+
+        {{ govukButton({
+          text: "Save and continue",
+          attributes: { id: "continue-btn" },
+          type: "button"
+        }) }}
+      </div>
+
+    </div> </div></div><script>
+document.addEventListener('DOMContentLoaded', function () {
+  const searchButton = document.querySelector('.search-btn');
+  const searchInput = document.getElementById('find-title');
+  const clearSearchButton = document.getElementById('clear-search');
+  const tableBody = document.querySelector('.govuk-table__body');
+  const rowCountText = document.getElementById('title-count-display');
+
+  function applySearch() {
+    const searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    let visibleCount = 0;
+
+    const tableRows = tableBody.querySelectorAll('tr');
+
+    tableRows.forEach(row => {
+      const titleCell = row.querySelector('td:nth-child(1)');
+      const addressCell = row.querySelector('td:nth-child(2)');
+      const matches = (
+        titleCell.textContent.toLowerCase().includes(searchTerm) ||
+        addressCell.textContent.toLowerCase().includes(searchTerm)
+      );
+
+      const shouldShow = matches || !searchTerm;
+      row.style.display = shouldShow ? 'table-row' : 'none';
+      if (shouldShow) visibleCount++;
+    });
+
+    const totalCount = tableRows.length;
+
+    if (visibleCount > 0) {
+      const showingText = visibleCount === totalCount
+        ? `Showing <strong>1</strong> to <strong>${totalCount}</strong> of <strong>${totalCount}</strong> titles`
+        : `Showing <strong>${visibleCount}</strong> of <strong>${totalCount}</strong> titles`;
+      rowCountText.innerHTML = showingText;
+    } else {
+      rowCountText.innerHTML = `No matching titles found - showing 0 of ${totalCount} titles`;
+    }
+  }
+
+  if (searchButton && searchInput) {
+    searchButton.addEventListener('click', applySearch);
+    searchInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        applySearch();
+      }
+    });
+  }
+
+  if (clearSearchButton) {
+    clearSearchButton.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      applySearch();
+    });
+  }
+
+  applySearch();
+});
+</script>
+
+<script src="/govuk-frontend/govuk/all.js"></script>
+<script>
+  window.GOVUKFrontend.initAll();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const addButton = document.getElementById('add-manual-title');
+  const inputField = document.getElementById('manual-title-number');
+  const tableBody = document.getElementById('titles-table-body');
+  const h2CountText = document.getElementById('title-h2-count');
+  const countDisplay = document.getElementById('title-count-display');
+
+  function updateCounts() {
+    const rowCount = tableBody.querySelectorAll('tr').length;
+    h2CountText.textContent = rowCount;
+    countDisplay.innerHTML = `Showing <strong>1</strong> to <strong>${rowCount}</strong> of <strong>${rowCount}</strong> titles`;
+  }
+
+  function removeRow(titleNumber) {
+    const rows = tableBody.querySelectorAll('tr');
+    rows.forEach(row => {
+      const titleCell = row.querySelector('td:first-child');
+      if (titleCell && titleCell.textContent === titleNumber) {
+        tableBody.removeChild(row);
+      }
+    });
+    updateCounts();
+  }
+
+  addButton.addEventListener('click', function () {
+    const title = inputField.value.trim().toUpperCase();
+    if (!title) return;
+
+    const numberMatch = title.match(/\d+/);
+    const number = numberMatch ? Number(numberMatch[0]) : null;
+
+    const shortCode = number !== null
+      ? String(number).slice(-2)
+      : '00';
+
+    const address = number !== null
+      ? `${number} Example Street, City ${number}, AB${shortCode}${shortCode}CD`
+      : '[Enter address manually]';
+
+    const uid = Date.now();
+
+    const newRow = document.createElement('tr');
+    newRow.className = 'govuk-table__row';
+    newRow.innerHTML = `
+      <td class="govuk-table__cell">${title}</td>
+      <td class="govuk-table__cell">${address}</td>
+      <td class="govuk-table__cell" style="vertical-align: top;" data-title-type>
+        <div style="max-width: 340px;">
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-visually-hidden">Title type for ${title}</legend>
+              <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input"
+                         id="transfer-${uid}"
+                         name="title-type-${uid}"
+                         type="radio"
+                         value="Transfer">
+                  <label class="govuk-label govuk-radios__label" for="transfer-${uid}">Transfer</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input"
+                         id="related-whole-${uid}"
+                         name="title-type-${uid}"
+                         type="radio"
+                         value="Related whole"
+                         checked>
+                  <label class="govuk-label govuk-radios__label" for="related-whole-${uid}">Related (Whole)</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input"
+                         id="related-part-${uid}"
+                         name="title-type-${uid}"
+                         type="radio"
+                         value="Related part"
+                         data-aria-controls="conditional-part-${uid}">
+                  <label class="govuk-label govuk-radios__label" for="related-part-${uid}">Related (Part)</label>
+                </div>
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                     id="conditional-part-${uid}">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="part-description-${uid}">Describe the parts affected</label>
+                    <span id="part-description-hint-${uid}" class="govuk-hint">
+                      For example, "Edged red on the plan dated DD/MM/YYYY."
+                    </span>
+                    <textarea class="govuk-textarea js-character-count"
+                              id="part-description-${uid}"
+                              name="part-description-${uid}"
+                              rows="3"
+                              aria-describedby="part-description-hint-${uid}"
+                              maxlength="100"></textarea>
+                    <div id="part-description-info-${uid}" class="govuk-hint govuk-character-count__message">
+                      You have 100 characters remaining
+                    </div>
+                  </div>
+                  <div class="govuk-inset-text">
+                    You will need to upload the plan later.
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </td>
+      <td class="govuk-table__cell">
+        <span class="govuk-body-s govuk-!-colour-muted" style="display: block; padding-top: 0.7em;">None</span>
+      </td>
+      <td class="govuk-table__cell">
+        <a href="#" class="govuk-link remove-title" data-title="${title}">Remove</a>
+      </td>
+    `;
+
+    tableBody.appendChild(newRow);
+    inputField.value = '';
+    updateCounts();
+
+    window.GOVUKFrontend.initAll();
+  });
+
+  tableBody.addEventListener('click', function (e) {
+    if (e.target.classList.contains('remove-title')) {
+      e.preventDefault();
+      const title = e.target.getAttribute('data-title');
+      removeRow(title);
+    }
+  });
+
+  updateCounts();
+});
+</script>
+
+<script type="text/javascript">
+document.getElementById('download-list').addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const rows = document.querySelectorAll('#titles-table-body tr');
+  let csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += "Title number,Property address,Title type,Restrictions\n";
+
+  rows.forEach(row => {
+    const title = row.querySelector('td:nth-child(1)').innerText.trim();
+    const address = row.querySelector('td:nth-child(2)').innerText.trim();
+
+    const radioInputs = row.querySelectorAll('input[type="radio"]');
+    let titleType = '';
+    radioInputs.forEach(input => {
+      if (input.checked) titleType = input.value;
+    });
+
+    const restrictions = row.querySelector('td:nth-child(4)').innerText.trim();
+
+    csvContent += `"${title}","${address}","${titleType}","${restrictions}"\n`;
+  });
+
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "titles-list.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
+</script>
+
+<script>
+// Client-side validation for "Manage your titles"
+// 1) At least one title is marked as Transfer
+// 2) All "Related (Part)" titles have details in the conditional textarea
+document.addEventListener('DOMContentLoaded', function () {
+  const continueBtn = document.getElementById('continue-btn');
+  const errorSummary = document.getElementById('titles-error-summary');
+  const summaryTransferItem = document.getElementById('error-summary-transfer-item');
+  const summaryPartItem = document.getElementById('error-summary-part-item');
+  const inlineTransferError = document.getElementById('title-type-error');
+  const tableWrapper = document.getElementById('transferor-error-group'); // FIX - Added this variable
+
+  function clearErrors() {
+    if (errorSummary) {
+      errorSummary.style.display = 'none';
+    }
+    if (summaryTransferItem) {
+      summaryTransferItem.style.display = 'none';
+    }
+    if (summaryPartItem) {
+      summaryPartItem.style.display = 'none';
+    }
+    if (inlineTransferError) {
+      inlineTransferError.style.display = 'none';
+    }
+
+    // FIX - Corrected logic to remove error classes
+    if (tableWrapper) {
+      tableWrapper.classList.remove('govuk-form-group--error');
+    }
+
+    document.querySelectorAll('td[data-title-type] > div > .govuk-form-group').forEach(group => {
+      group.classList.remove('govuk-form-group--error');
+    });
+
+    document.querySelectorAll('.govuk-radios__conditional .govuk-form-group').forEach(group => {
+      group.classList.remove('govuk-form-group--error');
+    });
+    // END FIX
+
+    document.querySelectorAll('.govuk-textarea').forEach(textarea => {
+      textarea.classList.remove('govuk-textarea--error');
+    });
+
+    document.querySelectorAll('.part-inline-error').forEach(msg => {
+      msg.parentNode.removeChild(msg);
+    });
+
+    // Remove any previous id used for linking from the summary
+    const firstPartErrorEl = document.getElementById('part-description-error');
+    if (firstPartErrorEl && firstPartErrorEl.classList.contains('part-inline-error')) {
+      firstPartErrorEl.removeAttribute('id');
+    }
+  }
+
+  function validateTransferSelection() {
+    const rows = document.querySelectorAll('#titles-table-body tr');
+    let hasTransfer = false;
+
+    rows.forEach(row => {
+      const chosen = row.querySelector('input[type="radio"]:checked');
+      if (chosen && chosen.value === 'Transfer') {
+        hasTransfer = true;
+      }
+    });
+
+    if (!hasTransfer) {
+      if (inlineTransferError) {
+        inlineTransferError.style.display = 'block';
+      }
+      if (summaryTransferItem) {
+        summaryTransferItem.style.display = 'list-item';
+      }
+      // FIX - Apply error class to the table wrapper
+      if (tableWrapper) {
+        tableWrapper.classList.add('govuk-form-group--error');
+      }
+    } else {
+      // FIX - Ensure class is removed on success
+      if (tableWrapper) {
+        tableWrapper.classList.remove('govuk-form-group--error');
+      }
+    }
+
+    return hasTransfer;
+  }
+
+  function validatePartDescriptions() {
+    const rows = document.querySelectorAll('#titles-table-body tr');
+    let allPartsOk = true;
+    let firstInlineErrorSet = false;
+
+    rows.forEach(row => {
+      const chosen = row.querySelector('input[type="radio"]:checked');
+      const radioCellFormGroup = row.querySelector('td[data-title-type] > div > .govuk-form-group'); // Form group for the radio buttons
+      const textareaFormGroup = row.querySelector('.govuk-radios__conditional .govuk-form-group'); // Form group for the textarea
+
+      // Clear any previous error styling before validation
+      if (radioCellFormGroup) radioCellFormGroup.classList.remove('govuk-form-group--error');
+      if (textareaFormGroup) textareaFormGroup.classList.remove('govuk-form-group--error');
+
+      // Check for validation error
+      if (chosen && chosen.value === 'Related part') {
+        const textarea = row.querySelector('textarea[id^="part-description-"]');
+        if (!textarea || !textarea.value.trim()) {
+          allPartsOk = false;
+
+          // FIX - Apply error class to the radio fieldset wrapper
+          if (radioCellFormGroup) {
+              radioCellFormGroup.classList.add('govuk-form-group--error');
+          }
+          // FIX - Apply error class to the textarea's form group
+          if (textareaFormGroup) {
+              textareaFormGroup.classList.add('govuk-form-group--error');
+          }
+
+          if (textarea) {
+            textarea.classList.add('govuk-textarea--error');
+
+            let errorP = row.querySelector('.part-inline-error');
+            if (!errorP) {
+              errorP = document.createElement('p');
+              errorP.className = 'govuk-error-message part-inline-error';
+              errorP.innerHTML = '<span class="govuk-visually-hidden">Error:</span> Give a brief description of the part affected';
+              // FIX - Insert the error message before the textarea
+              textarea.parentNode.insertBefore(errorP, textarea);
+            }
+
+            if (!firstInlineErrorSet) {
+              errorP.id = 'part-description-error';
+              firstInlineErrorSet = true;
+            }
+          }
+        }
+      }
+    });
+
+    if (!allPartsOk) {
+      if (summaryPartItem) {
+        summaryPartItem.style.display = 'list-item';
+      }
+    }
+
+    return allPartsOk;
+  }
+
+  if (continueBtn) {
+    continueBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      clearErrors();
+
+      const transferOk = validateTransferSelection();
+      const partsOk = validatePartDescriptions();
+
+      if (!transferOk || !partsOk) {
+        if (
+          errorSummary &&
+          (
+            (summaryTransferItem && summaryTransferItem.style.display === 'list-item') ||
+            (summaryPartItem && summaryPartItem.style.display === 'list-item')
+          )
+        ) {
+          errorSummary.style.display = 'block';
+          errorSummary.focus();
+        }
+        return;
+      }
+
+      window.location.href = '/ssa/v6/s1/disclosable-overriding-interests';
+    });
+  }
+});
+</script>
+
+{% endblock %}

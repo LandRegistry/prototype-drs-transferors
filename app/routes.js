@@ -1039,6 +1039,90 @@ router.get('/ssa/v6/s1/select-transactions', function (req, res) {
 });
 
 
+// ---------------------------------------------------------
+// SSA v6b (S1) ROUTES (Variant B)
+// ---------------------------------------------------------
+
+router.get('/ssa/v6b/s1/1-digital-registration-service', function (req, res) {
+  res.render('ssa/v6b/s1/1-digital-registration-service');
+});
+
+router.get('/ssa/v6b/s1/2-application-reference', function (req, res) {
+  res.render('ssa/v6b/s1/2-application-reference');
+});
+
+router.post('/ssa/v6b/s1/2-application-reference', function (req, res) {
+  res.redirect('/ssa/v6b/s1/3-are-you-a-conveyancer');
+});
+
+router.get('/ssa/v6b/s1/3-are-you-a-conveyancer', function (req, res) {
+  res.render('ssa/v6b/s1/3-are-you-a-conveyancer');
+});
+
+router.post('/ssa/v6b/s1/3-are-you-a-conveyancer', function (req, res) {
+  res.redirect('/ssa/v6b/s1/4-application-about');
+});
+
+router.get('/ssa/v6b/s1/4-application-about', function (req, res) {
+  res.render('ssa/v6b/s1/4-application-about');
+});
+
+router.post('/ssa/v6b/s1/4-application-about', function (req, res) {
+  res.redirect('/ssa/v6b/s1/5-1-transferring-whole-or-part');
+});
+
+router.get('/ssa/v6b/s1/5-1-transferring-whole-or-part', function (req, res) {
+  res.render('ssa/v6b/s1/5-1-transferring-whole-or-part');
+});
+
+router.post('/ssa/v6b/s1/5-1-transferring-whole-or-part', function (req, res) {
+  const answer = req.session.data['transfer-type']; // same field name is fine
+
+  if (answer === 'part') {
+    res.redirect('/ssa/v6b/s1/task-list');
+  } else if (answer === 'whole') {
+    // keep your existing behaviour: whole goes to v5 task list
+    res.redirect('/ssa/v5/s1/task-list');
+  } else {
+    res.redirect('/ssa/v6b/s1/5-1-transferring-whole-or-part');
+  }
+});
+
+router.get('/ssa/v6b/s1/task-list', function (req, res) {
+  res.render('ssa/v6b/s1/task-list');
+});
+
+router.get('/ssa/v6b/s1/how-many-titles', function (req, res) {
+  res.render('ssa/v6b/s1/how-many-titles');
+});
+
+router.post('/ssa/v6b/s1/how-many-titles', function (req, res) {
+  const count = req.session.data['title-count'];
+
+  if (count === '26-199') {
+    res.redirect('/ssa/v6b/s1/enter-title-numbers');
+  } else if (count === '1-25') {
+    res.redirect('/ssa/v6b/s1/enter-title-numbers-non-ssa');
+  } else {
+    res.redirect('/ssa/v6b/s1/how-many-titles');
+  }
+});
+
+router.get('/ssa/v6b/s1/enter-title-numbers', function (req, res) {
+  res.render('ssa/v6b/s1/enter-title-numbers');
+});
+
+router.post('/ssa/v6b/s1/enter-title-numbers', function (req, res) {
+  res.redirect('/ssa/v6b/s1/manage-titles');
+});
+
+router.get('/ssa/v6b/s1/manage-titles', function (req, res) {
+  res.render('ssa/v6b/s1/manage-titles');
+});
+
+router.post('/ssa/v6b/s1/manage-titles', function (req, res) {
+  res.redirect('/ssa/v6b/s1/disclosable-overriding-interests');
+});
 
 
 

@@ -590,3 +590,14 @@ Apply a narrower width to the first column */
 #table-myt td[data-title-type] {
   padding: 0; 
 }
+
+/* Ensures the error border on the header and cells aligns correctly */
+  .table-myt-b .govuk-table__header.govuk-form-group--error,
+  .table-myt-b .govuk-table__cell.govuk-form-group--error {
+    border-left: 5px solid #d4351c;
+    padding-left: 15px !important; /* Prevents text from touching the red line */
+  }
+  /* Removes default cell padding-left when error is active to keep alignment */
+  .govuk-table__header, .govuk-table__cell {
+    border-left: 5px solid transparent;
+  }
