@@ -1,0 +1,302 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirm the new lease has a term of 7 years or more – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post" action="#" novalidate>
+
+      <h1 class="govuk-heading-xl">Add applicant</h1>
+
+      <p class="govuk-body">
+        Tell us who you're lodging the application for. If you're a conveyancer, this may be your client.
+        <br>
+        You can add more applicants in the next step.
+      </p>
+
+      <div class="govuk-!-margin-bottom-9"></div>
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="party_type-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-font-size-24">
+            Select applicant type
+          </legend>
+
+          <div id="party_type-hint" class="govuk-hint"></div>
+
+          <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
+
+            <!-- Private individual -->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input"
+                     id="party_type"
+                     name="party_type"
+                     type="radio"
+                     value="private_individual"
+                     aria-controls="conditional-party_type"
+                     aria-expanded="false">
+              <label class="govuk-label govuk-radios__label" for="party_type">
+                Private individual
+              </label>
+            </div>
+
+            <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-party_type">
+              <div class="govuk-hint">
+                Name must be exactly as it appears on documents lodged with this application
+              </div>
+
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="private_individual_forenames">Forenames</label>
+                <input class="govuk-input govuk-!-width-one-half"
+                       id="private_individual_forenames"
+                       name="private_individual_forenames"
+                       type="text"
+                       value="">
+              </div>
+
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="private_individual_surname">Surname</label>
+                <input class="govuk-input govuk-!-width-one-half"
+                       id="private_individual_surname"
+                       name="private_individual_surname"
+                       type="text"
+                       value="">
+              </div>
+            </div>
+
+            <!-- UK company -->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input"
+                     id="party_type-2"
+                     name="party_type"
+                     type="radio"
+                     value="uk_company"
+                     aria-controls="conditional-party_type-2"
+                     aria-expanded="false">
+              <label class="govuk-label govuk-radios__label" for="party_type-2">
+                UK company or LLP
+              </label>
+            </div>
+
+            <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-party_type-2">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="uk_company_name">Company name</label>
+                <div id="uk_company_name-hint" class="govuk-hint">
+                  Full name registered at Companies House
+                </div>
+                <input class="govuk-input govuk-!-width-one-half"
+                       id="uk_company_name"
+                       name="uk_company_name"
+                       type="text"
+                       value=""
+                       aria-describedby="uk_company_name-hint">
+              </div>
+
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="uk_company_number">Company number</label>
+                <div id="uk_company_number-hint" class="govuk-hint">
+                  Companies House registration number, including any prefix
+                </div>
+                <input class="govuk-input govuk-!-width-one-half"
+                       id="uk_company_number"
+                       name="uk_company_number"
+                       type="text"
+                       value=""
+                       aria-describedby="uk_company_number-hint">
+              </div>
+            </div>
+
+            <!-- Overseas company -->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input"
+                     id="party_type-3"
+                     name="party_type"
+                     type="radio"
+                     value="overseas_company"
+                     aria-controls="conditional-party_type-3"
+                     aria-expanded="false">
+              <label class="govuk-label govuk-radios__label" for="party_type-3">
+                Overseas company
+              </label>
+            </div>
+
+            <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-party_type-3">
+
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="overseas_company_name">Company name</label>
+                <div id="overseas_company_name-hint" class="govuk-hint">
+                  Company name as incorporated in its state of origin
+                </div>
+                <input class="govuk-input govuk-!-width-one-half"
+                       id="overseas_company_name"
+                       name="overseas_company_name"
+                       type="text"
+                       value=""
+                       aria-describedby="overseas_company_name-hint">
+              </div>
+
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="overseas_uk_company_number">UK company number (optional)</label>
+                <div id="overseas_uk_company_number-hint" class="govuk-hint">
+                  Number issued, if registered at Companies House, eg FC023966
+                </div>
+                <input class="govuk-input govuk-!-width-one-half"
+                       id="overseas_uk_company_number"
+                       name="overseas_uk_company_number"
+                       type="text"
+                       value=""
+                       aria-describedby="overseas_uk_company_number-hint">
+              </div>
+
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="overseas_territory">Territory of incorporation</label>
+                <div id="overseas_territory-hint" class="govuk-hint">
+                  Territory or country where the company was first incorporated, eg 'France' or 'Manitoba, Canada'
+                </div>
+                <select class="govuk-select govuk-input govuk-!-width-full"
+                        id="overseas_territory"
+                        name="overseas_territory"
+                        aria-describedby="overseas_territory-hint">
+                  <option value="">-Select from list-</option>
+                  <option value="france">France</option>
+                  <option value="germany">Germany</option>
+                  <option value="ireland">Ireland</option>
+                  <option value="poland">Poland</option>
+                  <option value="spain">Spain</option>
+                  <option value="united states of america">United States of America</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <!-- NEW: ROE-ID decision -->
+              <div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="roe-decision-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+      <h2 class="govuk-fieldset__heading">
+        Do you have a Register of Overseas Entity ID?
+      </h2>
+    </legend>
+
+    <div id="roe-decision-hint" class="govuk-hint">
+      If the overseas entity is exempt, you will need to upload evidence (OE1 or OE2) later in this application.
+    </div>
+
+    <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
+
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input"
+               id="roe-decision"
+               name="roeDecision"
+               type="radio"
+               value="hasRoeId"
+               data-aria-controls="conditional-roe-decision">
+        <label class="govuk-label govuk-radios__label" for="roe-decision">
+          Yes, I have an ROE-ID
+        </label>
+      </div>
+
+      <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-roe-decision">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="roe-id">
+            Register of Overseas Entity ID
+          </label>
+          <div id="roe-id-hint" class="govuk-hint">
+            For example OE123456
+          </div>
+          <input class="govuk-input govuk-!-width-one-half"
+                 id="roe-id"
+                 name="roeId"
+                 type="text"
+                 spellcheck="false"
+                 autocapitalize="characters"
+                 aria-describedby="roe-id-hint">
+        </div>
+      </div>
+
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input"
+               id="roe-decision-2"
+               name="roeDecision"
+               type="radio"
+               value="exempt"
+               data-aria-controls="conditional-roe-decision-2">
+        <label class="govuk-label govuk-radios__label" for="roe-decision-2">
+          No, this overseas entity is exempt
+        </label>
+      </div>
+
+      <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-roe-decision-2">
+        <p class="govuk-body">
+          You must upload exemption evidence (OE1 or OE2) on the Documents page before you can submit the application.
+        </p>
+      </div>
+
+    </div>
+  </fieldset>
+</div>
+
+
+              <!-- /NEW: ROE-ID decision -->
+
+            </div>
+
+            <!-- Other organisation -->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input"
+                     id="party_type-4"
+                     name="party_type"
+                     type="radio"
+                     value="other"
+                     aria-controls="conditional-party_type-4"
+                     aria-expanded="false">
+              <label class="govuk-label govuk-radios__label" for="party_type-4">
+                Other organisation like charity, council, government department
+              </label>
+            </div>
+
+            <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-party_type-4">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="other_organisation_name">Name of organisation</label>
+                <input class="govuk-input govuk-!-width-one-half"
+                       id="other_organisation_name"
+                       name="other_organisation_name"
+                       type="text"
+                       value="">
+              </div>
+            </div>
+
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-visually-hidden">Warning</span>
+          Naming errors lead to requisitions. By selecting 'Continue' you confirm the name is correct and consistent with supporting documents. If it isn't consistent, you must attach evidence of a name change.
+        </strong>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button" id="submit_button">
+        Continue
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}
