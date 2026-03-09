@@ -1337,12 +1337,21 @@ router.post('/sev/v-1-3/13-task-list-variant-documents-required-continue', funct
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
   req.session.data['applicationReference'] = req.body['sev_applicationReference']
   req.session.data['titleNumber'] = req.body['sev_titleNumber']
-  req.session.data['requiredDocumentFileName'] = req.body['sev_requiredDocumentFileName']
-  req.session.data['requiredDocumentCertification'] = req.body['sev_requiredDocumentCertification']
   return res.redirect('/sev/v-1-3/14b-attach-documents-required')
 })
 
-// 14. Attach documents optional question
+// 13b. Task list - documents required complete - Review application button POST
+router.post('/sev/v-1-3/13b-task-list-variant-documents-required-complete-continue', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['requiredDocumentFileName'] = req.body['sev_requiredDocumentFileName']
+  req.session.data['requiredDocumentCertification'] = req.body['sev_requiredDocumentCertification']
+  return res.redirect('/sev/v-1-3/16b-review-your-application-documents-required')
+})
+
+/// 14. Attach documents optional question
 // Re-saves sev_ protected values so they survive this POST
 // DP: Yes -> attach documents page
 // DP: No -> task list (documents not required state)
@@ -1351,15 +1360,12 @@ router.post('/sev/v-1-3/14-attach-documents-optional-question', function (req, r
   req.session.data['attachDocumentsOptionalChoice'] = attachDocumentsOptionalChoice
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
-
   if (attachDocumentsOptionalChoice === 'yes') {
     return res.redirect('/sev/v-1-3/14b-attach-documents-optional')
   }
-
   if (attachDocumentsOptionalChoice === 'no') {
     return res.redirect('/sev/v-1-3/15-task-list-variant-documents-not-required')
   }
-
   return res.redirect('/sev/v-1-3/14-attach-documents-optional-question')
 })
 
@@ -1381,7 +1387,7 @@ router.post('/sev/v-1-3/14b-attach-documents-required', function (req, res) {
   req.session.data['requiredDocumentCertification'] = req.body['sev_requiredDocumentCertification']
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
-  return res.redirect('/sev/v-1-3/13-task-list-variant-documents-required')
+  return res.redirect('/sev/v-1-3/13b-task-list-variant-documents-required-complete')
 })
 
 // 14c. Attach and certify document - GET
