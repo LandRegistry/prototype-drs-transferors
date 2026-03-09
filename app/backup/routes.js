@@ -1171,21 +1171,19 @@ router.post('/sev/v-1-3/5-tell-us-what-your-application-is-about', function (req
 })
 
 // 6. Check if you can use this application type
-// DP: both eligibility answers Yes -> Enter title number
-// DP: any answer No -> pre-check failure page
+// DP: all eligibility answers Yes -> Enter title number
+// DP: any answer No -> You cannot continue with this application
 router.post('/sev/v-1-3/6-check-if-you-can-use-this-application-type', function (req, res) {
   const singleTitle = req.body['singleTitle']
   const multipleProprietors = req.body['multipleProprietors']
-
   req.session.data['singleTitle'] = singleTitle
   req.session.data['multipleProprietors'] = multipleProprietors
-  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
-
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']  // ADD
   if (singleTitle === 'yes' && multipleProprietors === 'yes') {
-    return res.redirect('/sev/v-1-3/7-enter-title-number')
+    res.redirect('/sev/v-1-3/7-enter-title-number')
+  } else {
+    res.redirect('/sev/v-1-3/6a-you-cannot-continue-with-this-application')
   }
-
-  return res.redirect('/sev/v-1-3/you-cannot-apply-online-for-severance-of-joint-tenancy-variant-a-pre-check-failure')
 })
 
 // 7. Enter title number
