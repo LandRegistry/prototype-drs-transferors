@@ -1339,7 +1339,7 @@ router.post('/sev/v-1-3/13-task-list-variant-documents-required-continue', funct
   req.session.data['titleNumber'] = req.body['sev_titleNumber']
   req.session.data['requiredDocumentFileName'] = req.body['sev_requiredDocumentFileName']
   req.session.data['requiredDocumentCertification'] = req.body['sev_requiredDocumentCertification']
-  return res.redirect('/sev/v-1-3/16b-review-your-application-documents-required')
+  return res.redirect('/sev/v-1-3/14b-attach-documents-required')
 })
 
 // 14. Attach documents optional question
