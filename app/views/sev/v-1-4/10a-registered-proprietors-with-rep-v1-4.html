@@ -114,6 +114,9 @@
       </div>
 
       <h2 class="govuk-heading-m">Additional applicants</h2>
+      <p class="govuk-body">
+        For example, deputies, receivers or trustees in bankruptcy.
+      </p>
 
       <div class="govuk-summary-card govuk-!-margin-bottom-6">
         <div class="govuk-summary-card__title-wrapper">
@@ -168,11 +171,6 @@
         </div>
       </div>
 
-      <h2 class="govuk-heading-m">Add additional applicant</h2>
-
-      <p class="govuk-body">
-        Add a representative if one is For example, a deputy, receiver or trustee in bankruptcy.
-      </p>
 
       {{ govukButton({
         text: "Add another applicant",
@@ -183,7 +181,7 @@
       {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 
       {{ govukWarningText({
-        text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct and consistent with supporting documents. If it isn’t consistent, you must attach evidence of a name change."
+        text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all applicant names are correct and consistent with supporting documents. If it isn’t consistent, you must attach evidence of a name change."
       }) }}
 
       <form action="/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4" method="post">
