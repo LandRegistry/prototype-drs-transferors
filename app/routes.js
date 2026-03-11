@@ -1693,6 +1693,15 @@ router.post('/sev/v-1-4/11-who-is-applying-v1-4', function (req, res) {
   return res.redirect('/sev/v-1-4/12b-conveyancer-documents-certified-variant-not-all-v1-4')
 })
 
+// 11b. Who is applying - return from task list (conditional redirect)
+router.get('/sev/v-1-4/who-is-applying-return', function (req, res) {
+  if (req.session.data['sev_representativeApplying'] === 'yes') {
+    res.redirect('/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4')
+  } else {
+    res.redirect('/sev/v-1-4/10-registered-proprietors-v1-4')
+  }
+})
+
 // 12. Conveyancer documents certified - all proprietors v1-4
 router.post('/sev/v-1-4/12-conveyancer-documents-certified-variant-all-v1-4', function (req, res) {
   req.session.data['conveyancerCertifiedAll'] = req.body['conveyancerCertifiedAll']
