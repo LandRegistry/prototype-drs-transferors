@@ -1,0 +1,135 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Apply to register or update a title - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">Apply to register or update a title</h1>
+
+    <p class="govuk-body govuk-!-margin-bottom-4">
+      <strong>Application incomplete</strong>
+    </p>
+
+    <p class="govuk-body">You've completed 1 of 2 sections</p>
+
+    <h2 class="govuk-heading-m">1. Application details</h2>
+
+    <ul class="govuk-task-list">
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          <a href="/sev/v-1-4/2-enter-your-reference" class="govuk-link">Enter your reference</a>
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag">Completed</strong>
+        </div>
+      </li>
+
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          <a href="/sev/v-1-4/7-enter-title-number" class="govuk-link">Enter title numbers</a>
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag">Completed</strong>
+        </div>
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">2. Transaction details</h2>
+
+    <h3 class="govuk-heading-m">Single form: Severance of joint tenancy</h3>
+
+    <ul class="govuk-task-list">
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          <a href="/sev/v-1-4/10-registered-proprietors" class="govuk-link">Who is applying</a>
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag">Completed</strong>
+        </div>
+      </li>
+
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          <a href="/sev/v-1-4/14b-attach-documents-required" class="govuk-link">Attach documents</a>
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag">Completed</strong>
+        </div>
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">3. Review and submit</h2>
+
+    <ul class="govuk-task-list govuk-!-margin-bottom-6">
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint">
+          <a href="/sev/v-1-4/16b-review-your-application-documents-required" class="govuk-link">Review application</a>
+        </div>
+        <div class="govuk-task-list__status">
+          <strong class="govuk-tag govuk-tag--grey">Not complete</strong>
+        </div>
+      </li>
+    </ul>
+
+    <form action="/sev/v-1-4/13b-task-list-variant-documents-required-complete-continue" method="post">
+      <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+      <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+      <input type="hidden" name="sev_requiredDocumentFileName" value="{{ data['requiredDocumentFileName'] }}">
+      <input type="hidden" name="sev_requiredDocumentCertification" value="{{ data['requiredDocumentCertification'] }}">
+      <input type="hidden" name="sev_representativeApplying" value="{{ data['sev_representativeApplying'] }}">
+      <input type="hidden" name="sev_repForenames" value="{{ data['sev_repForenames'] }}">
+      <input type="hidden" name="sev_repSurname" value="{{ data['sev_repSurname'] }}">
+      <input type="hidden" name="sev_repCapacity" value="{{ data['sev_repCapacity'] }}">
+      <input type="hidden" name="sev_transferorType" value="{{ data['sev_transferorType'] }}">
+      {% if data['applicants'] %}
+        {% set apList = data['applicants'] if data['applicants'] is iterable and data['applicants'] is not string else [data['applicants']] %}
+        {% for ap in apList %}
+          <input type="hidden" name="sev_applicants" value="{{ ap }}">
+        {% endfor %}
+      {% endif %}
+
+      {{ govukButton({
+        text: "Review application"
+      }) }}
+
+    </form>
+
+    {{ govukInsetText({
+      text: "To avoid requisitions, attach all relevant documents."
+    }) }}
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <ul class="govuk-list task-list-side-bar">
+      <li>
+        <strong>Your reference</strong>
+        <br>
+        {{ data["sev_applicationReference"] or data["applicationReference"] }}
+      </li>
+      <li>
+        <strong>Title numbers</strong>
+        <br>
+        {{ data["sev_titleNumber"] or data["titleNumber"] }}
+      </li>
+      <li>
+        <a class="govuk-link" href="#">Save application and exit</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

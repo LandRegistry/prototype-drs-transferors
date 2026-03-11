@@ -1,0 +1,109 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  {% if data["applicantsError"] %}Error: {% endif %}Who is applying? - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "/sev/v-1-4/9-task-list-transaction-details"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if data["applicantsError"] %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: [
+            {
+              text: "Select at least one applicant",
+              href: "#applicant-burt"
+            }
+          ]
+        }) }}
+      {% endif %}
+
+      <span class="govuk-caption-xl">Single transaction application: Severance of joint tenancy</span>
+
+      <h1 class="govuk-heading-xl">Who is applying?</h1>
+
+      <form action="/sev/v-1-4/11-who-is-applying-v1-4" method="post">
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+        <input type="hidden" name="sev_representativeApplying" value="{{ data['sev_representativeApplying'] }}">
+        <input type="hidden" name="sev_repForenames" value="{{ data['sev_repForenames'] }}">
+        <input type="hidden" name="sev_repSurname" value="{{ data['sev_repSurname'] }}">
+        <input type="hidden" name="sev_repCapacity" value="{{ data['sev_repCapacity'] }}">
+        <input type="hidden" name="sev_transferorType" value="{{ data['sev_transferorType'] }}">
+
+        <div class="govuk-form-group {% if data['applicantsError'] %}govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend">
+              <p class="govuk-body">
+                Select which registered proprietors or their representatives are applying.
+              </p>
+            </legend>
+
+            {% if data["applicantsError"] %}
+              <p id="applicants-error" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> Select at least one applicant
+              </p>
+            {% endif %}
+
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes"{% if data['applicantsError'] %} aria-describedby="applicants-error"{% endif %}>
+
+              <div class="govuk-checkboxes__item">
+                <input
+                  class="govuk-checkboxes__input"
+                  id="applicant-burt"
+                  name="applicants"
+                  type="checkbox"
+                  value="burt">
+                <label class="govuk-label govuk-checkboxes__label" for="applicant-burt">
+                  Burt Dowd
+                </label>
+              </div>
+
+              <div class="govuk-checkboxes__item">
+                <input
+                  class="govuk-checkboxes__input"
+                  id="applicant-sophie"
+                  name="applicants"
+                  type="checkbox"
+                  value="sophie">
+                <label class="govuk-label govuk-checkboxes__label" for="applicant-sophie">
+                  Sophie Green
+                </label>
+              </div>
+
+              {% if data['sev_representativeApplying'] === 'yes' %}
+                <div class="govuk-checkboxes__item">
+                  <input
+                    class="govuk-checkboxes__input"
+                    id="applicant-rep"
+                    name="applicants"
+                    type="checkbox"
+                    value="rep">
+                  <label class="govuk-label govuk-checkboxes__label" for="applicant-rep">
+                    {{ data['sev_repForenames'] }} {{ data['sev_repSurname'] }} ({{ data['sev_repCapacity'] }})
+                  </label>
+                </div>
+              {% endif %}
+
+            </div>
+          </fieldset>
+        </div>
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

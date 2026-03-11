@@ -1,0 +1,275 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Review your application - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "/sev/v-1-4/13b-task-list-variant-documents-required-complete"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+{# ── Resolve which applicants were selected ── #}
+{# Nunjucks-safe: convert applicants to a comma-joined string then use string search #}
+{% set apRaw = data["applicants"] %}
+{% if apRaw is string %}
+  {% set apStr = apRaw %}
+{% elif apRaw %}
+  {% set apStr = apRaw | join(",") %}
+{% else %}
+  {% set apStr = "" %}
+{% endif %}
+{# If nothing was selected (empty string) default to showing both RPs #}
+{% set showBurt   = (apStr == "") or ("burt"   in apStr) %}
+{% set showSophie = (apStr == "") or ("sophie" in apStr) %}
+{% set showRep    = ("rep" in apStr) %}
+
+{# ── Rep display name ── #}
+{% set repDisplayName = data["sev_repForenames"] + " " + data["sev_repSurname"] if (data["sev_repForenames"] and data["sev_repSurname"]) else "Additional applicant" %}
+{% set repTypeDisplay = "Private individual" %}
+{% if data["sev_transferorType"] == "uk-company-llp" %}{% set repTypeDisplay = "UK company or LLP" %}{% endif %}
+{% if data["sev_transferorType"] == "overseas-company" %}{% set repTypeDisplay = "Overseas company" %}{% endif %}
+{% if data["sev_transferorType"] == "other-organisation" %}{% set repTypeDisplay = "Other organisation" %}{% endif %}
+
+{# ── Title / property lookup ── #}
+{% set titleRef = data["titleNumber"] or data["sev_titleNumber"] %}
+{% set propertyDescription = "Land on the north side of 42 Test Road, Darlington (DL1 1BD)" %}
+{% if titleRef == "DN200" %}{% set propertyDescription = "Flat 2, 18 Market Street, Leeds (LS1 4AB)" %}{% endif %}
+{% if titleRef == "DN300" %}{% set propertyDescription = "1 Station Cottages, York Road, Selby (YO8 8AA)" %}{% endif %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <h1 class="govuk-heading-xl">Review your application</h1>
+
+    {# Application details #}
+    <div class="govuk-grid-row application-summary-change-header govuk-!-margin-top-6">
+      <h2 class="govuk-heading-l govuk-grid-column-three-quarters">Application details</h2>
+      <div class="govuk-grid-column-one-quarter change-link">
+        <a href="/sev/v-1-4/2-enter-your-reference" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19">
+          Change<span class="govuk-visually-hidden"> application details</span>
+        </a>
+      </div>
+    </div>
+
+    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Your reference</dt>
+        <dd class="govuk-summary-list__value">{{ data["applicationReference"] or data["sev_applicationReference"] }}</dd>
+      </div>
+      <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+        <dt class="govuk-summary-list__key">Application type</dt>
+        <dd class="govuk-summary-list__value">Single transaction application: Severance of joint tenancy</dd>
+      </div>
+    </dl>
+
+    {# Property details #}
+    <div class="govuk-grid-row application-summary-change-header govuk-!-margin-top-9">
+      <h2 class="govuk-heading-l govuk-grid-column-three-quarters">Property details</h2>
+      <div class="govuk-grid-column-one-quarter change-link">
+        <a href="/sev/v-1-4/7-enter-title-number" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19">
+          Change<span class="govuk-visually-hidden"> property details</span>
+        </a>
+      </div>
+    </div>
+
+    <table class="govuk-table govuk-!-margin-bottom-9">
+      <caption class="govuk-table__caption govuk-visually-hidden">Property details</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-!-width-one-half">Title number</th>
+          <th scope="col" class="govuk-table__header govuk-!-width-one-half">Property description</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">{{ titleRef }}</td>
+          <td class="govuk-table__cell">{{ propertyDescription }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    {# Applicants #}
+    <div class="govuk-grid-row application-summary-change-header govuk-!-margin-top-9">
+      <h2 class="govuk-heading-l govuk-grid-column-three-quarters">Applicants</h2>
+      <div class="govuk-grid-column-one-quarter change-link">
+        <a href="/sev/v-1-4/11-who-is-applying-v1-4" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19">
+          Change<span class="govuk-visually-hidden"> applicant details</span>
+        </a>
+      </div>
+    </div>
+
+    <table class="govuk-table govuk-!-margin-bottom-9">
+      <caption class="govuk-table__caption govuk-visually-hidden">Applicant details</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Applicant type</th>
+          <th scope="col" class="govuk-table__header">Full name</th>
+          <th scope="col" class="govuk-table__header">Company number</th>
+          <th scope="col" class="govuk-table__header">Territory of incorporation</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% if showBurt %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Private individual</td>
+            <td class="govuk-table__cell">Burt Dowd</td>
+            <td class="govuk-table__cell">N/A</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+        {% endif %}
+        {% if showSophie %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Private individual</td>
+            <td class="govuk-table__cell">Sophie Green</td>
+            <td class="govuk-table__cell">N/A</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+        {% endif %}
+        {% if showRep %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">{{ repTypeDisplay }} (representative)</td>
+            <td class="govuk-table__cell">{{ repDisplayName }}</td>
+            <td class="govuk-table__cell">N/A</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+
+    {# Transactions #}
+    <div class="govuk-grid-row application-summary-change-header govuk-!-margin-top-9">
+      <h2 class="govuk-heading-l govuk-grid-column-three-quarters">Transactions</h2>
+      <div class="govuk-grid-column-one-quarter change-link">
+        <a href="/sev/v-1-4/12-conveyancer-documents-certified-variant-all-v1-4" class="govuk-link govuk-link--no-visited-state govuk-!-font-size-19">
+          Change<span class="govuk-visually-hidden"> transaction details</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="govuk-!-margin-bottom-9">
+      <h3 class="govuk-heading-m">Single transaction application: Severance of joint tenancy</h3>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-3">
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+          <dt class="govuk-summary-list__key">Price/Value (£)</dt>
+          <dd class="govuk-summary-list__value">Not provided</dd>
+        </div>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+          <dt class="govuk-summary-list__key">Fee (£)</dt>
+          <dd class="govuk-summary-list__value">0</dd>
+        </div>
+      </dl>
+
+      {% if data["requiredDocumentFileName"] %}
+        <h4 class="govuk-heading-m govuk-!-margin-top-6 govuk-!-margin-bottom-1">Attached documents</h4>
+        <table class="govuk-table govuk-!-margin-bottom-2">
+          <caption class="govuk-table__caption govuk-visually-hidden">Attached documents</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Document type</th>
+              <th scope="col" class="govuk-table__header">Certification</th>
+              <th scope="col" class="govuk-table__header">File name</th>
+              <th scope="col" class="govuk-table__header"></th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Notice of Severance of Joint Tenancy</td>
+              <td class="govuk-table__cell">{{ data["requiredDocumentCertification"] or "" }}</td>
+              <td class="govuk-table__cell">{{ data["requiredDocumentFileName"] }}</td>
+              <td class="govuk-table__cell">
+                <a href="/sev/v-1-4/14b-attach-documents-required" class="govuk-link govuk-link--no-visited-state">Change</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      {% else %}
+        <dl class="govuk-summary-list govuk-!-margin-top-6">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Attached documents</dt>
+            <dd class="govuk-summary-list__value">No documents attached</dd>
+            <dd class="govuk-summary-list__actions">
+              <a href="/sev/v-1-4/14b-attach-documents-required" class="govuk-link govuk-link--no-visited-state">
+                Change<span class="govuk-visually-hidden"> attached documents</span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+      {% endif %}
+    </div>
+
+    <form method="post" action="/sev/v-1-4/16b-review-your-application-documents-required" novalidate>
+
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-0">Your contact email for this application</h2>
+
+      {{ govukRadios({
+        idPrefix: "email",
+        name: "email",
+        value: data["email"] or "corres@landregistry.gov.uk",
+        fieldset: {
+          legend: {
+            text: "Choose where you want us to send correspondence or requisitions.",
+            classes: "govuk-caption-m govuk-!-margin-bottom-4"
+          }
+        },
+        items: [
+          { value: "corres@landregistry.gov.uk", text: "corres@landregistry.gov.uk" },
+          { value: "cmuser1@landregistry.gov.uk", text: "cmuser1@landregistry.gov.uk" },
+          {
+            value: "other",
+            text: "Other",
+            conditional: {
+              html: govukInput({
+                id: "alternative_email",
+                name: "alternative_email",
+                label: { text: "Enter email address" },
+                classes: "govuk-!-width-one-half",
+                value: data["alternative_email"]
+              })
+            }
+          }
+        ]
+      }) }}
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+          <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Declaration</h2>
+
+          {{ govukDetails({
+            summaryText: "Warning statement",
+            html: '
+              <p class="govuk-body">Section 77 of the Land Registration Act 2002 imposes a duty not to apply for the entry of a restriction without reasonable cause, anyone in breach of this duty may be liable in damages to anyone who suffers loss in consequence.</p>
+              <p class="govuk-body">If you dishonestly enter information or make a statement that you know is, or might be, untrue or misleading, and intend by doing so to make a gain for yourself or another person, or to cause loss or the risk of loss to another person, you may commit the offence of fraud under section 1 of the Fraud Act 2006, the maximum penalty for which is 10 years imprisonment or an unlimited fine, or both.</p>
+              <p class="govuk-body">Failure to complete this form with proper care may result in a loss of protection under the Land Registration Act 2002 if, as a result, a mistake is made in the register.</p>
+              <p class="govuk-body">Under section 66 of the Land Registration Act 2002 most documents (including this form) kept by the registrar relating to an application to the registrar or referred to in the register are open to public inspection and copying. If you believe a document contains prejudicial information, you may apply for that part of the document to be made exempt using Form EX1, under rule 136 of the Land Registration Rules 2003.</p>
+            '
+          }) }}
+
+          <h2 class="govuk-heading-l govuk-!-margin-top-7 govuk-!-margin-bottom-2">Acknowledgement of SEV entry</h2>
+
+          {{ govukWarningText({
+            text: "The applicant applies for the following restriction to be entered in the register of the above title(s): No disposition by a sole proprietor of the registered estate (except a trust corporation) under which capital money arises is to be registered unless authorised by an order of the court.",
+            iconFallbackText: "Important"
+          }) }}
+
+          <p class="govuk-body">
+            By submitting this application you are confirming you have read and understood the warning statement and the acknowledgement of SEV entry.
+          </p>
+
+          {{ govukButton({ text: "Confirm and submit" }) }}
+
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

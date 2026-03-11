@@ -1,0 +1,98 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Attach documents (optional) - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "/sev/v-1-4/13-task-list-variant-documents-optional"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-l">Single transaction application: Severance of joint tenancy</span><br>
+
+      <h1 class="govuk-heading-xl">Attach documents (optional)</h1>
+
+      <p class="govuk-body">
+        Documents you may need to attach if relevant to your application.
+      </p>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Category</th>
+            <th scope="col" class="govuk-table__header">Document type</th>
+            <th scope="col" class="govuk-table__header">Certification</th>
+            <th scope="col" class="govuk-table__header">File name</th>
+            <th scope="col" class="govuk-table__header">Options</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Evidence</td>
+            <td class="govuk-table__cell">Notice of Severance of Joint Tenancy</td>
+            <td class="govuk-table__cell">{{ data["optionalDocumentCertification"] or "" }}</td>
+            <td class="govuk-table__cell">{{ data["optionalDocumentFileName"] or "" }}</td>
+            <td class="govuk-table__cell">
+              <a class="govuk-link" href="/sev/v-1-4/14-c-attach-and-certify-document">Attach</a>
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Evidence</td>
+            <td class="govuk-table__cell">Acknowledgement of receipt</td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"><a class="govuk-link" href="#">Attach</a></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Evidence</td>
+            <td class="govuk-table__cell">Certificate of service</td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"><a class="govuk-link" href="#">Attach</a></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Evidence</td>
+            <td class="govuk-table__cell">Evidence of reasonable steps taken to serve notice</td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"><a class="govuk-link" href="#">Attach</a></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Other</td>
+            <td class="govuk-table__cell">Other supporting evidence</td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"><a class="govuk-link" href="#">Attach</a></td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Other</td>
+            <td class="govuk-table__cell">Cover letter or explanation</td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"></td>
+            <td class="govuk-table__cell"><a class="govuk-link" href="#">Attach</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="#">Attach another type of document</a>
+      </p>
+
+      <form action="/sev/v-1-4/14b-attach-documents-optional" method="post">
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+        <input type="hidden" name="sev_optionalDocumentFileName" value="{{ data['optionalDocumentFileName'] }}">
+        <input type="hidden" name="sev_optionalDocumentCertification" value="{{ data['optionalDocumentCertification'] }}">
+        {{ govukButton({ text: "Continue" }) }}
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

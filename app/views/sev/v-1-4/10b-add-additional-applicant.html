@@ -1,0 +1,98 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Add an additional applicant – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-xl">Single form: Severance of joint tenancy</span>
+
+      <h1 class="govuk-heading-xl">Add an additional applicant</h1>
+
+      <p class="govuk-body">Select the type of transferor and enter their name.</p>
+
+      <form action="/sev/v-1-4/10b-add-additional-applicant" method="post">
+
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+
+        {% from "govuk/components/radios/macro.njk" import govukRadios %}
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+
+        {{ govukRadios({
+          idPrefix: "sev_transferorType",
+          name: "sev_transferorType",
+          value: data["sev_transferorType"],
+          fieldset: {
+            legend: {
+              text: "Select transferor type",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "private-individual",
+              text: "Private individual",
+              hint: {
+                text: "Name must be exactly as it appears on documents lodged with this application."
+              },
+              conditional: {
+                html: govukInput({
+                  label: { text: "Forenames" },
+                  id: "rep-forenames",
+                  name: "sev_repForenames",
+                  value: data["sev_repForenames"],
+                  classes: "govuk-input--width-20"
+                }) + govukInput({
+                  label: { text: "Surname" },
+                  id: "rep-surname",
+                  name: "sev_repSurname",
+                  value: data["sev_repSurname"],
+                  classes: "govuk-input--width-20"
+                })
+              }
+            },
+            {
+              value: "uk-company-llp",
+              text: "UK company or LLP"
+            },
+            {
+              value: "overseas-company",
+              text: "Overseas company"
+            },
+            {
+              value: "other-organisation",
+              text: "Other organisation like charity, council, government department"
+            }
+          ]
+        }) }}
+
+        {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+        {{ govukWarningText({
+          text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct and consistent with supporting documents. If it isn't consistent, you must attach evidence of a name change.",
+          iconFallbackText: "Warning"
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue"
+          }) }}
+          <a class="govuk-link" href="/sev/v-1-4/10-registered-proprietors-v1-4">Cancel</a>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

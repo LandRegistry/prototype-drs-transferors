@@ -1433,4 +1433,433 @@ router.post('/sev/v-1-3/16b-review-your-application-documents-required', functio
   return res.redirect('/sev/v-1-3/17-confirmation')
 })
 
+// ============================================================
+
+// SEV - v-1-4 (full block)
+// ---------------------------------------------------------
+
+// 2. Enter your reference
+// Saves reference under both plain and protected sev_ key
+router.post('/sev/v-1-4/2-enter-your-reference', function (req, res) {
+  req.session.data['applicationReference'] = req.body['applicationReference']
+  req.session.data['sev_applicationReference'] = req.body['applicationReference']
+  res.redirect('/sev/v-1-4/3-are-you-a-conveyancer')
+})
+
+// 3. Are you a conveyancer?
+// Yes -> continue to developer application check
+// No -> placeholder non-conveyancer branch (404 for now)
+router.post('/sev/v-1-4/3-are-you-a-conveyancer', function (req, res) {
+  const conveyancer = req.body['conveyancer']
+  req.session.data['conveyancer'] = conveyancer
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']  // ADD
+  if (conveyancer === 'yes') { res.redirect('/sev/v-1-4/4-is-this-a-developer-application') }
+  else if (conveyancer === 'no') { res.redirect('/404') }
+  else { res.redirect('/sev/v-1-4/3-are-you-a-conveyancer') }
+})
+
+// 4. Is this a developer application?
+// No branching logic - always continues to next page
+router.post('/sev/v-1-4/4-is-this-a-developer-application', function (req, res) {
+  req.session.data['developerApplication'] = req.body['developerApplication']
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']  // ADD
+  res.redirect('/sev/v-1-4/5-tell-us-what-your-application-is-about')
+})
+
+// 5. Tell us what your application is about
+// SEV radio -> eligibility check
+// Anything else -> 404 for now
+router.post('/sev/v-1-4/5-tell-us-what-your-application-is-about', function (req, res) {
+  const applicationType = req.body['application-type']
+  req.session.data['application-type'] = applicationType
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']  // ADD
+  switch (applicationType) {
+    case 'single-transaction-application-severance-of-joint-tenancy':
+      res.redirect('/sev/v-1-4/6-check-if-you-can-use-this-application-type'); break
+    default: res.redirect('/404'); break
+  }
+})
+
+// 6. Check if you can use this application type
+// DP: both eligibility answers Yes -> Enter title number
+// DP: any answer No -> pre-check failure page
+router.post('/sev/v-1-4/6-check-if-you-can-use-this-application-type', function (req, res) {
+  const singleTitle = req.body['singleTitle']
+  const multipleProprietors = req.body['multipleProprietors']
+
+  req.session.data['singleTitle'] = singleTitle
+  req.session.data['multipleProprietors'] = multipleProprietors
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+
+  if (singleTitle === 'yes' && multipleProprietors === 'yes') {
+    return res.redirect('/sev/v-1-4/7-enter-title-number')
+  }
+
+  return res.redirect('/sev/v-1-4/you-cannot-apply-online-for-severance-of-joint-tenancy-variant-a-pre-check-failure')
+})
+
+// 7. Enter title number
+// Saves title number under both plain and protected sev_ key
+// DP: accepted titles (DN100, DN200, DN300) -> Title details
+// DP: anything else -> post-check failure page
+router.post('/sev/v-1-4/7-enter-title-number', function (req, res) {
+  const titleNumberRaw = req.body['titleNumber'] || ''
+  const titleNumber = titleNumberRaw.trim().toUpperCase()
+
+  req.session.data['titleNumber'] = titleNumber
+  req.session.data['sev_titleNumber'] = titleNumber
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']  // ADD THIS
+
+  const acceptedTitles = ['DN100', 'DN200', 'DN300']
+
+  if (!acceptedTitles.includes(titleNumber)) {
+    return res.redirect('/sev/v-1-4/you-cannot-apply-online-for-severance-of-joint-tenancy-variant-b-post-check-failure')
+  }
+
+  return res.redirect('/sev/v-1-4/8-title-details')
+})
+
+// 8. Title details
+// No branching - always continues to task list
+router.post('/sev/v-1-4/8-title-details', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  res.redirect('/sev/v-1-4/9-task-list-transaction-details')
+})
+
+// 9. Task list - transaction details - Continue button POST
+// Re-saves sev_ protected values so the Kit cannot wipe them
+// Always continues to registered proprietors
+router.post('/sev/v-1-4/9-task-list-transaction-details-continue', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  res.redirect('/sev/v-1-4/10-registered-proprietors-v1-4')
+})
+
+// 10. Registered proprietors v1-4 (no representative question)
+// Continue sets representativeApplying = no via hidden field
+router.post('/sev/v-1-4/10-registered-proprietors-v1-4', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_representativeApplying'] = 'no'
+  return res.redirect('/sev/v-1-4/11-who-is-applying-v1-4')
+})
+
+// 10a. Registered proprietors with rep v1-4
+// Continue sets representativeApplying = yes via hidden field
+// 10e. Remove additional applicant — confirmation page (GET)
+router.get('/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4-remove', function (req, res) {
+  res.render('sev/v-1-4/10e-confirm-remove-additional-applicant')
+})
+
+// 10e. Remove additional applicant — confirmed (POST)
+// Clears all rep session data and routes back to the clean applicant details page
+router.post('/sev/v-1-4/10e-confirm-remove-additional-applicant', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+
+  // Clear representative data
+  req.session.data['sev_representativeApplying'] = 'no'
+  req.session.data['sev_repForenames'] = ''
+  req.session.data['sev_repSurname'] = ''
+  req.session.data['sev_repCapacity'] = ''
+  req.session.data['sev_transferorType'] = ''
+
+  return res.redirect('/sev/v-1-4/10-registered-proprietors-v1-4')
+})
+
+router.post('/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_representativeApplying'] = 'yes'
+  req.session.data['sev_repForenames'] = req.body['sev_repForenames']
+  req.session.data['sev_repSurname'] = req.body['sev_repSurname']
+  req.session.data['sev_repCapacity'] = req.body['sev_repCapacity']
+  req.session.data['sev_transferorType'] = req.body['sev_transferorType']
+  return res.redirect('/sev/v-1-4/11-who-is-applying-v1-4')
+})
+
+// -------------------------------------------------------
+// SEV v-1-4: Add additional applicant sub-flow
+// Flow: add-additional-applicant
+//    -> select-capacity
+//    -> representative-added-confirmation (cannot be processed instantly)
+//    -> 10a-registered-proprietors-with-rep-v1-4
+// -------------------------------------------------------
+
+// Add an additional applicant
+router.get('/sev/v-1-4/10b-add-additional-applicant', function (req, res) {
+  res.render('sev/v-1-4/10b-add-additional-applicant')
+})
+
+router.post('/sev/v-1-4/10b-add-additional-applicant', function (req, res) {
+  const sev_transferorType = req.body['sev_transferorType']
+  req.session.data['sev_transferorType'] = sev_transferorType
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+
+  // Only save name fields for private individual - other types post empty strings
+  // from the hidden conditional inputs which would wipe a previously entered name
+  if (sev_transferorType === 'private-individual') {
+    req.session.data['sev_repForenames'] = req.body['sev_repForenames']
+    req.session.data['sev_repSurname'] = req.body['sev_repSurname']
+  }
+
+  if (!sev_transferorType) {
+    return res.redirect('/sev/v-1-4/10b-add-additional-applicant')
+  }
+
+  return res.redirect('/sev/v-1-4/10c-select-capacity')
+})
+
+// Select capacity
+router.get('/sev/v-1-4/10c-select-capacity', function (req, res) {
+  res.render('sev/v-1-4/10c-select-capacity')
+})
+
+router.post('/sev/v-1-4/10c-select-capacity', function (req, res) {
+  req.session.data['sev_repCapacity'] = req.body['sev_repCapacity']
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_repForenames'] = req.body['sev_repForenames']
+  req.session.data['sev_repSurname'] = req.body['sev_repSurname']
+  req.session.data['sev_transferorType'] = req.body['sev_transferorType']
+
+  if (!req.body['sev_repCapacity']) {
+    return res.redirect('/sev/v-1-4/10c-select-capacity')
+  }
+
+  return res.redirect('/sev/v-1-4/10d-representative-added-confirmation')
+})
+
+// Your application cannot be processed instantly
+router.get('/sev/v-1-4/10d-representative-added-confirmation', function (req, res) {
+  res.render('sev/v-1-4/10d-representative-added-confirmation')
+})
+
+router.post('/sev/v-1-4/10d-representative-added-confirmation', function (req, res) {
+  // Set the representative flag - this carries through to documents routing downstream
+  req.session.data['sev_representativeApplying'] = 'yes'
+  req.session.data['sev_repForenames'] = req.body['sev_repForenames']
+  req.session.data['sev_repSurname'] = req.body['sev_repSurname']
+  req.session.data['sev_repCapacity'] = req.body['sev_repCapacity']
+  req.session.data['sev_transferorType'] = req.body['sev_transferorType']
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+
+  // Return to registered proprietors page - now with rep card visible
+  return res.redirect('/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4')
+})
+
+
+
+// 11. Who is applying v1-4 - GET
+router.get('/sev/v-1-4/11-who-is-applying-v1-4', function (req, res) {
+  res.render('sev/v-1-4/11-who-is-applying-v1-4')
+})
+
+// 11. Who is applying - POST
+// Filters _unchecked values injected by the Kit (see GOV.UK Prototype Kit bug notes)
+// Re-saves sev_ reference and title number so they survive this POST
+// DP: 0 selected -> stay on page (error state)
+// DP: 2 selected (all proprietors) -> certification variant all
+// DP: 1 selected (partial) -> certification variant not-all
+router.post('/sev/v-1-4/11-who-is-applying-v1-4', function (req, res) {
+  let raw = req.body['applicants']
+  const selected = (Array.isArray(raw) ? raw : raw ? [raw] : [])
+    .filter(v => v !== '' && v !== null && v !== undefined && v !== '_unchecked')
+
+  req.session.data['applicants'] = selected
+  req.session.data['applicantsError'] = selected.length === 0
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_representativeApplying'] = req.body['sev_representativeApplying']
+  req.session.data['sev_repForenames'] = req.body['sev_repForenames']
+  req.session.data['sev_repSurname'] = req.body['sev_repSurname']
+  req.session.data['sev_repCapacity'] = req.body['sev_repCapacity']
+  req.session.data['sev_transferorType'] = req.body['sev_transferorType']
+
+  if (selected.length === 0) {
+    return res.redirect('/sev/v-1-4/11-who-is-applying-v1-4')
+  }
+
+  // Count only registered proprietors (not the rep)
+  const registeredSelected = selected.filter(v => v === 'burt' || v === 'sophie')
+
+  if (registeredSelected.length >= 2) {
+    return res.redirect('/sev/v-1-4/12-conveyancer-documents-certified-variant-all-v1-4')
+  }
+
+  return res.redirect('/sev/v-1-4/12b-conveyancer-documents-certified-variant-not-all-v1-4')
+})
+
+// 12. Conveyancer documents certified - all proprietors v1-4
+router.post('/sev/v-1-4/12-conveyancer-documents-certified-variant-all-v1-4', function (req, res) {
+  req.session.data['conveyancerCertifiedAll'] = req.body['conveyancerCertifiedAll']
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_repForenames'] = req.body['sev_repForenames']
+  req.session.data['sev_repSurname'] = req.body['sev_repSurname']
+  req.session.data['sev_repCapacity'] = req.body['sev_repCapacity']
+  req.session.data['sev_transferorType'] = req.body['sev_transferorType']
+
+  const representativeApplying = req.body['sev_representativeApplying']
+  req.session.data['sev_representativeApplying'] = representativeApplying
+
+  if (representativeApplying === 'yes') {
+    return res.redirect('/sev/v-1-4/13-task-list-variant-documents-required')
+  }
+
+  return res.redirect('/sev/v-1-4/13-task-list-variant-documents-optional')
+})
+
+// 12b. Conveyancer documents certified - not all proprietors v1-4
+router.post('/sev/v-1-4/12b-conveyancer-documents-certified-variant-not-all-v1-4', function (req, res) {
+  req.session.data['conveyancerCertifiedNotAll'] = req.body['conveyancerCertifiedNotAll']
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_repForenames'] = req.body['sev_repForenames']
+  req.session.data['sev_repSurname'] = req.body['sev_repSurname']
+  req.session.data['sev_repCapacity'] = req.body['sev_repCapacity']
+  req.session.data['sev_transferorType'] = req.body['sev_transferorType']
+
+  const representativeApplying = req.body['sev_representativeApplying']
+  req.session.data['sev_representativeApplying'] = representativeApplying
+
+  if (representativeApplying === 'yes') {
+    return res.redirect('/sev/v-1-4/13-task-list-variant-documents-required')
+  }
+
+  return res.redirect('/sev/v-1-4/13-task-list-variant-documents-optional')
+})
+
+router.post('/sev/v-1-4/13-task-list-variant-documents-optional-continue', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  res.redirect('/sev/v-1-4/14-attach-documents-optional-question')
+})
+
+// 13. Task list - documents required - Continue / Review button POST
+router.post('/sev/v-1-4/13-task-list-variant-documents-required-continue', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_representativeApplying'] = req.body['sev_representativeApplying']
+  req.session.data['sev_repForenames'] = req.body['sev_repForenames']
+  req.session.data['sev_repSurname'] = req.body['sev_repSurname']
+  req.session.data['sev_repCapacity'] = req.body['sev_repCapacity']
+  req.session.data['sev_transferorType'] = req.body['sev_transferorType']
+  const raw = req.body['sev_applicants']
+  if (raw) {
+    req.session.data['applicants'] = Array.isArray(raw) ? raw : [raw]
+  }
+  return res.redirect('/sev/v-1-4/14b-attach-documents-required')
+})
+
+// 13b. Task list - documents required complete - Review application button POST
+router.post('/sev/v-1-4/13b-task-list-variant-documents-required-complete-continue', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['requiredDocumentFileName'] = req.body['sev_requiredDocumentFileName']
+  req.session.data['requiredDocumentCertification'] = req.body['sev_requiredDocumentCertification']
+  req.session.data['sev_representativeApplying'] = req.body['sev_representativeApplying']
+  req.session.data['sev_repForenames'] = req.body['sev_repForenames']
+  req.session.data['sev_repSurname'] = req.body['sev_repSurname']
+  req.session.data['sev_repCapacity'] = req.body['sev_repCapacity']
+  req.session.data['sev_transferorType'] = req.body['sev_transferorType']
+  const raw = req.body['sev_applicants']
+  if (raw) {
+    req.session.data['applicants'] = Array.isArray(raw) ? raw : [raw]
+  }
+  return res.redirect('/sev/v-1-4/16b-review-your-application-documents-required')
+})
+
+/// 14. Attach documents optional question
+// Re-saves sev_ protected values so they survive this POST
+// DP: Yes -> attach documents page
+// DP: No -> task list (documents not required state)
+router.post('/sev/v-1-4/14-attach-documents-optional-question', function (req, res) {
+  const attachDocumentsOptionalChoice = req.body['attachDocumentsOptionalChoice']
+  req.session.data['attachDocumentsOptionalChoice'] = attachDocumentsOptionalChoice
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  if (attachDocumentsOptionalChoice === 'yes') {
+    return res.redirect('/sev/v-1-4/14b-attach-documents-optional')
+  }
+  if (attachDocumentsOptionalChoice === 'no') {
+    return res.redirect('/sev/v-1-4/15-task-list-variant-documents-not-required')
+  }
+  return res.redirect('/sev/v-1-4/14-attach-documents-optional-question')
+})
+
+// 14b. Attach documents optional - POST
+// Carries document file name and certification forward via hidden fields
+// Re-saves sev_ protected values so they survive this POST
+// Always returns to task list (documents not required state)
+router.post('/sev/v-1-4/14b-attach-documents-optional', function (req, res) {
+  req.session.data['optionalDocumentFileName'] = req.body['sev_optionalDocumentFileName']
+  req.session.data['optionalDocumentCertification'] = req.body['sev_optionalDocumentCertification']
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  return res.redirect('/sev/v-1-4/15-task-list-variant-documents-not-required')
+})
+
+// 14b. Attach documents required - POST
+router.post('/sev/v-1-4/14b-attach-documents-required', function (req, res) {
+  req.session.data['requiredDocumentFileName'] = req.body['sev_requiredDocumentFileName']
+  req.session.data['requiredDocumentCertification'] = req.body['sev_requiredDocumentCertification']
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  return res.redirect('/sev/v-1-4/13b-task-list-variant-documents-required-complete')
+})
+
+// 14c. Attach and certify document - GET
+router.get('/sev/v-1-4/14-c-attach-and-certify-document', function (req, res) {
+  res.render('sev/v-1-4/14-c-attach-and-certify-document')
+})
+
+// 14c. Attach and certify document - POST
+// Saves file name captured by JS on the page and certification choice
+// Always returns to attach documents optional table
+router.post('/sev/v-1-4/14-c-attach-and-certify-document', function (req, res) {
+  req.session.data['optionalDocumentFileName'] = req.body['optionalDocumentFileName']
+  req.session.data['optionalDocumentCertification'] = req.body['optionalDocumentCertification']
+  return res.redirect('/sev/v-1-4/14b-attach-documents-optional')
+})
+
+// 14c required. Attach and certify document (required variant) - GET + POST
+router.get('/sev/v-1-4/14-c-attach-and-certify-document-required', function (req, res) {
+  res.render('sev/v-1-4/14-c-attach-and-certify-document-required')
+})
+
+router.post('/sev/v-1-4/14-c-attach-and-certify-document-required', function (req, res) {
+  req.session.data['requiredDocumentFileName'] = req.body['requiredDocumentFileName']
+  req.session.data['requiredDocumentCertification'] = req.body['requiredDocumentCertification']
+  return res.redirect('/sev/v-1-4/14b-attach-documents-required')
+})
+
+// 15. Task list - documents not required - Continue button POST
+// Re-saves all sev_ protected values and document values so the Kit cannot wipe them
+// Always continues to review page
+router.post('/sev/v-1-4/15-task-list-variant-documents-not-required', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['optionalDocumentFileName'] = req.body['sev_optionalDocumentFileName']
+  req.session.data['optionalDocumentCertification'] = req.body['sev_optionalDocumentCertification']
+  return res.redirect('/sev/v-1-4/16-review-your-application-documents-optional')
+})
+
+// 16b. Review your application - documents required - POST (Confirm and submit)
+router.post('/sev/v-1-4/16b-review-your-application-documents-required', function (req, res) {
+  return res.redirect('/sev/v-1-4/17-confirmation')
+})
+
+
+// ============================================================
+
 module.exports = router;

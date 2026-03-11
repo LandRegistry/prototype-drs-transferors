@@ -1,0 +1,153 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Applicant details - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "/sev/v-1-4/9-task-list-transaction-details"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-xl">Single transaction application: Severance of joint tenancy</span>
+
+      <h1 class="govuk-heading-xl">Check the applicants’ details</h1>
+      <p class="govuk-body">Correct the applicants’ details if they’re wrong. You can also add another applicant if you need to.</p>
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+      <h2 class="govuk-heading-m">Registered proprietors</h2>
+
+      <div class="govuk-!-margin-bottom-6">
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: "Proprietor 1"
+            }
+          },
+          rows: [
+            {
+              key: { text: "Transferor type" },
+              value: { text: "Private individual" }
+            },
+            {
+              key: { text: "Transferor name" },
+              value: { text: "Burt Dowd" },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Amend",
+                    visuallyHiddenText: "transferor name for proprietor 1"
+                  }
+                ]
+              }
+            },
+            {
+              key: { text: "Capacity" },
+              value: { text: "Entitled to be registered as proprietor" }
+            },
+            {
+              key: { text: "Power of attorney" },
+              value: { text: "Not in place" },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Add an attorney",
+                    visuallyHiddenText: "for proprietor 1"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+      </div>
+
+      <div class="govuk-!-margin-bottom-6">
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: "Proprietor 2"
+            }
+          },
+          rows: [
+            {
+              key: { text: "Transferor type" },
+              value: { text: "Private individual" }
+            },
+            {
+              key: { text: "Transferor name" },
+              value: { text: "Sophie Green" },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Amend",
+                    visuallyHiddenText: "transferor name for proprietor 2"
+                  }
+                ]
+              }
+            },
+            {
+              key: { text: "Capacity" },
+              value: { text: "Registered proprietor" }
+            },
+            {
+              key: { text: "Power of attorney" },
+              value: { text: "Not in place" },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Add an attorney",
+                    visuallyHiddenText: "for proprietor 2"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+      </div>
+
+      <h2 class="govuk-heading-m">Add additional applicant</h2>
+
+      <p class="govuk-body">
+        Add a representative if one is For example, a deputy, receiver or trustee in bankruptcy.
+      </p>
+      <!-- <p class="govuk-body">Add a representative if one is applying on behalf of a registered proprietor, such as a deputy, receiver or trustee in bankruptcy.</p> -->
+
+      {{ govukButton({
+        text: "Add an additional applicant",
+        classes: "govuk-button--secondary",
+        href: "/sev/v-1-4/10b-add-additional-applicant"
+      }) }}
+
+      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+      {{ govukWarningText({
+        text: "Naming errors lead to requisitions. By selecting 'Continue' you confirm all transferor names are correct and consistent with supporting documents. If it isn’t consistent, you must attach evidence of a name change."
+      }) }}
+
+      
+
+      <form action="/sev/v-1-4/10-registered-proprietors-v1-4" method="post">
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+        <input type="hidden" name="sev_representativeApplying" value="no">
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

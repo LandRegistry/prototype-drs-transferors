@@ -1,0 +1,45 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Your application cannot be processed instantly – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-xl">Single transaction application: Severance of joint tenancy</span>
+
+      <h1 class="govuk-heading-xl">Your application cannot be processed instantly</h1>
+
+      <p class="govuk-body">You will need to upload supporting documents for the proprietor's representative later. Because of this, your application cannot be processed instantly.</p>
+
+      <p class="govuk-body">The documents required depend on the capacity the representative is applying in. We'll guide you through the process.</p>
+
+      <form action="/sev/v-1-4/10d-representative-added-confirmation" method="post">
+
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+        <input type="hidden" name="sev_repForenames" value="{{ data['sev_repForenames'] }}">
+        <input type="hidden" name="sev_repSurname" value="{{ data['sev_repSurname'] }}">
+        <input type="hidden" name="sev_transferorType" value="{{ data['sev_transferorType'] }}">
+        <input type="hidden" name="sev_repCapacity" value="{{ data['sev_repCapacity'] }}">
+        <input type="hidden" name="sev_representativeApplying" value="yes">
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

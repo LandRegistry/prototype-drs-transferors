@@ -1,0 +1,67 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Title details – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-xl">Single form: Severance of joint tenancy</span>
+
+      <h1 class="govuk-heading-xl">Title details</h1>
+
+      <p class="govuk-body">These are the registered proprietors for this title.</p>
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Title number"
+            },
+            value: {
+              text: data["titleNumber"]
+            },
+            actions: {
+              items: [
+                {
+                  href: "/sev/v-1-4/7-enter-title-number",
+                  text: "Amend",
+                  visuallyHiddenText: "title number"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Property"
+            },
+            value: {
+              html: "Land on the north side of 42 Test Road, Darlington<br>(DL1 1BD)"
+            }
+          }
+        ]
+      }) }}
+
+      <form action="/sev/v-1-4/8-title-details" method="post">
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+
+    </div>
+  </div>
+{% endblock %}
