@@ -200,7 +200,7 @@
       {{ govukRadios({
         idPrefix: "email",
         name: "email",
-        value: data["email"] or "corres@landregistry.gov.uk",
+        value: data["email"] or "info@company.co.uk",
         fieldset: {
           legend: {
             text: "Choose where you want us to send correspondence or requisitions.",
@@ -208,14 +208,7 @@
           }
         },
         items: [
-          {
-            value: "corres@landregistry.gov.uk",
-            text: "corres@landregistry.gov.uk"
-          },
-          {
-            value: "cmuser1@landregistry.gov.uk",
-            text: "cmuser1@landregistry.gov.uk"
-          },
+          { value: "info@company.co.uk", text: "info@company.co.uk" },
           {
             value: "other",
             text: "Other",
@@ -223,9 +216,7 @@
               html: govukInput({
                 id: "alternative_email",
                 name: "alternative_email",
-                label: {
-                  text: "Enter email address"
-                },
+                label: { text: "Enter email address" },
                 classes: "govuk-!-width-one-half",
                 value: data["alternative_email"]
               })
