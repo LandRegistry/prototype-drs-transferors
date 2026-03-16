@@ -1467,17 +1467,27 @@ router.post('/sev/v-1-4/4-is-this-a-developer-application', function (req, res) 
 })
 
 // 5. Tell us what your application is about
-// SEV radio -> eligibility check
+// SEV radio -> task list before eligibility check
 // Anything else -> 404 for now
 router.post('/sev/v-1-4/5-tell-us-what-your-application-is-about', function (req, res) {
   const applicationType = req.body['application-type']
   req.session.data['application-type'] = applicationType
-  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']  // ADD
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+
   switch (applicationType) {
     case 'single-transaction-application-severance-of-joint-tenancy':
-      res.redirect('/sev/v-1-4/6-check-if-you-can-use-this-application-type'); break
-    default: res.redirect('/404'); break
+      return res.redirect('/sev/v-1-4/5b-task-list-application-details')
+    default:
+      return res.redirect('/404')
   }
+})
+
+// 5b. Task list - application details - Continue button POST
+// Re-saves sev_ protected values so the Kit cannot wipe them
+// Continues to eligibility check
+router.post('/sev/v-1-4/5b-task-list-application-details-continue', function (req, res) {
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  return res.redirect('/sev/v-1-4/6-check-if-you-can-use-this-application-type')
 })
 
 // 6. Check if you can use this application type
