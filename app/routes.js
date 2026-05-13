@@ -1943,8 +1943,8 @@ const CA_MULTI_ACCEPTED = {
 
 const CA_MULTI_PRIORITY = {
   DN200: '1',
-  DN201: '2',
-  DN202: '3'
+  DN201: '1',
+  DN202: '1'
 }
 
 const CA_SINGLE_ACCEPTED = '114-B2-L5'

@@ -599,5 +599,5 @@ Apply a narrower width to the first column */
   }
   /* Removes default cell padding-left when error is active to keep alignment */
   .govuk-table__header, .govuk-table__cell {
-    border-left: 5px solid transparent;
+    /* border-left: 5px solid transparent; */
   }
