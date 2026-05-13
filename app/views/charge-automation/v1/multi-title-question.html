@@ -1,11 +1,12 @@
 {% extends "layouts/main.html" %}
 
 {% set showPhaseBanner = true %}
-{% set showBackLink = true %}
-{% set useAlternativeBackLink = true %}
-{% set alternativeBackLinkHref = "/charge-automation/v1/multi-title-tell-us-about-official-search-numbers" %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+
+{% set multiQuestionBackHref = "/charge-automation/v1/multi-title-tell-us-about-official-search-numbers" %}
 {% if caStateEncoded %}
-  {% set alternativeBackLinkHref = "/charge-automation/v1/multi-title-tell-us-about-official-search-numbers?state=" ~ caStateEncoded %}
+  {% set multiQuestionBackHref = multiQuestionBackHref ~ "?state=" ~ caStateEncoded %}
 {% endif %}
 
 {# Values are passed in from routes.js. Do not rely on per-title session keys here. #}
@@ -18,6 +19,14 @@
 
 {% block pageTitle %}
   {% if questionError %}Error: {% endif %}Do you have an official search number for this title? – Digital Registration Service – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
 {% endblock %}
 
 {% block content %}
@@ -33,11 +42,11 @@
             <div class="govuk-error-summary__body">
               <ul class="govuk-list govuk-error-summary__list">
                 {% if questionError === 'noChoice' %}
-                  <li><a href="#ca_multi_answer">Select yes if you have an official search number for this title</a></li>
+                  <li><a href="#ca_multi_answer">Select whether you have an official search number for this title</a></li>
                 {% elif questionError === 'emptyInput' %}
                   <li><a href="#ca_multi_number">Enter an official search number</a></li>
                 {% elif questionError === 'wrongFormat' %}
-                  <li><a href="#ca_multi_number">Enter the official search number in the correct format</a></li>
+                  <li><a href="#ca_multi_number">Official search number not recognised. Enter a valid official search number</a></li>
                 {% endif %}
               </ul>
             </div>
@@ -67,7 +76,7 @@
 
             {% if questionError === 'noChoice' %}
               <p id="ca_multi_answer-error" class="govuk-error-message">
-                <span class="govuk-visually-hidden">Error:</span> Select yes if you have an official search number for this title
+                <span class="govuk-visually-hidden">Error:</span> Select whether you have an official search number for this title
               </p>
             {% endif %}
 
@@ -88,7 +97,7 @@
                     </p>
                   {% elif questionError === 'wrongFormat' %}
                     <p id="ca_multi_number-error" class="govuk-error-message">
-                      <span class="govuk-visually-hidden">Error:</span> Enter the official search number in the correct format
+                      <span class="govuk-visually-hidden">Error:</span> Official search number not recognised. Enter a valid official search number
                     </p>
                   {% endif %}
                   <input class="govuk-input govuk-input--width-10 {% if questionError === 'emptyInput' or questionError === 'wrongFormat' %}govuk-input--error{% endif %}" id="ca_multi_number" name="ca_multi_number" type="text" value="{{ currentNumber }}" aria-describedby="ca_multi_number-hint">

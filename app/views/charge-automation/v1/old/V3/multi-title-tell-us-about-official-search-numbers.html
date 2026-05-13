@@ -4,11 +4,6 @@
 {% set showBackLink = false %}
 {% set useAlternativeBackLink = false %}
 
-{% set multiReturnHref = "/charge-automation/v1/multi-title-task-list" %}
-{% if caStateEncoded %}
-  {% set multiReturnHref = multiReturnHref ~ "?state=" ~ caStateEncoded %}
-{% endif %}
-
 {# Values are passed in from routes.js. Do not rely on per-title session keys here. #}
 {% set dn200Answer = caDn200Answer or '' %}
 {% set dn200Number = caDn200Number or '' %}
@@ -22,19 +17,12 @@
   {% if tableError %}Error: {% endif %}Tell us about official search numbers – Digital Registration Service – GOV.UK Prototype Kit
 {% endblock %}
 
-{% block beforeContent %}
-  {{ super() }}
-  {{ govukBackLink({
-    text: "Return to application",
-    href: multiReturnHref
-  }) }}
-{% endblock %}
-
 {% block content %}
 <div class="govuk-width-container">
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      <a href="/charge-automation/v1/multi-title-task-list?state={{ caStateEncoded }}" class="govuk-back-link">Return to application</a>
 
       {% if tableError %}
         <div class="govuk-error-summary" data-module="govuk-error-summary">
