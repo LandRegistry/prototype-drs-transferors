@@ -1,0 +1,41 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Confirm removal of additional applicant – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-xl">Single transaction application: Severance of joint tenancy</span>
+
+      <h1 class="govuk-heading-xl">Confirm removal of additional applicant</h1>
+
+      <p class="govuk-body">
+        {{ data['sev_repForenames'] }} {{ data['sev_repSurname'] }} will be removed as an additional applicant.
+      </p>
+
+      <form action="/sev/v-1-4/10e-confirm-remove-additional-applicant" method="post">
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Confirm"
+          }) }}
+          <a class="govuk-link" href="/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4">Cancel</a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

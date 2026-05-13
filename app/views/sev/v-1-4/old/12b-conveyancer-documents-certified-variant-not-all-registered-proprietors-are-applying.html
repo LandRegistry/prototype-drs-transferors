@@ -1,0 +1,67 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Conveyancer documents certified? - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "/sev/v-1-4/9-task-list-transaction-details"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-l">Single transaction application: Severance of joint tenancy</span><br>
+
+      <h1 class="govuk-heading-xl">Conveyancer documents certified?</h1>
+
+      <form action="/sev/v-1-4/12b-conveyancer-documents-certified-variant-not-all-registered-proprietors-are-applying" method="post">
+        <input type="hidden" name="sev_representativeApplying" value="{{ data['sev_representativeApplying'] }}">
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+
+        <input type="hidden" name="sev_representativeApplying" value="{{ data['sev_representativeApplying'] }}">
+
+        <div class="govuk-form-group">
+          <p class="govuk-body">
+            I am the applicant's conveyancer, and I certify that I hold:
+          </p>
+
+          {{ govukRadios({
+            idPrefix: "conveyancerCertifiedNotAll",
+            name: "conveyancerCertifiedNotAll",
+            value: data["conveyancerCertifiedNotAll"],
+            items: [
+              {
+                value: "acknowledgement",
+                text: "The original or a certified copy of the Notice of Severance of Joint Tenancy document with an acknowledgement of receipt signed by the other registered proprietors"
+              },
+              {
+                value: "served-lpa-1925",
+                text: "The original or a certified copy of the Notice of Severance of Joint Tenancy document and that it was served on the other registered proprietors in accordance with sections 36(2) and 196 of the Law of Property Act 1925"
+              },
+              {
+                value: "reasonable-steps",
+                text: "The original or a certified copy of the Notice of Severance of Joint Tenancy document and evidence that reasonable steps were taken to serve notice where acknowledgement could not be obtained"
+              }
+            ]
+          }) }}
+        </div>
+
+        {{ govukInsetText({
+          text: "You will not need to upload these documents"
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

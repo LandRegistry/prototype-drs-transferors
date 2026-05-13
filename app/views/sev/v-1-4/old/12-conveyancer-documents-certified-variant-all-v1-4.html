@@ -1,0 +1,65 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Conveyancer documents certified? - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "/sev/v-1-4/9-task-list-transaction-details"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-l">Single transaction application: Severance of joint tenancy</span><br>
+
+      <h1 class="govuk-heading-xl">Conveyancer documents certified?</h1>
+
+      <form action="/sev/v-1-4/12-conveyancer-documents-certified-variant-all-v1-4" method="post">
+        <input type="hidden" name="sev_representativeApplying" value="{{ data['sev_representativeApplying'] }}">
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+        <input type="hidden" name="sev_repForenames" value="{{ data['sev_repForenames'] }}">
+        <input type="hidden" name="sev_repSurname" value="{{ data['sev_repSurname'] }}">
+        <input type="hidden" name="sev_repCapacity" value="{{ data['sev_repCapacity'] }}">
+        <input type="hidden" name="sev_transferorType" value="{{ data['sev_transferorType'] }}">
+
+        <div class="govuk-form-group">
+          <p class="govuk-body">
+            I am the applicant's conveyancer, and I certify that I hold:
+          </p>
+
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input
+                class="govuk-checkboxes__input"
+                id="certified-all"
+                name="conveyancerCertifiedAll"
+                type="checkbox"
+                value="yes"
+                {% if data["conveyancerCertifiedAll"] == "yes" %}checked{% endif %}>
+              <label class="govuk-label govuk-checkboxes__label" for="certified-all">
+                The original or a certified copy of the Notice of Severance of Joint Tenancy signed by all registered proprietors
+              </label>
+            </div>
+          </div>
+        </div>
+
+        {{ govukInsetText({
+          text: "You will not need to upload these documents"
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

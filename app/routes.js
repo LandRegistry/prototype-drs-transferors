@@ -1448,21 +1448,25 @@ router.post('/sev/v-1-4/2-enter-your-reference', function (req, res) {
 
 // 3. Are you a conveyancer?
 // Yes -> continue to developer application check
-// No -> placeholder non-conveyancer branch (404 for now)
+// No  -> continues same front door (conveyancer value saved to session as sev_conveyancer)
 router.post('/sev/v-1-4/3-are-you-a-conveyancer', function (req, res) {
   const conveyancer = req.body['conveyancer']
   req.session.data['conveyancer'] = conveyancer
-  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']  // ADD
-  if (conveyancer === 'yes') { res.redirect('/sev/v-1-4/4-is-this-a-developer-application') }
-  else if (conveyancer === 'no') { res.redirect('/404') }
-  else { res.redirect('/sev/v-1-4/3-are-you-a-conveyancer') }
+  req.session.data['sev_conveyancer'] = conveyancer
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+
+  if (conveyancer === 'yes' || conveyancer === 'no') {
+    return res.redirect('/sev/v-1-4/4-is-this-a-developer-application')
+  }
+  return res.redirect('/sev/v-1-4/3-are-you-a-conveyancer')
 })
 
 // 4. Is this a developer application?
 // No branching logic - always continues to next page
 router.post('/sev/v-1-4/4-is-this-a-developer-application', function (req, res) {
   req.session.data['developerApplication'] = req.body['developerApplication']
-  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']  // ADD
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
   res.redirect('/sev/v-1-4/5-tell-us-what-your-application-is-about')
 })
 
@@ -1473,6 +1477,7 @@ router.post('/sev/v-1-4/5-tell-us-what-your-application-is-about', function (req
   const applicationType = req.body['application-type']
   req.session.data['application-type'] = applicationType
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
 
   switch (applicationType) {
     case 'single-transaction-application-severance-of-joint-tenancy':
@@ -1484,9 +1489,9 @@ router.post('/sev/v-1-4/5-tell-us-what-your-application-is-about', function (req
 
 // 5b. Task list - application details - Continue button POST
 // Re-saves sev_ protected values so the Kit cannot wipe them
-// Continues to eligibility check
 router.post('/sev/v-1-4/5b-task-list-application-details-continue', function (req, res) {
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
   return res.redirect('/sev/v-1-4/6-check-if-you-can-use-this-application-type')
 })
 
@@ -1500,6 +1505,7 @@ router.post('/sev/v-1-4/6-check-if-you-can-use-this-application-type', function 
   req.session.data['singleTitle'] = singleTitle
   req.session.data['multipleProprietors'] = multipleProprietors
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
 
   if (singleTitle === 'yes' && multipleProprietors === 'yes') {
     return res.redirect('/sev/v-1-4/7-enter-title-number')
@@ -1518,7 +1524,8 @@ router.post('/sev/v-1-4/7-enter-title-number', function (req, res) {
 
   req.session.data['titleNumber'] = titleNumber
   req.session.data['sev_titleNumber'] = titleNumber
-  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']  // ADD THIS
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
 
   const acceptedTitles = ['DN100', 'DN200', 'DN300']
 
@@ -1530,57 +1537,75 @@ router.post('/sev/v-1-4/7-enter-title-number', function (req, res) {
 })
 
 // 8. Title details
-// No branching - always continues to task list
+// DP: conveyancer=yes -> task list
+// DP: conveyancer=no  -> 8b-non-con-authority-to-act
 router.post('/sev/v-1-4/8-title-details', function (req, res) {
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
-  res.redirect('/sev/v-1-4/9-task-list-transaction-details')
+  const sev_conveyancer = req.body['sev_conveyancer'] || req.session.data['sev_conveyancer']
+  req.session.data['sev_conveyancer'] = sev_conveyancer
+
+  if (sev_conveyancer === 'no') {
+    return res.redirect('/sev/v-1-4/8b-non-con-authority-to-act')
+  }
+
+  return res.redirect('/sev/v-1-4/9-task-list-transaction-details')
+})
+
+// 8b. Authority to act (non-conveyancer only)
+// Both yes and no continue to task list for prototype purposes
+router.post('/sev/v-1-4/8b-non-con-authority-to-act', function (req, res) {
+  req.session.data['authorityToAct'] = req.body['authorityToAct']
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  const sev_conveyancer = req.body['sev_conveyancer'] || req.session.data['sev_conveyancer']
+  req.session.data['sev_conveyancer'] = sev_conveyancer
+  return res.redirect('/sev/v-1-4/9-task-list-transaction-details')
 })
 
 // 9. Task list - transaction details - Continue button POST
 // Re-saves sev_ protected values so the Kit cannot wipe them
-// Always continues to registered proprietors
 router.post('/sev/v-1-4/9-task-list-transaction-details-continue', function (req, res) {
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
   res.redirect('/sev/v-1-4/10-registered-proprietors-v1-4')
 })
 
-// 10. Registered proprietors v1-4 (no representative question)
-// Continue sets representativeApplying = no via hidden field
+// 10. Registered proprietors v1-4 (read-only, no rep question)
+// Continue sets representativeApplying = no
 router.post('/sev/v-1-4/10-registered-proprietors-v1-4', function (req, res) {
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
   req.session.data['sev_representativeApplying'] = 'no'
   return res.redirect('/sev/v-1-4/11-who-is-applying-v1-4')
 })
 
-// 10a. Registered proprietors with rep v1-4
-// Continue sets representativeApplying = yes via hidden field
-// 10e. Remove additional applicant — confirmation page (GET)
+// 10a. Registered proprietors with rep v1-4 — Remove link GET
 router.get('/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4-remove', function (req, res) {
   res.render('sev/v-1-4/10e-confirm-remove-additional-applicant')
 })
 
-// 10e. Remove additional applicant — confirmed (POST)
-// Clears all rep session data and routes back to the clean applicant details page
+// 10e. Confirm remove additional applicant POST
+// Clears all rep session data, returns to clean applicant details page
 router.post('/sev/v-1-4/10e-confirm-remove-additional-applicant', function (req, res) {
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
-
-  // Clear representative data
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
   req.session.data['sev_representativeApplying'] = 'no'
   req.session.data['sev_repForenames'] = ''
   req.session.data['sev_repSurname'] = ''
   req.session.data['sev_repCapacity'] = ''
   req.session.data['sev_transferorType'] = ''
-
   return res.redirect('/sev/v-1-4/10-registered-proprietors-v1-4')
 })
 
+// 10a. Registered proprietors with rep v1-4 — Continue POST
 router.post('/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4', function (req, res) {
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
   req.session.data['sev_representativeApplying'] = 'yes'
   req.session.data['sev_repForenames'] = req.body['sev_repForenames']
   req.session.data['sev_repSurname'] = req.body['sev_repSurname']
@@ -1590,14 +1615,10 @@ router.post('/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4', function (req
 })
 
 // -------------------------------------------------------
-// SEV v-1-4: Add additional applicant sub-flow
-// Flow: add-additional-applicant
-//    -> select-capacity
-//    -> representative-added-confirmation (cannot be processed instantly)
-//    -> 10a-registered-proprietors-with-rep-v1-4
+// Add additional applicant sub-flow
+// 10b -> 10c -> 10d -> 10a
 // -------------------------------------------------------
 
-// Add an additional applicant
 router.get('/sev/v-1-4/10b-add-additional-applicant', function (req, res) {
   res.render('sev/v-1-4/10b-add-additional-applicant')
 })
@@ -1607,9 +1628,10 @@ router.post('/sev/v-1-4/10b-add-additional-applicant', function (req, res) {
   req.session.data['sev_transferorType'] = sev_transferorType
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
 
-  // Only save name fields for private individual - other types post empty strings
-  // from the hidden conditional inputs which would wipe a previously entered name
+  // Bug 3: Only save name fields for private individual
+  // Other types post empty strings from hidden conditional inputs
   if (sev_transferorType === 'private-individual') {
     req.session.data['sev_repForenames'] = req.body['sev_repForenames']
     req.session.data['sev_repSurname'] = req.body['sev_repSurname']
@@ -1622,7 +1644,6 @@ router.post('/sev/v-1-4/10b-add-additional-applicant', function (req, res) {
   return res.redirect('/sev/v-1-4/10c-select-capacity')
 })
 
-// Select capacity
 router.get('/sev/v-1-4/10c-select-capacity', function (req, res) {
   res.render('sev/v-1-4/10c-select-capacity')
 })
@@ -1631,6 +1652,7 @@ router.post('/sev/v-1-4/10c-select-capacity', function (req, res) {
   req.session.data['sev_repCapacity'] = req.body['sev_repCapacity']
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
   req.session.data['sev_repForenames'] = req.body['sev_repForenames']
   req.session.data['sev_repSurname'] = req.body['sev_repSurname']
   req.session.data['sev_transferorType'] = req.body['sev_transferorType']
@@ -1642,13 +1664,11 @@ router.post('/sev/v-1-4/10c-select-capacity', function (req, res) {
   return res.redirect('/sev/v-1-4/10d-representative-added-confirmation')
 })
 
-// Your application cannot be processed instantly
 router.get('/sev/v-1-4/10d-representative-added-confirmation', function (req, res) {
   res.render('sev/v-1-4/10d-representative-added-confirmation')
 })
 
 router.post('/sev/v-1-4/10d-representative-added-confirmation', function (req, res) {
-  // Set the representative flag - this carries through to documents routing downstream
   req.session.data['sev_representativeApplying'] = 'yes'
   req.session.data['sev_repForenames'] = req.body['sev_repForenames']
   req.session.data['sev_repSurname'] = req.body['sev_repSurname']
@@ -1656,33 +1676,33 @@ router.post('/sev/v-1-4/10d-representative-added-confirmation', function (req, r
   req.session.data['sev_transferorType'] = req.body['sev_transferorType']
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
-
-  // Return to registered proprietors page - now with rep card visible
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
   return res.redirect('/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4')
 })
 
-
-
-// 11. Who is applying v1-4 - GET
+// 11. Who is applying v1-4 — GET
 router.get('/sev/v-1-4/11-who-is-applying-v1-4', function (req, res) {
   res.render('sev/v-1-4/11-who-is-applying-v1-4')
 })
 
-// 11. Who is applying - POST
-// Filters _unchecked values injected by the Kit (see GOV.UK Prototype Kit bug notes)
-// Re-saves sev_ reference and title number so they survive this POST
-// DP: 0 selected -> stay on page (error state)
-// DP: 2 selected (all proprietors) -> certification variant all
-// DP: 1 selected (partial) -> certification variant not-all
+// 11. Who is applying — POST
+// Bug 1: filters _unchecked Kit artefacts before counting
+// DP: 0 selected -> error, stay on page
+// DP: conveyancer=no -> 11b-non-con-which-evidence-will-you-provide
+// DP: conveyancer=yes, all proprietors -> certification variant all
+// DP: conveyancer=yes, partial -> certification variant not-all
 router.post('/sev/v-1-4/11-who-is-applying-v1-4', function (req, res) {
   let raw = req.body['applicants']
   const selected = (Array.isArray(raw) ? raw : raw ? [raw] : [])
     .filter(v => v !== '' && v !== null && v !== undefined && v !== '_unchecked')
 
+  const sev_conveyancer = req.body['sev_conveyancer'] || req.session.data['sev_conveyancer']
+
   req.session.data['applicants'] = selected
   req.session.data['applicantsError'] = selected.length === 0
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_conveyancer'] = sev_conveyancer
   req.session.data['sev_representativeApplying'] = req.body['sev_representativeApplying']
   req.session.data['sev_repForenames'] = req.body['sev_repForenames']
   req.session.data['sev_repSurname'] = req.body['sev_repSurname']
@@ -1693,7 +1713,12 @@ router.post('/sev/v-1-4/11-who-is-applying-v1-4', function (req, res) {
     return res.redirect('/sev/v-1-4/11-who-is-applying-v1-4')
   }
 
-  // Count only registered proprietors (not the rep)
+  // Non-conveyancer fork — bypass certification, go to evidence selection
+  if (sev_conveyancer === 'no') {
+    return res.redirect('/sev/v-1-4/11b-non-con-which-evidence-will-you-provide')
+  }
+
+  // Conveyancer routing — count only registered proprietors (not rep)
   const registeredSelected = selected.filter(v => v === 'burt' || v === 'sophie')
 
   if (registeredSelected.length >= 2) {
@@ -1703,7 +1728,27 @@ router.post('/sev/v-1-4/11-who-is-applying-v1-4', function (req, res) {
   return res.redirect('/sev/v-1-4/12b-conveyancer-documents-certified-variant-not-all-v1-4')
 })
 
-// 11b. Who is applying - return from task list (conditional redirect)
+// 11b. Which evidence will you provide? (non-conveyancer only)
+// Carries all sev_ fields through, continues to documents required task list
+router.post('/sev/v-1-4/11b-non-con-which-evidence-will-you-provide', function (req, res) {
+  req.session.data['nonConEvidence'] = req.body['nonConEvidence']
+  req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
+  req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
+  req.session.data['sev_conveyancer'] = req.body['sev_conveyancer']
+  req.session.data['sev_representativeApplying'] = req.body['sev_representativeApplying']
+  req.session.data['sev_repForenames'] = req.body['sev_repForenames']
+  req.session.data['sev_repSurname'] = req.body['sev_repSurname']
+  req.session.data['sev_repCapacity'] = req.body['sev_repCapacity']
+  req.session.data['sev_transferorType'] = req.body['sev_transferorType']
+  const raw = req.body['sev_applicants']
+  if (raw) {
+    req.session.data['applicants'] = Array.isArray(raw) ? raw : [raw]
+  }
+  return res.redirect('/sev/v-1-4/13-task-list-variant-documents-required')
+})
+
+// Who is applying — return from task list (conditional redirect)
+// Reads sev_representativeApplying from session to decide which page to send back to
 router.get('/sev/v-1-4/who-is-applying-return', function (req, res) {
   if (req.session.data['sev_representativeApplying'] === 'yes') {
     res.redirect('/sev/v-1-4/10a-registered-proprietors-with-rep-v1-4')
@@ -1752,6 +1797,7 @@ router.post('/sev/v-1-4/12b-conveyancer-documents-certified-variant-not-all-v1-4
   return res.redirect('/sev/v-1-4/13-task-list-variant-documents-optional')
 })
 
+// 13. Task list - documents optional - Continue button POST
 router.post('/sev/v-1-4/13-task-list-variant-documents-optional-continue', function (req, res) {
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
@@ -1796,10 +1842,9 @@ router.post('/sev/v-1-4/13b-task-list-variant-documents-required-complete-contin
   return res.redirect('/sev/v-1-4/16b-review-your-application-documents-required')
 })
 
-/// 14. Attach documents optional question
-// Re-saves sev_ protected values so they survive this POST
+// 14. Attach documents optional question
 // DP: Yes -> attach documents page
-// DP: No -> task list (documents not required state)
+// DP: No  -> task list (documents not required state)
 router.post('/sev/v-1-4/14-attach-documents-optional-question', function (req, res) {
   const attachDocumentsOptionalChoice = req.body['attachDocumentsOptionalChoice']
   req.session.data['attachDocumentsOptionalChoice'] = attachDocumentsOptionalChoice
@@ -1815,9 +1860,6 @@ router.post('/sev/v-1-4/14-attach-documents-optional-question', function (req, r
 })
 
 // 14b. Attach documents optional - POST
-// Carries document file name and certification forward via hidden fields
-// Re-saves sev_ protected values so they survive this POST
-// Always returns to task list (documents not required state)
 router.post('/sev/v-1-4/14b-attach-documents-optional', function (req, res) {
   req.session.data['optionalDocumentFileName'] = req.body['sev_optionalDocumentFileName']
   req.session.data['optionalDocumentCertification'] = req.body['sev_optionalDocumentCertification']
@@ -1835,21 +1877,18 @@ router.post('/sev/v-1-4/14b-attach-documents-required', function (req, res) {
   return res.redirect('/sev/v-1-4/13b-task-list-variant-documents-required-complete')
 })
 
-// 14c. Attach and certify document - GET
+// 14c. Attach and certify document (optional variant) - GET + POST
 router.get('/sev/v-1-4/14-c-attach-and-certify-document', function (req, res) {
   res.render('sev/v-1-4/14-c-attach-and-certify-document')
 })
 
-// 14c. Attach and certify document - POST
-// Saves file name captured by JS on the page and certification choice
-// Always returns to attach documents optional table
 router.post('/sev/v-1-4/14-c-attach-and-certify-document', function (req, res) {
   req.session.data['optionalDocumentFileName'] = req.body['optionalDocumentFileName']
   req.session.data['optionalDocumentCertification'] = req.body['optionalDocumentCertification']
   return res.redirect('/sev/v-1-4/14b-attach-documents-optional')
 })
 
-// 14c required. Attach and certify document (required variant) - GET + POST
+// 14c. Attach and certify document (required variant) - GET + POST
 router.get('/sev/v-1-4/14-c-attach-and-certify-document-required', function (req, res) {
   res.render('sev/v-1-4/14-c-attach-and-certify-document-required')
 })
@@ -1861,8 +1900,6 @@ router.post('/sev/v-1-4/14-c-attach-and-certify-document-required', function (re
 })
 
 // 15. Task list - documents not required - Continue button POST
-// Re-saves all sev_ protected values and document values so the Kit cannot wipe them
-// Always continues to review page
 router.post('/sev/v-1-4/15-task-list-variant-documents-not-required', function (req, res) {
   req.session.data['sev_applicationReference'] = req.body['sev_applicationReference']
   req.session.data['sev_titleNumber'] = req.body['sev_titleNumber']
@@ -1878,6 +1915,505 @@ router.post('/sev/v-1-4/16b-review-your-application-documents-required', functio
   return res.redirect('/sev/v-1-4/17-confirmation')
 })
 
+
+// ============================================================
+// Charge Automation v3 - Official Search Number journeys
+// ============================================================
+// Two separate journeys for capturing an official search number against
+// titles linked to a charge:
+//
+//   1) Single title - DN100, accepted number 114-B2-L5
+//   2) Multi-title  - DN200 / DN201 / DN202, accepted numbers
+//                     114-B2-L5 / 114-B2-L6 / 114-B2-L7
+//
+// Important Prototype Kit behaviour:
+// The Prototype Kit can wipe session keys during POST handling. The
+// multi-title journey therefore uses one carried, encoded state value
+// (ca_multi_state) as the source of truth. Every question, table and
+// task-list route passes that state forward explicitly.
+// ============================================================
+
+const CA_MULTI_TITLES = ['DN200', 'DN201', 'DN202']
+
+const CA_MULTI_ACCEPTED = {
+  DN200: '114-B2-L5',
+  DN201: '114-B2-L6',
+  DN202: '114-B2-L7'
+}
+
+const CA_MULTI_PRIORITY = {
+  DN200: '1',
+  DN201: '2',
+  DN202: '3'
+}
+
+const CA_SINGLE_ACCEPTED = '114-B2-L5'
+
+function clearSingleQuestionError(req) {
+  delete req.session.data['ca_single_error']
+}
+
+function makeEmptySingleState() {
+  return {
+    answer: '',
+    number: ''
+  }
+}
+
+function normaliseSingleState(state) {
+  const row = state || {}
+  const answer = row.answer === 'yes' || row.answer === 'no' ? row.answer : ''
+  const number = typeof row.number === 'string' ? row.number : ''
+
+  return {
+    answer: answer,
+    number: answer === 'yes' ? number : ''
+  }
+}
+
+function encodeSingleState(state) {
+  const json = JSON.stringify(normaliseSingleState(state))
+  return Buffer.from(json, 'utf8')
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/g, '')
+}
+
+function decodeSingleState(encoded) {
+  if (!encoded || typeof encoded !== 'string') {
+    return null
+  }
+
+  try {
+    const base64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
+    const json = Buffer.from(base64, 'base64').toString('utf8')
+    return normaliseSingleState(JSON.parse(json))
+  } catch (error) {
+    return null
+  }
+}
+
+function getLegacySingleState(req) {
+  const answer = req.session.data['ca_single_answer']
+  const number = req.session.data['ca_single_number']
+
+  if (answer === 'yes' || answer === 'no') {
+    return {
+      answer: answer,
+      number: answer === 'yes' ? (number || '') : ''
+    }
+  }
+
+  return makeEmptySingleState()
+}
+
+function getSingleState(req) {
+  return (
+    decodeSingleState(req.body['ca_single_state']) ||
+    decodeSingleState(req.query.state) ||
+    decodeSingleState(req.session.data['ca_single_state']) ||
+    getLegacySingleState(req)
+  )
+}
+
+function saveSingleState(req, state) {
+  const cleanState = normaliseSingleState(state)
+  const encoded = encodeSingleState(cleanState)
+
+  req.session.data['ca_single_state'] = encoded
+  req.session.data['ca_single_answer'] = cleanState.answer || undefined
+  req.session.data['ca_single_number'] = cleanState.number || ''
+
+  return encoded
+}
+
+function hasSingleProgress(state) {
+  return Boolean(state.answer)
+}
+
+function renderSingleTitleQuestion(req, res) {
+  const state = getSingleState(req)
+  const encodedState = saveSingleState(req, state)
+  const questionError = req.query.error || ''
+
+  req.session.data['ca_single_error'] = questionError || undefined
+
+  return res.render('charge-automation/v1/single-title-question', {
+    caSingleAnswer: state.answer,
+    caSingleNumber: state.number,
+    caSingleError: questionError,
+    caSingleStateEncoded: encodedState
+  })
+}
+
+function renderSingleTitleTable(req, res, tableError) {
+  const state = getSingleState(req)
+  const encodedState = saveSingleState(req, state)
+
+  return res.render('charge-automation/v1/single-title-tell-us-about-official-search-numbers', {
+    caSingleAnswer: state.answer,
+    caSingleNumber: state.number,
+    caSingleTableError: tableError,
+    caSingleStateEncoded: encodedState
+  })
+}
+
+
+function makeEmptyMultiState() {
+  return {
+    DN200: { answer: '', number: '' },
+    DN201: { answer: '', number: '' },
+    DN202: { answer: '', number: '' }
+  }
+}
+
+function normaliseMultiState(state) {
+  const cleanState = makeEmptyMultiState()
+
+  CA_MULTI_TITLES.forEach(function (title) {
+    const row = state && state[title] ? state[title] : {}
+    const answer = row.answer === 'yes' || row.answer === 'no' ? row.answer : ''
+    const number = typeof row.number === 'string' ? row.number : ''
+
+    cleanState[title] = {
+      answer: answer,
+      number: answer === 'yes' ? number : ''
+    }
+  })
+
+  return cleanState
+}
+
+function encodeMultiState(state) {
+  const json = JSON.stringify(normaliseMultiState(state))
+  return Buffer.from(json, 'utf8')
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/g, '')
+}
+
+function decodeMultiState(encoded) {
+  if (!encoded || typeof encoded !== 'string') {
+    return null
+  }
+
+  try {
+    const base64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
+    const json = Buffer.from(base64, 'base64').toString('utf8')
+    return normaliseMultiState(JSON.parse(json))
+  } catch (error) {
+    return null
+  }
+}
+
+function getLegacyMultiState(req) {
+  const state = makeEmptyMultiState()
+
+  CA_MULTI_TITLES.forEach(function (title) {
+    const answer = req.session.data['ca_multi_' + title + '_answer']
+    const number = req.session.data['ca_multi_' + title + '_number']
+
+    if (answer === 'yes' || answer === 'no') {
+      state[title] = {
+        answer: answer,
+        number: answer === 'yes' ? (number || '') : ''
+      }
+    }
+  })
+
+  return state
+}
+
+function getMultiState(req) {
+  return (
+    decodeMultiState(req.body['ca_multi_state']) ||
+    decodeMultiState(req.query.state) ||
+    decodeMultiState(req.session.data['ca_multi_state']) ||
+    getLegacyMultiState(req)
+  )
+}
+
+function saveMultiState(req, state) {
+  const cleanState = normaliseMultiState(state)
+  const encoded = encodeMultiState(cleanState)
+
+  req.session.data['ca_multi_state'] = encoded
+
+  CA_MULTI_TITLES.forEach(function (title) {
+    req.session.data['ca_multi_' + title + '_answer'] = cleanState[title].answer || undefined
+    req.session.data['ca_multi_' + title + '_number'] = cleanState[title].number || ''
+  })
+
+  return encoded
+}
+
+function hasMultiProgress(state) {
+  return CA_MULTI_TITLES.some(function (title) {
+    return Boolean(state[title].answer)
+  })
+}
+
+function getNotStartedTitles(state) {
+  return CA_MULTI_TITLES.filter(function (title) {
+    return !state[title].answer
+  })
+}
+
+function renderMultiTitleQuestion(req, res, requestedTitle) {
+  const state = getMultiState(req)
+  const safeTitle = CA_MULTI_ACCEPTED[requestedTitle] ? requestedTitle : 'DN200'
+  const encodedState = saveMultiState(req, state)
+  const questionError = req.query.error || ''
+
+  req.session.data['ca_multi_currentTitle'] = safeTitle
+  req.session.data['ca_multi_question_error'] = questionError || undefined
+
+  return res.render('charge-automation/v1/multi-title-question', {
+    caCurrentTitle: safeTitle,
+    caCurrentAnswer: state[safeTitle].answer,
+    caCurrentNumber: state[safeTitle].number,
+    caCurrentExample: CA_MULTI_ACCEPTED[safeTitle],
+    caCurrentPriority: CA_MULTI_PRIORITY[safeTitle] || '1',
+    caQuestionError: questionError,
+    caStateEncoded: encodedState
+  })
+}
+
+function renderMultiTitleTable(req, res, tableError) {
+  const state = getMultiState(req)
+  const encodedState = saveMultiState(req, state)
+  const notStartedTitles = tableError ? getNotStartedTitles(state) : []
+
+  req.session.data['ca_multi_error'] = tableError ? true : undefined
+
+  CA_MULTI_TITLES.forEach(function (title) {
+    req.session.data['ca_multi_row_error_' + title] = notStartedTitles.includes(title) ? true : undefined
+  })
+
+  return res.render('charge-automation/v1/multi-title-tell-us-about-official-search-numbers', {
+    caStateEncoded: encodedState,
+    caTableError: tableError,
+    caDn200Answer: state.DN200.answer,
+    caDn200Number: state.DN200.number,
+    caDn200RowError: notStartedTitles.includes('DN200'),
+    caDn201Answer: state.DN201.answer,
+    caDn201Number: state.DN201.number,
+    caDn201RowError: notStartedTitles.includes('DN201'),
+    caDn202Answer: state.DN202.answer,
+    caDn202Number: state.DN202.number,
+    caDn202RowError: notStartedTitles.includes('DN202')
+  })
+}
+
+
+// ------------------------------------------------------------
+// Single title journey
+// ------------------------------------------------------------
+
+router.get('/charge-automation/v1/single-title-task-list', function (req, res) {
+  const state = getSingleState(req)
+  const encodedState = saveSingleState(req, state)
+  const taskCompleted = hasSingleProgress(state)
+
+  req.session.data['ca_single_taskCompleted'] = taskCompleted ? true : undefined
+
+  return res.render('charge-automation/v1/single-title-task-list', {
+    caSingleStateEncoded: encodedState,
+    caSingleTaskCompleted: taskCompleted
+  })
+})
+
+router.get('/charge-automation/v1/single-title-start', function (req, res) {
+  let state = getSingleState(req)
+
+  if (hasSingleProgress(state)) {
+    const encodedState = saveSingleState(req, state)
+    return res.redirect('/charge-automation/v1/single-title-tell-us-about-official-search-numbers?state=' + encodedState)
+  }
+
+  state = makeEmptySingleState()
+  delete req.session.data['ca_single_taskCompleted']
+  delete req.session.data['ca_single_error']
+
+  const encodedState = saveSingleState(req, state)
+
+  return res.redirect('/charge-automation/v1/single-title-question?state=' + encodedState)
+})
+
+router.get('/charge-automation/v1/single-title-question', function (req, res) {
+  return renderSingleTitleQuestion(req, res)
+})
+
+router.post('/charge-automation/v1/single-title-question', function (req, res) {
+  const state = getSingleState(req)
+  const answer = req.body['ca_single_answer']
+  const number = (req.body['ca_single_number'] || '').trim()
+
+  if (!answer) {
+    const encodedState = saveSingleState(req, state)
+    return res.redirect('/charge-automation/v1/single-title-question?state=' + encodedState + '&error=noChoice')
+  }
+
+  if (answer === 'yes') {
+    state.answer = 'yes'
+    state.number = number
+
+    if (!number) {
+      const encodedState = saveSingleState(req, state)
+      return res.redirect('/charge-automation/v1/single-title-question?state=' + encodedState + '&error=emptyInput')
+    }
+
+    if (number !== CA_SINGLE_ACCEPTED) {
+      const encodedState = saveSingleState(req, state)
+      return res.redirect('/charge-automation/v1/single-title-question?state=' + encodedState + '&error=wrongFormat')
+    }
+
+    clearSingleQuestionError(req)
+    const encodedState = saveSingleState(req, state)
+    return res.redirect('/charge-automation/v1/single-title-tell-us-about-official-search-numbers?state=' + encodedState)
+  }
+
+  if (answer === 'no') {
+    state.answer = 'no'
+    state.number = ''
+
+    clearSingleQuestionError(req)
+    const encodedState = saveSingleState(req, state)
+    return res.redirect('/charge-automation/v1/single-title-tell-us-about-official-search-numbers?state=' + encodedState)
+  }
+
+  const encodedState = saveSingleState(req, state)
+  return res.redirect('/charge-automation/v1/single-title-question?state=' + encodedState)
+})
+
+router.get('/charge-automation/v1/single-title-tell-us-about-official-search-numbers', function (req, res) {
+  return renderSingleTitleTable(req, res, req.query.error === 'missing')
+})
+
+router.post('/charge-automation/v1/single-title-tell-us-about-official-search-numbers', function (req, res) {
+  const state = getSingleState(req)
+  const encodedState = saveSingleState(req, state)
+
+  if (!hasSingleProgress(state)) {
+    return res.redirect('/charge-automation/v1/single-title-tell-us-about-official-search-numbers?state=' + encodedState + '&error=missing')
+  }
+
+  req.session.data['ca_single_taskCompleted'] = true
+
+  return res.redirect('/charge-automation/v1/single-title-task-list?state=' + encodedState)
+})
+
+// ------------------------------------------------------------
+// Multi-title journey
+// ------------------------------------------------------------
+
+router.get('/charge-automation/v1/multi-title-task-list', function (req, res) {
+  const state = getMultiState(req)
+  const encodedState = saveMultiState(req, state)
+  const taskCompleted = getNotStartedTitles(state).length === 0
+
+  req.session.data['ca_multi_taskCompleted'] = taskCompleted ? true : undefined
+
+  return res.render('charge-automation/v1/multi-title-task-list', {
+    caStateEncoded: encodedState,
+    caMultiTaskCompleted: taskCompleted
+  })
+})
+
+router.get('/charge-automation/v1/multi-title-start', function (req, res) {
+  let state = getMultiState(req)
+
+  if (hasMultiProgress(state)) {
+    const encodedState = saveMultiState(req, state)
+    return res.redirect('/charge-automation/v1/multi-title-tell-us-about-official-search-numbers?state=' + encodedState)
+  }
+
+  state = makeEmptyMultiState()
+  delete req.session.data['ca_multi_taskCompleted']
+  delete req.session.data['ca_multi_error']
+  delete req.session.data['ca_multi_question_error']
+
+  const encodedState = saveMultiState(req, state)
+  req.session.data['ca_multi_currentTitle'] = 'DN200'
+
+  return res.redirect('/charge-automation/v1/multi-title-question/DN200?state=' + encodedState)
+})
+
+router.get('/charge-automation/v1/multi-title-question', function (req, res) {
+  return renderMultiTitleQuestion(req, res, req.query.title)
+})
+
+router.get('/charge-automation/v1/multi-title-question/:title', function (req, res) {
+  return renderMultiTitleQuestion(req, res, req.params.title)
+})
+
+router.post('/charge-automation/v1/multi-title-question', function (req, res) {
+  const state = getMultiState(req)
+  const title = req.body['ca_multi_title']
+  const answer = req.body['ca_multi_answer']
+  const number = (req.body['ca_multi_number'] || '').trim()
+
+  if (!title || !CA_MULTI_ACCEPTED[title]) {
+    const encodedState = saveMultiState(req, state)
+    return res.redirect('/charge-automation/v1/multi-title-question/DN200?state=' + encodedState)
+  }
+
+  req.session.data['ca_multi_currentTitle'] = title
+
+  if (!answer) {
+    const encodedState = saveMultiState(req, state)
+    return res.redirect('/charge-automation/v1/multi-title-question/' + title + '?state=' + encodedState + '&error=noChoice')
+  }
+
+  if (answer === 'yes') {
+    state[title].answer = 'yes'
+    state[title].number = number
+
+    if (!number) {
+      const encodedState = saveMultiState(req, state)
+      return res.redirect('/charge-automation/v1/multi-title-question/' + title + '?state=' + encodedState + '&error=emptyInput')
+    }
+
+    if (number !== CA_MULTI_ACCEPTED[title]) {
+      const encodedState = saveMultiState(req, state)
+      return res.redirect('/charge-automation/v1/multi-title-question/' + title + '?state=' + encodedState + '&error=wrongFormat')
+    }
+
+    const encodedState = saveMultiState(req, state)
+    return res.redirect('/charge-automation/v1/multi-title-tell-us-about-official-search-numbers?state=' + encodedState)
+  }
+
+  if (answer === 'no') {
+    state[title].answer = 'no'
+    state[title].number = ''
+
+    const encodedState = saveMultiState(req, state)
+    return res.redirect('/charge-automation/v1/multi-title-tell-us-about-official-search-numbers?state=' + encodedState)
+  }
+
+  const encodedState = saveMultiState(req, state)
+  return res.redirect('/charge-automation/v1/multi-title-question/' + title + '?state=' + encodedState)
+})
+
+router.get('/charge-automation/v1/multi-title-tell-us-about-official-search-numbers', function (req, res) {
+  return renderMultiTitleTable(req, res, req.query.error === 'missing')
+})
+
+router.post('/charge-automation/v1/multi-title-tell-us-about-official-search-numbers', function (req, res) {
+  const state = getMultiState(req)
+  const encodedState = saveMultiState(req, state)
+  const notStartedTitles = getNotStartedTitles(state)
+
+  if (notStartedTitles.length > 0) {
+    return res.redirect('/charge-automation/v1/multi-title-tell-us-about-official-search-numbers?state=' + encodedState + '&error=missing')
+  }
+
+  req.session.data['ca_multi_taskCompleted'] = true
+
+  return res.redirect('/charge-automation/v1/multi-title-task-list?state=' + encodedState)
+})
 
 // ============================================================
 

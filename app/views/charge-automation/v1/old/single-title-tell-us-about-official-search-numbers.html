@@ -1,0 +1,72 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+
+{% block pageTitle %}
+  Tell us about official search numbers – Digital Registration Service – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <a href="/charge-automation/v1/single-title-task-list" class="govuk-back-link">Return to application</a>
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <span class="govuk-caption-l">Charge</span>
+      <h1 class="govuk-heading-xl">Tell us about official search numbers</h1>
+
+      <p class="govuk-body">For each title, add an official search number or confirm that you do not have one.</p>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Title number</th>
+            <th scope="col" class="govuk-table__header">Priority</th>
+            <th scope="col" class="govuk-table__header">Transaction</th>
+            <th scope="col" class="govuk-table__header">Official search number</th>
+            <th scope="col" class="govuk-table__header">Action</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">DN100</td>
+            <td class="govuk-table__cell">1</td>
+            <td class="govuk-table__cell">Charge</td>
+            <td class="govuk-table__cell">
+              {% if data['ca_single_answer'] === 'yes' %}
+                {{ data['ca_single_number'] }}
+              {% elif data['ca_single_answer'] === 'no' %}
+                Not provided
+              {% else %}
+                Not started
+              {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+              <a class="govuk-link" href="/charge-automation/v1/single-title-question">Change<span class="govuk-visually-hidden"> official search number for DN100</span></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <form action="/charge-automation/v1/single-title-tell-us-about-official-search-numbers" method="post" novalidate>
+        {# Hidden fields carry values forward so the Kit cannot wipe them (Bug 2). #}
+        <input type="hidden" name="ca_single_answer" value="{{ data['ca_single_answer'] }}">
+        <input type="hidden" name="ca_single_number" value="{{ data['ca_single_number'] }}">
+        <button class="govuk-button" data-module="govuk-button">Continue</button>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

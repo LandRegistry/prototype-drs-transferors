@@ -1,0 +1,118 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = true %}
+{% set useAlternativeBackLink = true %}
+{% set alternativeBackLinkHref = "/charge-automation/v1/multi-title-tell-us-about-official-search-numbers" %}
+
+{# Resolve the current title and per-title session values dynamically. #}
+{% set currentTitle = data['ca_multi_currentTitle'] %}
+{% set answerKey = 'ca_multi_' + currentTitle + '_answer' %}
+{% set numberKey = 'ca_multi_' + currentTitle + '_number' %}
+{% set currentAnswer = data[answerKey] %}
+{% set currentNumber = data[numberKey] %}
+
+{% block pageTitle %}
+  {% if data['ca_multi_question_error'] %}Error: {% endif %}Do you have an official search number for this title? – Digital Registration Service – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if data['ca_multi_question_error'] %}
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+          <div role="alert">
+            <h2 class="govuk-error-summary__title">There is a problem</h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                {% if data['ca_multi_question_error'] === 'noChoice' %}
+                  <li><a href="#ca_multi_answer">Select yes if you have an official search number for this title</a></li>
+                {% elif data['ca_multi_question_error'] === 'emptyInput' %}
+                  <li><a href="#ca_multi_number">Enter an official search number</a></li>
+                {% elif data['ca_multi_question_error'] === 'wrongFormat' %}
+                  <li><a href="#ca_multi_number">Enter the official search number in the correct format</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <span class="govuk-caption-l">Charge</span>
+
+      <form action="/charge-automation/v1/multi-title-question" method="post" novalidate>
+
+        {# Carry the current title forward in the body so the POST knows which row to update. #}
+        <input type="hidden" name="ca_multi_title" value="{{ currentTitle }}">
+
+        <div class="govuk-form-group {% if data['ca_multi_question_error'] === 'noChoice' %}govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset" aria-describedby="ca-multi-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">Do you have an official search number for this title?</h1>
+            </legend>
+
+            <p class="govuk-body" id="ca-multi-hint">
+              <strong>Title number:</strong> {{ currentTitle }}<br>
+              <strong>Linked transaction:</strong> Charge 1
+            </p>
+
+            {% if data['ca_multi_question_error'] === 'noChoice' %}
+              <p id="ca_multi_answer-error" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> Select yes if you have an official search number for this title
+              </p>
+            {% endif %}
+
+            <div class="govuk-radios" data-module="govuk-radios">
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="ca_multi_answer" name="ca_multi_answer" type="radio" value="yes" data-aria-controls="conditional-multi-yes" {% if currentAnswer === 'yes' %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="ca_multi_answer">Yes</label>
+              </div>
+
+              <div class="govuk-radios__conditional {% if currentAnswer !== 'yes' %}govuk-radios__conditional--hidden{% endif %}" id="conditional-multi-yes">
+                <div class="govuk-form-group {% if data['ca_multi_question_error'] === 'emptyInput' or data['ca_multi_question_error'] === 'wrongFormat' %}govuk-form-group--error{% endif %}">
+                  <label class="govuk-label" for="ca_multi_number">Official search number</label>
+                  <div id="ca_multi_number-hint" class="govuk-hint">For example, 114-B2-L6</div>
+                  {% if data['ca_multi_question_error'] === 'emptyInput' %}
+                    <p id="ca_multi_number-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> Enter an official search number
+                    </p>
+                  {% elif data['ca_multi_question_error'] === 'wrongFormat' %}
+                    <p id="ca_multi_number-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> Enter the official search number in the correct format
+                    </p>
+                  {% endif %}
+                  <input class="govuk-input govuk-input--width-10 {% if data['ca_multi_question_error'] === 'emptyInput' or data['ca_multi_question_error'] === 'wrongFormat' %}govuk-input--error{% endif %}" id="ca_multi_number" name="ca_multi_number" type="text" value="{{ currentNumber }}" aria-describedby="ca_multi_number-hint">
+                </div>
+              </div>
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="ca_multi_answer-2" name="ca_multi_answer" type="radio" value="no" {% if currentAnswer === 'no' %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="ca_multi_answer-2">No</label>
+              </div>
+
+            </div>
+          </fieldset>
+        </div>
+
+        <button class="govuk-button" data-module="govuk-button">Continue</button>
+
+      </form>
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">What is a search reference?</span>
+        </summary>
+        <div class="govuk-details__text">
+          An official search number is issued when you carry out an official search of a registered title. It helps us link your application to the search you have already paid for.
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

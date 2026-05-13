@@ -25,6 +25,7 @@
       <form action="/sev/v-1-4/10b-add-additional-applicant" method="post">
 
         <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_conveyancer" value="{{ data['sev_conveyancer'] }}">
         <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
 
         {% from "govuk/components/radios/macro.njk" import govukRadios %}

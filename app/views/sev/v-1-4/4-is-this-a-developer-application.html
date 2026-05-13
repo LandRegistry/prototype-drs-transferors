@@ -18,6 +18,7 @@
 
       <form action="/sev/v-1-4/4-is-this-a-developer-application" method="post">
         <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_conveyancer" value="{{ data['sev_conveyancer'] }}">
         {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
         {{ govukRadios({

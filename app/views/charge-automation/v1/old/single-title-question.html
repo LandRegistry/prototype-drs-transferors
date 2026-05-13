@@ -1,0 +1,108 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = true %}
+{% set useAlternativeBackLink = true %}
+{% set alternativeBackLinkHref = "/charge-automation/v1/single-title-task-list" %}
+
+{% block pageTitle %}
+  {% if data['ca_single_error'] %}Error: {% endif %}Do you have an official search number for this title? – Digital Registration Service – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if data['ca_single_error'] %}
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+          <div role="alert">
+            <h2 class="govuk-error-summary__title">There is a problem</h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                {% if data['ca_single_error'] === 'noChoice' %}
+                  <li><a href="#ca_single_answer">Select yes if you have an official search number for this title</a></li>
+                {% elif data['ca_single_error'] === 'emptyInput' %}
+                  <li><a href="#ca_single_number">Enter an official search number</a></li>
+                {% elif data['ca_single_error'] === 'wrongFormat' %}
+                  <li><a href="#ca_single_number">Enter the official search number in the correct format</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <span class="govuk-caption-l">Charge</span>
+
+      <form action="/charge-automation/v1/single-title-question" method="post" novalidate>
+
+        <div class="govuk-form-group {% if data['ca_single_error'] === 'noChoice' %}govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset" aria-describedby="ca-single-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">Do you have an official search number for this title?</h1>
+            </legend>
+
+            <p class="govuk-body" id="ca-single-hint">
+              <strong>Title number:</strong> DN100<br>
+              <strong>Linked transaction:</strong> Charge 1
+            </p>
+
+            {% if data['ca_single_error'] === 'noChoice' %}
+              <p id="ca_single_answer-error" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> Select yes if you have an official search number for this title
+              </p>
+            {% endif %}
+
+            <div class="govuk-radios" data-module="govuk-radios">
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="ca_single_answer" name="ca_single_answer" type="radio" value="yes" data-aria-controls="conditional-yes" {% if data['ca_single_answer'] === 'yes' %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="ca_single_answer">Yes</label>
+              </div>
+
+              <div class="govuk-radios__conditional {% if data['ca_single_answer'] !== 'yes' %}govuk-radios__conditional--hidden{% endif %}" id="conditional-yes">
+                <div class="govuk-form-group {% if data['ca_single_error'] === 'emptyInput' or data['ca_single_error'] === 'wrongFormat' %}govuk-form-group--error{% endif %}">
+                  <label class="govuk-label" for="ca_single_number">Official search number</label>
+                  <div id="ca_single_number-hint" class="govuk-hint">For example, 114-B2-L5</div>
+                  {% if data['ca_single_error'] === 'emptyInput' %}
+                    <p id="ca_single_number-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> Enter an official search number
+                    </p>
+                  {% elif data['ca_single_error'] === 'wrongFormat' %}
+                    <p id="ca_single_number-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> Enter the official search number in the correct format
+                    </p>
+                  {% endif %}
+                  <input class="govuk-input govuk-input--width-10 {% if data['ca_single_error'] === 'emptyInput' or data['ca_single_error'] === 'wrongFormat' %}govuk-input--error{% endif %}" id="ca_single_number" name="ca_single_number" type="text" value="{{ data['ca_single_number'] }}" aria-describedby="ca_single_number-hint">
+                </div>
+              </div>
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="ca_single_answer-2" name="ca_single_answer" type="radio" value="no" {% if data['ca_single_answer'] === 'no' %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="ca_single_answer-2">No</label>
+              </div>
+
+            </div>
+          </fieldset>
+        </div>
+
+        <button class="govuk-button" data-module="govuk-button">Continue</button>
+
+      </form>
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">What is a search reference?</span>
+        </summary>
+        <div class="govuk-details__text">
+          An official search number is issued when you carry out an official search of a registered title. It helps us link your application to the search you have already paid for.
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

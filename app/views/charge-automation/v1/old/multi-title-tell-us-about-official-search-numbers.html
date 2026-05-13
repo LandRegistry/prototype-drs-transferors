@@ -1,0 +1,159 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+
+{# Resolve per-title session values dynamically. #}
+{% set dn200Answer = data['ca_multi_DN200_answer'] %}
+{% set dn200Number = data['ca_multi_DN200_number'] %}
+{% set dn201Answer = data['ca_multi_DN201_answer'] %}
+{% set dn201Number = data['ca_multi_DN201_number'] %}
+{% set dn202Answer = data['ca_multi_DN202_answer'] %}
+{% set dn202Number = data['ca_multi_DN202_number'] %}
+
+{% block pageTitle %}
+  {% if data['ca_multi_error'] %}Error: {% endif %}Tell us about official search numbers – Digital Registration Service – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <a href="/charge-automation/v1/multi-title-task-list" class="govuk-back-link">Return to application</a>
+
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if data['ca_multi_error'] %}
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+          <div role="alert">
+            <h2 class="govuk-error-summary__title">There is a problem</h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                <li>
+                  <a href="#ca-multi-table">Add an official search number or confirm that you do not have one for every title</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <span class="govuk-caption-l">Charge</span>
+      <h1 class="govuk-heading-xl">Tell us about official search numbers</h1>
+
+      <p class="govuk-body">For each title, add an official search number or confirm that you do not have one.</p>
+
+      <table class="govuk-table" id="ca-multi-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Title number</th>
+            <th scope="col" class="govuk-table__header">Priority</th>
+            <th scope="col" class="govuk-table__header">Transaction</th>
+            <th scope="col" class="govuk-table__header">Official search number</th>
+            <th scope="col" class="govuk-table__header">Action</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+
+          {# DN200 row #}
+          <tr class="govuk-table__row {% if data['ca_multi_row_error_DN200'] %}govuk-form-group--error{% endif %}" {% if data['ca_multi_row_error_DN200'] %}style="border-left: 5px solid #d4351c;"{% endif %}>
+            <td class="govuk-table__cell">DN200</td>
+            <td class="govuk-table__cell">1</td>
+            <td class="govuk-table__cell">Charge</td>
+            <td class="govuk-table__cell">
+              {% if data['ca_multi_row_error_DN200'] %}
+                <p class="govuk-error-message govuk-!-margin-bottom-1">
+                  <span class="govuk-visually-hidden">Error:</span> Add an official search number or confirm that you do not have one
+                </p>
+              {% endif %}
+              {% if dn200Answer === 'yes' %}
+                {{ dn200Number }}
+              {% elif dn200Answer === 'no' %}
+                Not provided
+              {% else %}
+                Not started
+              {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+              <a class="govuk-link" href="/charge-automation/v1/multi-title-question?title=DN200">Change<span class="govuk-visually-hidden"> official search number for DN200</span></a>
+            </td>
+          </tr>
+
+          {# DN201 row #}
+          <tr class="govuk-table__row {% if data['ca_multi_row_error_DN201'] %}govuk-form-group--error{% endif %}" {% if data['ca_multi_row_error_DN201'] %}style="border-left: 5px solid #d4351c;"{% endif %}>
+            <td class="govuk-table__cell">DN201</td>
+            <td class="govuk-table__cell">1</td>
+            <td class="govuk-table__cell">Charge</td>
+            <td class="govuk-table__cell">
+              {% if data['ca_multi_row_error_DN201'] %}
+                <p class="govuk-error-message govuk-!-margin-bottom-1">
+                  <span class="govuk-visually-hidden">Error:</span> Add an official search number or confirm that you do not have one
+                </p>
+              {% endif %}
+              {% if dn201Answer === 'yes' %}
+                {{ dn201Number }}
+              {% elif dn201Answer === 'no' %}
+                Not provided
+              {% else %}
+                Not started
+              {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+              <a class="govuk-link" href="/charge-automation/v1/multi-title-question?title=DN201">Change<span class="govuk-visually-hidden"> official search number for DN201</span></a>
+            </td>
+          </tr>
+
+          {# DN202 row #}
+          <tr class="govuk-table__row {% if data['ca_multi_row_error_DN202'] %}govuk-form-group--error{% endif %}" {% if data['ca_multi_row_error_DN202'] %}style="border-left: 5px solid #d4351c;"{% endif %}>
+            <td class="govuk-table__cell">DN202</td>
+            <td class="govuk-table__cell">1</td>
+            <td class="govuk-table__cell">Charge</td>
+            <td class="govuk-table__cell">
+              {% if data['ca_multi_row_error_DN202'] %}
+                <p class="govuk-error-message govuk-!-margin-bottom-1">
+                  <span class="govuk-visually-hidden">Error:</span> Add an official search number or confirm that you do not have one
+                </p>
+              {% endif %}
+              {% if dn202Answer === 'yes' %}
+                {{ dn202Number }}
+              {% elif dn202Answer === 'no' %}
+                Not provided
+              {% else %}
+                Not started
+              {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+              <a class="govuk-link" href="/charge-automation/v1/multi-title-question?title=DN202">Change<span class="govuk-visually-hidden"> official search number for DN202</span></a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <form action="/charge-automation/v1/multi-title-tell-us-about-official-search-numbers" method="post" novalidate>
+        {# Hidden fields carry per-row values forward so the Kit cannot wipe them (Bug 2). #}
+        <input type="hidden" name="ca_multi_DN200_answer" value="{{ dn200Answer }}">
+        <input type="hidden" name="ca_multi_DN200_number" value="{{ dn200Number }}">
+        <input type="hidden" name="ca_multi_DN201_answer" value="{{ dn201Answer }}">
+        <input type="hidden" name="ca_multi_DN201_number" value="{{ dn201Number }}">
+        <input type="hidden" name="ca_multi_DN202_answer" value="{{ dn202Answer }}">
+        <input type="hidden" name="ca_multi_DN202_number" value="{{ dn202Number }}">
+        <button class="govuk-button" data-module="govuk-button">Continue</button>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

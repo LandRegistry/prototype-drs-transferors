@@ -1,0 +1,89 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Which evidence will you provide? - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "/sev/v-1-4/9-task-list-transaction-details"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-l">Single transaction application: Severance of joint tenancy</span>
+
+      <h1 class="govuk-heading-xl">Which evidence will you provide?</h1>
+
+      <p class="govuk-body">
+        As you are not a conveyancer, you must upload evidence that you gave notice of severance to the other registered proprietors.
+      </p>
+
+      <form action="/sev/v-1-4/11b-non-con-which-evidence-will-you-provide" method="post">
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+        <input type="hidden" name="sev_representativeApplying" value="{{ data['sev_representativeApplying'] }}">
+        <input type="hidden" name="sev_repForenames" value="{{ data['sev_repForenames'] }}">
+        <input type="hidden" name="sev_repSurname" value="{{ data['sev_repSurname'] }}">
+        <input type="hidden" name="sev_repCapacity" value="{{ data['sev_repCapacity'] }}">
+        <input type="hidden" name="sev_transferorType" value="{{ data['sev_transferorType'] }}">
+        {% if data['applicants'] %}
+          {% set apList = data['applicants'] if data['applicants'] is iterable and data['applicants'] is not string else [data['applicants']] %}
+          {% for ap in apList %}
+            <input type="hidden" name="sev_applicants" value="{{ ap }}">
+          {% endfor %}
+        {% endif %}
+
+        {{ govukRadios({
+          idPrefix: "nonConEvidence",
+          name: "nonConEvidence",
+          value: data["nonConEvidence"],
+          fieldset: {
+            legend: {
+              text: "I will provide:",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "signed-by-all",
+              text: "A notice of severance signed by all registered proprietors",
+              hint: {
+                text: "This shows that all proprietors have agreed to the severance"
+              }
+            },
+            {
+              value: "acknowledgement-of-receipt",
+              text: "A notice of severance and a signed acknowledgement of receipt",
+              hint: {
+                text: "This confirms the other proprietors received the notice"
+              }
+            },
+            {
+              value: "certificate-of-service",
+              text: "A notice of severance and a certificate confirming the notice was served",
+              hint: {
+                text: "This confirms the notice was delivered in line with legal requirements"
+              }
+            }
+          ]
+        }) }}
+
+        {{ govukInsetText({
+          text: "You'll need to upload this evidence in the next step."
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

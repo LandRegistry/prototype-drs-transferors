@@ -1,0 +1,75 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Select capacity – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-xl">Single form: Severance of joint tenancy</span>
+
+      <h1 class="govuk-heading-xl">Select capacity</h1>
+
+      <p class="govuk-body">Select the capacity the transferor is acting in. You'll need to lodge evidence of the capacity to act and check whether ID evidence will be required.</p>
+
+      <form action="/sev/v-1-4/10c-select-capacity" method="post">
+
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+        <input type="hidden" name="sev_repForenames" value="{{ data['sev_repForenames'] }}">
+        <input type="hidden" name="sev_repSurname" value="{{ data['sev_repSurname'] }}">
+        <input type="hidden" name="sev_transferorType" value="{{ data['sev_transferorType'] }}">
+
+        {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+        {{ govukRadios({
+          idPrefix: "sev_repCapacity",
+          name: "sev_repCapacity",
+          value: data["sev_repCapacity"],
+          items: [
+            {
+              value: "additional-trustee",
+              text: "additional trustee (for example, for the purposes of over-reaching)"
+            },
+            {
+              value: "trustee-in-bankruptcy",
+              text: "trustee in bankruptcy, liquidator, supervisor, administrator or administrative receiver appointed under the Insolvency Act 1986"
+            },
+            {
+              value: "receiver-lpa",
+              text: "receiver under the Law of Property Act 1925"
+            },
+            {
+              value: "deputy-mca",
+              text: "deputy appointed under the Mental Capacity Act 2005"
+            },
+            {
+              value: "guardian-gmpa",
+              text: "guardian appointed under the Guardianship (Missing Persons) Act 2017"
+            },
+            {
+              value: "personal-representative",
+              text: "personal representative (such as an executor) who assents or transfers the land or charge"
+            }
+          ]
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

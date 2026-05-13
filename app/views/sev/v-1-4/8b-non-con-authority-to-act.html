@@ -1,0 +1,68 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Authority to act - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-l">Single transaction application: Severance of joint tenancy</span>
+
+      <h1 class="govuk-heading-xl">
+        Are you authorised to act on behalf of the registered proprietor?
+      </h1>
+
+      <p class="govuk-body">
+        Because you are not a conveyancer, you must confirm that you are authorised to act on behalf of the registered proprietor.
+      </p>
+
+      <form action="/sev/v-1-4/8b-non-con-authority-to-act" method="post">
+        <input type="hidden" name="sev_conveyancer" value="{{ data['sev_conveyancer'] }}">
+        <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_titleNumber" value="{{ data['sev_titleNumber'] }}">
+
+        {{ govukRadios({
+          idPrefix: "authorityToAct",
+          name: "authorityToAct",
+          value: data["authorityToAct"],
+          fieldset: {
+            legend: {
+              text: "Are you authorised to act on behalf of the registered proprietor?",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes"
+            },
+            {
+              value: "no",
+              text: "No, I do not have authority to act and will provide evidence with signed authority of the registered proprietor to apply for the SEV"
+            }
+          ]
+        }) }}
+
+        {{ govukInsetText({
+          text: "You will need to provide evidence of your authority to act later in the application."
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

@@ -73,6 +73,7 @@
 
     <form action="/sev/v-1-4/5b-task-list-application-details-continue" method="post">
       <input type="hidden" name="sev_applicationReference" value="{{ data['sev_applicationReference'] }}">
+        <input type="hidden" name="sev_conveyancer" value="{{ data['sev_conveyancer'] }}">
       {{ govukButton({
         text: "Continue"
       }) }}

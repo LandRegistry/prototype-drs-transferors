@@ -1,0 +1,95 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+{% set useAlternativeBackLink = false %}
+
+{# Values are passed in from routes.js. Do not rely on session data directly here. #}
+{% set singleAnswer = caSingleAnswer or '' %}
+{% set singleNumber = caSingleNumber or '' %}
+{% set tableError = caSingleTableError or false %}
+
+{% block pageTitle %}
+  {% if tableError %}Error: {% endif %}Add official search numbers – Digital Registration Service – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <a href="/charge-automation/v1/single-title-task-list?state={{ caSingleStateEncoded }}" class="govuk-back-link">Return to application</a>
+
+      {% if tableError %}
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+          <div role="alert">
+            <h2 class="govuk-error-summary__title">There is a problem</h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                <li>
+                  <a href="#ca-single-table">Add an official search number or confirm that you do not have one for every title</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <span class="govuk-caption-l">Charge</span>
+      <h1 class="govuk-heading-xl">Add official search numbers</h1>
+
+      <p class="govuk-body">For each title, enter an official search number or confirm that you do not have one.</p>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full" id="ca-single-table">
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Title number</th>
+            <th scope="col" class="govuk-table__header">Priority</th>
+            <th scope="col" class="govuk-table__header">Transaction</th>
+            <th scope="col" class="govuk-table__header">Official search number</th>
+            <th scope="col" class="govuk-table__header">Action</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header govuk-!-font-weight-regular">DN100</th>
+            <td class="govuk-table__cell">1</td>
+            <td class="govuk-table__cell">Charge</td>
+            <td class="govuk-table__cell">
+              {% if tableError %}
+                <p class="govuk-error-message govuk-!-margin-bottom-1">
+                  <span class="govuk-visually-hidden">Error:</span> Add an official search number or confirm that you do not have one
+                </p>
+              {% endif %}
+              {% if singleAnswer === 'yes' %}
+                {{ singleNumber }}
+              {% elif singleAnswer === 'no' %}
+                Not provided
+              {% else %}
+                Not started
+              {% endif %}
+            </td>
+            <td class="govuk-table__cell">
+              <a class="govuk-link" href="/charge-automation/v1/single-title-question?state={{ caSingleStateEncoded }}">Change<span class="govuk-visually-hidden"> official search number for DN100</span></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="/charge-automation/v1/single-title-tell-us-about-official-search-numbers" method="post" novalidate>
+        <input type="hidden" name="ca_single_state" value="{{ caSingleStateEncoded }}">
+        <button class="govuk-button" data-module="govuk-button">Continue</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

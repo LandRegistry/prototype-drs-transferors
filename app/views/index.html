@@ -10,6 +10,149 @@
 
     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
 
+
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-charge-automation">
+              Charge automation - official search number capture
+            </span>
+          </h2>
+        </div>
+
+        <div id="accordion-default-content-charge-automation" class="govuk-accordion__section-content">
+
+          <h2 class="govuk-heading-m">Overview</h2>
+
+          <p class="govuk-body">
+            This prototype shows how DRS captures official search numbers for titles linked to a charge. This information can then be used to support charge automation later in the application process.
+          </p>
+
+          <p class="govuk-body">
+            For each relevant title, the user must give an explicit answer. They either enter an official search number, or confirm that they do not have one.
+          </p>
+
+          <p class="govuk-body">
+            The prototype includes validation for unanswered questions, missing official search numbers and test numbers that do not match the expected value. Each question page shows the accepted test number in the hint text.
+          </p>
+
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Single-title journey
+              </span>
+            </summary>
+
+            <div class="govuk-details__text">
+              <p class="govuk-body">
+                This journey shows the simplest case: one charge linked to one title.
+              </p>
+
+              <p class="govuk-body">
+                The user starts on the task list, answers the official search number question for title DN100, then reviews the answer in a table before completing the task.
+              </p>
+
+              <p class="govuk-body">
+                For testing, either:
+              </p>
+
+              <ul class="govuk-list govuk-list--bullet">
+                <li>
+                  select <strong>Yes</strong> and enter:
+                  <br>
+                  <strong>Title number:</strong> DN100
+                  <br>
+                  <strong>Official search number:</strong> 114-B2-L5
+                </li>
+                <li>
+                  select <strong>No</strong> to record that an official search number has not been provided
+                </li>
+              </ul>
+
+              <p class="govuk-body">
+                This journey includes validation when the user:
+              </p>
+
+              <ul class="govuk-list govuk-list--bullet">
+                <li>continues without selecting Yes or No</li>
+                <li>selects Yes but leaves the official search number blank</li>
+                <li>enters a number that does not match the accepted test number</li>
+              </ul>
+
+              <p class="govuk-body">
+                <a href="/charge-automation/v1/single-title-task-list" target="_blank" class="govuk-link">
+                  Open single-title journey
+                </a>
+              </p>
+            </div>
+          </details>
+
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Multi-title journey
+              </span>
+            </summary>
+
+            <div class="govuk-details__text">
+              <p class="govuk-body">
+                This journey shows a more complex case: one charge linked to three titles.
+              </p>
+
+              <p class="govuk-body">
+                The user starts on the task list and answers the official search number question for the first title. They are then taken to a table showing all linked title rows, where they can add or change answers for each title.
+              </p>
+
+              <p class="govuk-body">
+                For testing, each title must have one of the following outcomes:
+              </p>
+
+              <ul class="govuk-list govuk-list--bullet">
+                <li>
+                  select <strong>Yes</strong> and enter the accepted official search number for that title:
+                  <br>
+                  <strong>Title number:</strong> DN200
+                  <br>
+                  <strong>Official search number:</strong> 114-B2-L5
+                  <br><br>
+                  <strong>Title number:</strong> DN201
+                  <br>
+                  <strong>Official search number:</strong> 114-B2-L6
+                  <br><br>
+                  <strong>Title number:</strong> DN202
+                  <br>
+                  <strong>Official search number:</strong> 114-B2-L7
+                </li>
+                <li>
+                  select <strong>No</strong> to record that an official search number has not been provided for that title
+                </li>
+              </ul>
+
+              <p class="govuk-body">
+                The task can only be completed once every title row has an answer. If any row is still marked as Not started, selecting Continue shows a validation error.
+              </p>
+
+              <p class="govuk-body">
+                This journey includes validation when the user:
+              </p>
+
+              <ul class="govuk-list govuk-list--bullet">
+                <li>continues without selecting Yes or No</li>
+                <li>selects Yes but leaves the official search number blank</li>
+                <li>enters a number that does not match the accepted test number for that title</li>
+                <li>tries to complete the task while one or more title rows are still Not started</li>
+              </ul>
+
+              <p class="govuk-body">
+                <a href="/charge-automation/v1/multi-title-task-list" target="_blank" class="govuk-link">
+                  Open multi-title journey
+                </a>
+              </p>
+            </div>
+          </details>
+
+        </div>
+        
       <div class="govuk-accordion__section">
         <div class="govuk-accordion__section-header">
           <h2 class="govuk-accordion__section-heading">
