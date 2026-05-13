@@ -1,0 +1,119 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = true %}
+{% set useAlternativeBackLink = true %}
+{% set alternativeBackLinkHref = "/charge-automation/v1/single-title-tell-us-about-official-search-numbers" %}
+{% if caSingleStateEncoded %}
+  {% set alternativeBackLinkHref = "/charge-automation/v1/single-title-tell-us-about-official-search-numbers?state=" ~ caSingleStateEncoded %}
+{% endif %}
+
+{# Values are passed in from routes.js. Do not rely on session data directly here. #}
+{% set currentAnswer = caSingleAnswer or '' %}
+{% set currentNumber = caSingleNumber or '' %}
+{% set questionError = caSingleError or '' %}
+
+{% block pageTitle %}
+  {% if questionError %}Error: {% endif %}Do you have an official search number for this title? – Digital Registration Service – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if questionError %}
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+          <div role="alert">
+            <h2 class="govuk-error-summary__title">There is a problem</h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                {% if questionError === 'noChoice' %}
+                  <li><a href="#ca_single_answer">Select yes if you have an official search number for this title</a></li>
+                {% elif questionError === 'emptyInput' %}
+                  <li><a href="#ca_single_number">Enter an official search number</a></li>
+                {% elif questionError === 'wrongFormat' %}
+                  <li><a href="#ca_single_number">Enter the official search number in the correct format</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <span class="govuk-caption-l">Charge</span>
+
+      <form action="/charge-automation/v1/single-title-question" method="post" novalidate>
+
+        {# The encoded state carries the saved yes/no answer and number. #}
+        <input type="hidden" name="ca_single_state" value="{{ caSingleStateEncoded }}">
+
+        <div class="govuk-form-group {% if questionError === 'noChoice' %}govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset" aria-describedby="ca-single-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+              <h1 class="govuk-fieldset__heading">Do you have an official search number for this title?</h1>
+            </legend>
+
+            <p class="govuk-body" id="ca-single-hint">
+              <strong>Title number:</strong> DN100<br>
+              <strong>Linked transaction:</strong> Charge 1
+            </p>
+
+            {% if questionError === 'noChoice' %}
+              <p id="ca_single_answer-error" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> Select yes if you have an official search number for this title
+              </p>
+            {% endif %}
+
+            <div class="govuk-radios" data-module="govuk-radios">
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="ca_single_answer" name="ca_single_answer" type="radio" value="yes" data-aria-controls="conditional-yes" {% if currentAnswer === 'yes' %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="ca_single_answer">Yes</label>
+              </div>
+
+              <div class="govuk-radios__conditional {% if currentAnswer !== 'yes' %}govuk-radios__conditional--hidden{% endif %}" id="conditional-yes">
+                <div class="govuk-form-group {% if questionError === 'emptyInput' or questionError === 'wrongFormat' %}govuk-form-group--error{% endif %}">
+                  <label class="govuk-label" for="ca_single_number">Official search number</label>
+                  <div id="ca_single_number-hint" class="govuk-hint">For example, 114-B2-L5</div>
+                  {% if questionError === 'emptyInput' %}
+                    <p id="ca_single_number-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> Enter an official search number
+                    </p>
+                  {% elif questionError === 'wrongFormat' %}
+                    <p id="ca_single_number-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> Enter the official search number in the correct format
+                    </p>
+                  {% endif %}
+                  <input class="govuk-input govuk-input--width-10 {% if questionError === 'emptyInput' or questionError === 'wrongFormat' %}govuk-input--error{% endif %}" id="ca_single_number" name="ca_single_number" type="text" value="{{ currentNumber }}" aria-describedby="ca_single_number-hint">
+                </div>
+              </div>
+
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="ca_single_answer-2" name="ca_single_answer" type="radio" value="no" {% if currentAnswer === 'no' %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="ca_single_answer-2">No</label>
+              </div>
+
+            </div>
+          </fieldset>
+        </div>
+
+        <button class="govuk-button" data-module="govuk-button">Continue</button>
+
+      </form>
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">What is an official search number?</span>
+        </summary>
+        <div class="govuk-details__text">
+          An official search number is a reference number assigned to an Official Search of Whole (OS1) or Official Search of Part (OS2). You can find it on your official search certificate. It follows a 7-character format, for example “114-B2-L5”.
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
