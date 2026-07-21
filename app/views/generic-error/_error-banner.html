@@ -1,0 +1,42 @@
+{#
+  Prototype-only red error banner for the generic error handling journeys.
+  Uses GOV.UK notification banner markup with a prototype-specific modifier
+  class (app-notification-banner--error) so the global component is untouched.
+
+  role="region" + aria-labelledby (not role="alert"/data-module) so it does NOT
+  steal focus on every page load, which would be distracting in moderated research.
+
+  The link always routes to the Fix errors page for the user-fixable journey.
+#}
+
+<style>
+  .app-notification-banner--error {
+    border-color: #d4351c;
+  }
+  .app-notification-banner--error .govuk-notification-banner__header {
+    background-color: #d4351c;
+    border-bottom-color: #d4351c;
+  }
+</style>
+
+<div class="govuk-notification-banner app-notification-banner--error"
+     role="region"
+     aria-labelledby="generic-error-banner-title">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="generic-error-banner-title">
+      There is a problem
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <p class="govuk-notification-banner__heading">
+      Some information in your application is missing or incorrect.
+      <a class="govuk-notification-banner__link" href="/generic-error/user-fixable/fix-errors">Check the details to fix the errors</a>.
+    </p>
+    <p class="govuk-body">
+      This error message will stay on screen until you resubmit your application.
+    </p>
+    <p class="govuk-body">
+      Tasks will show as complete even if they contain errors. Check each task carefully before you resubmit.
+    </p>
+  </div>
+</div>

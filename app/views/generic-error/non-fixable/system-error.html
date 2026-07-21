@@ -1,0 +1,48 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+
+{% block pageTitle %}
+  We found a system error in your application - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">We found a system error in your application</h1>
+
+      <p class="govuk-body">Your application has not been submitted and it is not on the day list.</p>
+      <p class="govuk-body">We are working to fix this. You do not need to do anything right now.</p>
+
+      <p class="govuk-body">Next steps:</p>
+      <ol class="govuk-list govuk-list--number">
+        <li>We will fix the error and email you.</li>
+        <li>You will then need to resubmit your application.</li>
+      </ol>
+
+      {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+      {{ govukInsetText({
+        text: "Tasks will show as complete even if they contain errors."
+      }) }}
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Return to applications",
+        href: "/generic-error/non-fixable/applications"
+      }) }}
+
+    </div>
+  </div>
+</div>
+{% endblock %}

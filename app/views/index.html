@@ -10,6 +10,87 @@
 
     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
 
+      <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id="accordion-default-heading-generic-error">
+              Generic error handling
+            </span>
+          </h2>
+        </div>
+
+        <div id="accordion-default-content-generic-error" class="govuk-accordion__section-content">
+
+          <h2 class="govuk-heading-m">Overview</h2>
+
+          <p class="govuk-body">
+            This prototype simulates two generic error handling journeys for applications that fail validation after submission. It is for moderated user research, so participants can be walked through each flow and asked what they would do next.
+          </p>
+
+          <p class="govuk-body">
+            A red notification banner is used to show that an application has failed validation. This is a prototype-specific style. It persists on screen because DRS cannot know whether the errors have been fixed until the application is resubmitted and revalidated.
+          </p>
+
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Journey 1: user-fixable validation error
+              </span>
+            </summary>
+
+            <div class="govuk-details__text">
+              <p class="govuk-body">
+                Simulates an application that fails validation, where the errors can potentially be fixed by the user in DRS.
+              </p>
+
+              <p class="govuk-body">
+                The user submits the application, sees it fail with a <strong class="govuk-tag govuk-tag--red">Validation failed</strong> status on the Applications page, opens it to the task list where the red banner appears, views the human-readable errors on the Fix errors page, and returns to review and resubmit. The banner persists on the task list and on the review page.
+              </p>
+
+              <p class="govuk-body">
+                Test data for this journey: reference <strong>HK58210</strong>, title <strong>DV88431</strong>.
+              </p>
+
+              <p class="govuk-body">
+                <a href="/generic-error/user-fixable/review" target="_blank" class="govuk-link">
+                  Open user-fixable journey
+                </a>
+              </p>
+            </div>
+          </details>
+
+          <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Journey 2: non-user-fixable / mixed validation error
+              </span>
+            </summary>
+
+            <div class="govuk-details__text">
+              <p class="govuk-body">
+                Simulates an application that fails validation because at least one error is not fixable by the user. The agreed rule for this prototype is that if there is at least one non-user-fixable error, the user cannot fix the application in DRS at this point.
+              </p>
+
+              <p class="govuk-body">
+                The user submits the application, sees it fail with a <strong class="govuk-tag govuk-tag--red">Validation failed</strong> status, and opens it directly to a system error page explaining that HMLR is working to fix the issue and will contact them. There is no task list and no banner in this journey.
+              </p>
+
+              <p class="govuk-body">
+                Test data for this journey: reference <strong>MT44907</strong>, title <strong>SY71099</strong>.
+              </p>
+
+              <p class="govuk-body">
+                <a href="/generic-error/non-fixable/review" target="_blank" class="govuk-link">
+                  Open non-user-fixable journey
+                </a>
+              </p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+
+
 
       <div class="govuk-accordion__section">
         <div class="govuk-accordion__section-header">
