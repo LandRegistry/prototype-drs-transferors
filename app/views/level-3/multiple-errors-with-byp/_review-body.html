@@ -1,0 +1,219 @@
+{#
+  Shared review body for Journey 1 (user-fixable).
+  Parent page decides:
+    - whether the red banner is shown (parent includes _error-banner.html above this)
+    - confirmSubmitHref: where "Confirm and submit" routes to
+  Data is fixed and consistent with the task list and applications row:
+  reference HK58210 / title DV88431 / applicant Emily Johnson /
+  single "Transfer for value" transaction.
+#}
+{% set confirmSubmitHref = confirmSubmitHref | default("/generic-error/user-fixable/validating") %}
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Review your application</h1>
+
+      <h2 class="govuk-heading-l">Application details</h2>
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Your reference</dt>
+          <dd class="govuk-summary-list__value">HK58210</dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="#">Change<span class="govuk-visually-hidden"> reference</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+          <dt class="govuk-summary-list__key">Application type</dt>
+          <dd class="govuk-summary-list__value">Change of ownership</dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-9">Property details</h2>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-visually-hidden">Property details</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Title number</th>
+            <th scope="col" class="govuk-table__header">Property description</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Additional details</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">DV88431</td>
+            <td class="govuk-table__cell">12 Ardsley Road, Leeds, LS8 2LN</td>
+            <td class="govuk-table__cell">This application affects the whole of the title</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-9">Overriding interests</h2>
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Are any titles affected by overriding interests?</dt>
+          <dd class="govuk-summary-list__value">Yes</dd>
+        </div>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+          <dt class="govuk-summary-list__key">Document attached</dt>
+          <dd class="govuk-summary-list__value">Form DI</dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-9">Linked transactions and title numbers</h2>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-visually-hidden">Linked transactions and title numbers</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-half">Transactions</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-half">Title numbers</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Transfer for value</td>
+            <td class="govuk-table__cell">DV88431</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-9">Applicants</h2>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-visually-hidden">Applicant details</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Applicant type</th>
+            <th scope="col" class="govuk-table__header">Full name</th>
+            <th scope="col" class="govuk-table__header">Company number</th>
+            <th scope="col" class="govuk-table__header">Territory of incorporation</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Private individual</td>
+            <td class="govuk-table__cell">Emily Johnson</td>
+            <td class="govuk-table__cell">N/A</td>
+            <td class="govuk-table__cell">N/A</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-9">Transfer for value</h2>
+
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Parties</h3>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-visually-hidden">Transferee and transferor</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Role</th>
+            <th scope="col" class="govuk-table__header">Full name</th>
+            <th scope="col" class="govuk-table__header">Capacity</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Transferee</td>
+            <td class="govuk-table__cell">Emily Johnson</td>
+            <td class="govuk-table__cell">Beneficial owner</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">Transferor</td>
+            <td class="govuk-table__cell">Robert Hughes</td>
+            <td class="govuk-table__cell">Registered proprietor</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <dl class="govuk-summary-list govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Transfer date</dt>
+          <dd class="govuk-summary-list__value">14 November 2024</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Consideration</dt>
+          <dd class="govuk-summary-list__value">Transfer of £250,000 received from transferee</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Title guarantee</dt>
+          <dd class="govuk-summary-list__value">Full title guarantee</dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Additional provisions</dt>
+          <dd class="govuk-summary-list__value">None</dd>
+        </div>
+      </dl>
+
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-1">Attached documents</h3>
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-visually-hidden">Attached documents</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Document type</th>
+            <th scope="col" class="govuk-table__header">Certification</th>
+            <th scope="col" class="govuk-table__header">File name</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">TR1 Registered title(s): whole transfer</td>
+            <td class="govuk-table__cell">Certified</td>
+            <td class="govuk-table__cell">Draft TR1.pdf</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-9 govuk-!-margin-bottom-0">Your contact email for this application</h2>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend">
+            <span class="govuk-caption-m govuk-!-margin-bottom-4">Choose where you want us to send correspondence or requisitions.</span>
+          </legend>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="contact-email" name="contact-email" type="radio" value="corres@landregistry.gov.uk" checked>
+              <label class="govuk-label govuk-radios__label" for="contact-email">corres@landregistry.gov.uk</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="contact-email-2" name="contact-email" type="radio" value="cmuser1@landregistry.gov.uk">
+              <label class="govuk-label govuk-radios__label" for="contact-email-2">cmuser1@landregistry.gov.uk</label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="contact-email-3" name="contact-email" type="radio" value="other">
+              <label class="govuk-label govuk-radios__label" for="contact-email-3">Other</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-margin-top-6">Declaration</h2>
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">Warning statement</span>
+        </summary>
+        <div class="govuk-details__text">
+          <p class="govuk-body">
+            If you dishonestly enter information or make a statement that you know is, or might be, untrue or misleading, you may commit the offence of fraud under section 1 of the Fraud Act 2006.
+          </p>
+        </div>
+      </details>
+
+      <p class="govuk-body">
+        By submitting this application you are confirming you have read and understood the warning statement.
+      </p>
+
+      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+      {{ govukWarningText({
+        text: "Make sure your application and attached documents are accurate. The validation process will check for errors and, if any are found, you'll have to resolve them which may delay your application.",
+        iconFallbackText: "Warning"
+      }) }}
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Confirm and submit",
+        href: confirmSubmitHref
+      }) }}
+
+    </div>
+  </div>
+</div>

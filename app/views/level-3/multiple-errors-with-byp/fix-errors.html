@@ -1,0 +1,51 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+
+{% block pageTitle %}
+  Fix errors in your application - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "/generic-error/user-fixable/task-list"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Fix errors in your application</h1>
+
+      <p class="govuk-body">Follow these steps to fix errors in your application:</p>
+      <ol class="govuk-list govuk-list--number">
+        <li>Review the error messages</li>
+        <li>Return to application and review the sections affected</li>
+        <li>Resubmit your application</li>
+      </ol>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-6">Error messages:</h2>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Document not accepted. The TR1 document uploaded is encrypted and cannot be processed. Please remove the encryption and try again</li>
+      </ul>
+
+      {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+      {{ govukInsetText({
+        html: "The error message will stay on screen until you resubmit your application.<br><br>Tasks will show as complete even if they contain errors. Check each task carefully before you submit."
+      }) }}
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Return to application",
+        href: "/generic-error/user-fixable/task-list"
+      }) }}
+
+    </div>
+  </div>
+</div>
+{% endblock %}

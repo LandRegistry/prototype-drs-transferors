@@ -1,0 +1,55 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+
+{% block pageTitle %}
+  Your application is being validated - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Your application is being validated</h1>
+
+      <p class="govuk-body">We're checking we have all the information we need to process your application.</p>
+      <p class="govuk-body">The status of your application will be updated as soon as the checks are complete. You can view the status on the Applications page.</p>
+      <p class="govuk-body">Statuses are explained on this page.</p>
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+      {% from "govuk/components/tag/macro.njk" import govukTag %}
+
+      {{ govukSummaryList({
+        card: { title: { text: "Application statuses" } },
+        rows: [
+          {
+            key: { html: govukTag({ text: "Validating", classes: "govuk-tag--blue status-column" }) },
+            value: { html: "Your application is being validated. It is not yet on the day list." }
+          },
+          {
+            key: { html: govukTag({ text: "Accepted", classes: "govuk-tag--green status-column" }) },
+            value: { html: "Your application has gone through validation successfully. It is now on the day list and has priority. If it was validated out of office hours, it will show on the day list (with priority) on the next working day." }
+          },
+          {
+            key: { html: govukTag({ text: "Validation failed", classes: "govuk-tag--red status-column" }) },
+            value: { html: "Some information on your application is missing or incorrect. It is not on the day list. You can open your application to view the problem details. You may be able to fix it and resubmit your application. If not, our service desk will contact you by email." }
+          },
+          {
+            key: { html: govukTag({ text: "Draft", classes: "govuk-tag--grey status-column" }) },
+            value: { html: "The application has not been submitted for validation yet." }
+          }
+        ]
+      }) }}
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Continue to Applications page",
+        href: "/generic-error/user-fixable/applications"
+      }) }}
+
+    </div>
+  </div>
+</div>
+{% endblock %}

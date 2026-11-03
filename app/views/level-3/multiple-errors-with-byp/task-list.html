@@ -1,0 +1,166 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Apply to register or update a title - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "generic-error/_error-banner.html" %}
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Apply to register or update a title</h1>
+    <p class="govuk-body govuk-!-margin-bottom-4"><b>Application complete</b></p>
+    <p class="govuk-body">You have completed 3 of 3 sections</p>
+
+    <h2 class="govuk-heading-m">1. Application details</h2>
+    <ul class="govuk-task-list">
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Enter your reference</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Enter title numbers</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Select transactions</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Link transactions and title numbers</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Fees</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Add applicant details</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-8">2. Overriding interest</h2>
+    <ul class="govuk-task-list">
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Attach form DI</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-8">3. Transaction details</h2>
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">3.1. Transfer for value</h3>
+
+    <div class="govuk-!-padding-left-6">
+
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-1">3.1.1 Transferee details</h4>
+    <ul class="govuk-task-list">
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Select transferees</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Add transferee representation</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Add addresses for service</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+    </ul>
+
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-top-6">3.1.2 Transferor details</h4>
+    <ul class="govuk-task-list">
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Transferor details</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Add transferor representation</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+    </ul>
+
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-top-6">3.1.3 Additional fields</h4>
+    <ul class="govuk-task-list">
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Confirm transfer date</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Confirm consideration</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Select title guarantee</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Additional provisions</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+    </ul>
+
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-top-6">3.1.4 Supporting documents</h4>
+    <ul class="govuk-task-list">
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Download part-completed TR1</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+      <li class="govuk-task-list__item">
+        <div class="govuk-task-list__name-and-hint"><a href="#" class="govuk-link">Attach documents</a></div>
+        <div class="govuk-task-list__status"><strong class="govuk-tag">COMPLETED</strong></div>
+      </li>
+    </ul>
+
+    </div>
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+    {{ govukButton({
+      text: "Review application",
+      href: "/generic-error/user-fixable/review-with-banner",
+      classes: "govuk-!-margin-top-6"
+    }) }}
+
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+    {{ govukInsetText({
+      text: "To avoid requisitions, attach all relevant documents."
+    }) }}
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <ul class="govuk-list task-list-side-bar">
+      <li>
+        <strong>Your Reference</strong>
+        <br>
+        HK58210
+      </li>
+      <li>
+        <strong>Title numbers</strong>
+        <br>
+        DV88431
+      </li>
+      <li>
+        <a class="govuk-link" href="#">Save application and exit</a>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+{% endblock %}
