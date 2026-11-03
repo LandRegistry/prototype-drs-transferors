@@ -7,34 +7,53 @@
   steal focus on every page load, which would be distracting in moderated research.
 #}
 
-<style>
-  .app-notification-banner--error {
-    border-color: #d4351c;
-  }
-  .app-notification-banner--error .govuk-notification-banner__header {
-    background-color: #d4351c;
-    border-bottom-color: #d4351c;
-  }
-</style>
-
 <div class="govuk-notification-banner app-notification-banner--error"
      role="region"
      aria-labelledby="generic-error-banner-title">
   <div class="govuk-notification-banner__header">
     <h2 class="govuk-notification-banner__title" id="generic-error-banner-title">
-      There is a problem
+      Validation problems
     </h2>
   </div>
-  <div class="govuk-notification-banner__content">
-    <p class="govuk-notification-banner__heading">
-      Some information in your application is missing or incorrect.
-      <a class="govuk-notification-banner__link" href="/generic-error/user-fixable/fix-errors">Check the details to fix the errors</a>.
+  <div class="govuk-notification-banner__content width-max">
+    <p class="govuk-body">
+      This error message will stay on screen until you resubmit your application. Tasks will show as complete even if they contain errors. Check each task carefully before you resubmit.
     </p>
     <p class="govuk-body">
-      This error message will stay on screen until you resubmit your application.
+       <strong>You can mark errors as resolved here for your own reference only.</strong>
     </p>
-    <p class="govuk-body">
-      Tasks will show as complete even if they contain errors. Check each task carefully before you resubmit.
-    </p>
+
+    {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+    {{ govukCheckboxes({
+      name: "errorsFound",
+      values: data.errorsFound,
+      items: [
+        {
+          value: "error1",
+          text: "Document not accepted. The TR1 document uploaded is encrypted and cannot be processed. Please remove the encryption and try again"
+        },
+        {
+          value: "error2",
+          html: 'Title number AGL500906 does not match any title number provided in the TR1 document. This uses new document analysis, so may be inaccurate. <a class="govuk-link" href="bypass">Tell us if we are wrong</a>'
+        },
+        {
+          value: "error3",
+          html: 'Name "Dave" does not match any name provided in the TR1 document. This uses new document analysis, so may be inaccurate. <a class="govuk-link" href="bypass">Tell us if we are wrong</a>'
+        }
+      ]
+    }) }}
+
   </div>
 </div>
+
+<!-- 
+        {
+          value: "error2",
+          html: "Title number AGL500906 does not match any title number provided in the TR1 document. This uses new document analysis, so may be inaccurate. <a href='bypass'>Tell us if we are wrong</a>"
+        },
+        {
+          value: "error3",
+          html: "Name "Dave" does not match any name provided in the TR1 document. This uses new document analysis, so may be inaccurate. <a href='bypass'>Tell us if we are wrong</a>"
+        }
+-->

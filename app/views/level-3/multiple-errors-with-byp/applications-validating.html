@@ -86,7 +86,7 @@
             <div class="govuk-grid-column-one-quarter">
                 <div class="govuk-button-group full-width-buttons">
                     <button id="apply-filters" class="govuk-button full-width" type="button">Filter</button>
-                    <button id="clear-search" class="govuk-button govuk-button--secondary full-width" type="button">Clear all</button>
+                    <a href="applications-failures" id="clear-search" class="govuk-button govuk-button--secondary full-width" >Clear all</a>
                 </div>
             </div>
 
@@ -115,32 +115,13 @@
                         </thead>
                         <tbody class="govuk-table__body">
                             <tr class="govuk-table__row" data-owner="mine">
-                                <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--red">Validation failed</strong></td>
+                                <td class="govuk-table__cell"><strong class="govuk-tag">In submission</strong></td>
                                 <td class="govuk-table__cell">HK58210</td>
                                 <td class="govuk-table__cell">DV88431</td>
                                 <td class="govuk-table__cell">12 Ardsley Road, Leeds, LS8 2LN</td>
                                 <td class="govuk-table__cell">Emily Johnson</td>
                                 <td class="govuk-table__cell">14/11/24</td>
-                                <td class="govuk-table__cell">
-                                    <div class="input-wrapper">
-                                        <div class="input-with-button last-column-container">
-                                            <div class="input-with-button">
-                                                <select class="govuk-select full-width">
-                                                    <option value="">Select action</option>
-                                                    <option value="/generic-error/user-fixable/task-list" data-url="/generic-error/user-fixable/task-list">Open</option>
-                                                    <option value="#" data-url="#">Transfer</option>
-                                                    <option value="#" data-url="#">Delete</option>
-                                                </select>
-                                                <button class="search-btn" type="button">
-                                                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                                                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                        <path d="M14 5L19 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
+                                <td class="govuk-table__cell">No actions available while performing checks</td>
                             </tr>
                             <tr class="govuk-table__row" data-owner="mine">
                                 <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Accepted</strong></td>
@@ -415,7 +396,7 @@
                         {
                             number: 1,
                             current: true,
-                            href: "#"
+                            href: "applications-failures"
                         }
                     ]
                 }) }}
@@ -491,7 +472,7 @@
     // Event listener for the search button to trigger filtering as well
     searchButton.addEventListener('click', applyFilters);
 
-    // Clear search functionality
+    /* Clear search functionality
     clearSearchLink.addEventListener('click', function (event) {
         event.preventDefault();
 
@@ -508,6 +489,7 @@
 
         applyFilters(); // Apply default filters again
     });
+    */
 
     // Event listener for action buttons in the table rows
     const actionButtons = document.querySelectorAll('.govuk-table__cell .search-btn');

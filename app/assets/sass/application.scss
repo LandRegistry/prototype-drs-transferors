@@ -456,12 +456,12 @@
 }
 
 /* VCAD Card - Your application is being validated
-Apply a narrower width to the first column */
+Apply a narrower width to the first column
 @media (min-width: 40.0625em) {
     .govuk-summary-list__key {
         width: 22%;
     }
-}
+} */
 
 
 /* Full-width buttons container with padding for vertical alignment */
@@ -526,12 +526,13 @@ Apply a narrower width to the first column */
   vertical-align: top;
 }
 
+/* Don't know why it's here, overrides defualt label font size and shouldn't
 @media (min-width: 40.0625em) {
     .govuk-label {
         font-size: 1rem;
         line-height: 1.3157894737;
     }
-}
+} */
 
 @media (min-width: 40.0625em) {
     #table-myt {
@@ -601,3 +602,32 @@ Apply a narrower width to the first column */
   .govuk-table__header, .govuk-table__cell {
     /* border-left: 5px solid transparent; */
   }
+
+// Override for error banner width
+.govuk-notification-banner__content > * {
+    max-width: 100%;
+}
+
+// Setting page width to currently recommended default instead of 960px
+.govuk-width-container {
+    max-width: 1100px;
+}
+
+// Styles for error banner
+.app-notification-banner--error {
+  border-color: #d4351c;
+}
+.app-notification-banner--error .govuk-notification-banner__header {
+  background-color: #d4351c;
+  border-bottom-color: #d4351c;
+}
+@media (min-width: 40.0625em) {
+    .govuk-notification-banner {
+        margin-bottom: 30px
+    }
+}
+
+// Fix for extra spacing on last item in spaced list
+.govuk-list--spaced li:last-child {
+  margin-bottom:0;
+}

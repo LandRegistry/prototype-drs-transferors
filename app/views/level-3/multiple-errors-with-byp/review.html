@@ -11,10 +11,10 @@
   {{ super() }}
   {{ govukBackLink({
     text: "Return to application",
-    href: "javascript:window.history.back()"
+    href: "task-view"
   }) }}
 {% endblock %}
 
 {% block content %}
-{% include "generic-error/user-fixable/_review-body.html" %}
+  {% include "level-3/_review-body.html" %}
 {% endblock %}

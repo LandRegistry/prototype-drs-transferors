@@ -4,14 +4,14 @@
 {% set showBackLink = false %}
 
 {% block pageTitle %}
-  Fix errors in your application - {{ serviceName }} - GOV.UK Prototype Kit
+  Validation errors were found in your application - {{ serviceName }} - GOV.UK Prototype Kit
 {% endblock %}
 
 {% block beforeContent %}
   {{ super() }}
   {{ govukBackLink({
-    text: "Return to application",
-    href: "/generic-error/user-fixable/task-list"
+    text: "Return to applications",
+    href: "applications-failures"
   }) }}
 {% endblock %}
 
@@ -20,32 +20,65 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">Fix errors in your application</h1>
+      <h1 class="govuk-heading-xl">Validation errors were found in your application</h1>
 
-      <p class="govuk-body">Follow these steps to fix errors in your application:</p>
-      <ol class="govuk-list govuk-list--number">
-        <li>Review the error messages</li>
-        <li>Return to application and review the sections affected</li>
-        <li>Resubmit your application</li>
-      </ol>
+      <p class="govuk-body">HMLRs automated back-end validation has found problems with your application that we could not identify before submission. These problems need to be fixed before the application can be submitted.</p>
 
-      <h2 class="govuk-heading-m govuk-!-margin-top-6">Error messages:</h2>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Document not accepted. The TR1 document uploaded is encrypted and cannot be processed. Please remove the encryption and try again</li>
-      </ul>
+      <p class="govuk-body"><strong>Due to the nature of these errors, we cannot tell you what you need to do to fix them.</strong></p>
 
-      {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-      {{ govukInsetText({
-        html: "The error message will stay on screen until you resubmit your application.<br><br>Tasks will show as complete even if they contain errors. Check each task carefully before you submit."
-      }) }}
+      <p class="govuk-body">For your reference, these error messages will be visible as you edit your application. They will stay on screen until you resubmit your application.</p>
+
+      <p class="govuk-body">Tasks in the application will show as complete even if they contain errors. Check each task carefully before you send for validation.</p>
+
+      <div class="govuk-notification-banner app-notification-banner--error"
+          role="region"
+          aria-labelledby="generic-error-banner-title">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="generic-error-banner-title">
+            Validation errors found in this application
+          </h2>
+        </div>
+        <div class="govuk-notification-banner__content width-max">       
+          <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+            <li>Document not accepted. The TR1 document uploaded is encrypted and cannot be processed. Please remove the encryption and try again.</li>
+            <li>Title number AGL500906 does not match any title number provided in the TR1 document. This uses new document analysis, so may be inaccurate.</li>
+            <li>Name "Dave" does not match any name provided in the TR1 document. This uses new document analysis, so may be inaccurate.</li>
+          </ul>
+        </div>
+      </div>
 
       {% from "govuk/components/button/macro.njk" import govukButton %}
       {{ govukButton({
-        text: "Return to application",
-        href: "/generic-error/user-fixable/task-list"
+        text: "Edit application",
+        href: "task-list"
+      }) }}
+
+      <p class="govuk-body">If you know these issues mean you will have to start again with a new application, you can delete the application and start again.</p>
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Delete application",
+        href: "#",
+        classes: 'govuk-button--secondary'
       }) }}
 
     </div>
+
+    <div class="govuk-grid-column-one-third">
+      <ul class="govuk-list task-list-side-bar">
+        <li>
+          <strong>Your Reference</strong>
+          <br>
+          HK58210
+        </li>
+        <li>
+          <strong>Title numbers</strong>
+          <br>
+          DV88431
+        </li>
+      </ul>
+    </div>
+
   </div>
 </div>
 {% endblock %}

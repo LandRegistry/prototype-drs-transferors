@@ -1,13 +1,13 @@
 {#
-  Shared review body for Journey 1 (user-fixable).
+  Shared review body.
   Parent page decides:
-    - whether the red banner is shown (parent includes _error-banner.html above this)
+    - whether the red banner is shown
     - confirmSubmitHref: where "Confirm and submit" routes to
   Data is fixed and consistent with the task list and applications row:
   reference HK58210 / title DV88431 / applicant Emily Johnson /
   single "Transfer for value" transaction.
 #}
-{% set confirmSubmitHref = confirmSubmitHref | default("/generic-error/user-fixable/validating") %}
+{% set confirmSubmitHref = confirmSubmitHref | default("validating") %}
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
@@ -186,6 +186,40 @@
         </fieldset>
       </div>
 
+      {% if bypassPlayback == "true" %}
+        <h2 class="govuk-heading-l govuk-!-margin-top-9">Contesting validation errors</h2>
+
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Contested error</th>
+              <th scope="col" class="govuk-table__header">Reason</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{ data.errorsToBypass[0] }}</td>
+              <td class="govuk-table__cell">{{ data.bypassComment }}</td>
+            </tr>
+          </tbody>
+        </table>
+      {% endif %}
+
+    </div>
+
+    {% if showBanner == "true" %}
+      <div class="govuk-grid-column-one-third">
+
+        {% include "level-3/_error-banner.html" %}
+      
+      </div>
+    {% endif %}
+
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
       <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-margin-top-6">Declaration</h2>
       <details class="govuk-details" data-module="govuk-details">
         <summary class="govuk-details__summary">
@@ -210,10 +244,11 @@
 
       {% from "govuk/components/button/macro.njk" import govukButton %}
       {{ govukButton({
-        text: "Confirm and submit",
+        text: "Send for validation",
         href: confirmSubmitHref
       }) }}
-
     </div>
   </div>
+
+  
 </div>

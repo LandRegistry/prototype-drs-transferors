@@ -11,19 +11,17 @@
   {{ super() }}
   {{ govukBackLink({
     text: "Return to application",
-    href: "/generic-error/user-fixable/task-list"
+    href: "task-list"
   }) }}
 {% endblock %}
 
 {% block content %}
-<div class="govuk-width-container">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      {% include "generic-error/_error-banner.html" %}
-    </div>
-  </div>
-</div>
 
-{% set confirmSubmitHref = "/generic-error/user-fixable/end" %}
-{% include "generic-error/user-fixable/_review-body.html" %}
+  {% set confirmSubmitHref = "end" %}
+  {% set showBanner = "true" %}
+  {% if data.bypassComment %}
+    {% set bypassPlayback = "true" %}
+  {% endif %}
+  {% include "level-3/_review-body.html" %}
+
 {% endblock %}

@@ -1,0 +1,105 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+
+{% block pageTitle %}
+  Tell us we got comething wrong - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "task-list"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<form action="review-with-banner" method="post">
+
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">Tell us we're wrong</h1>
+
+        <p class="govuk-body">You have indicated that one or more of the errors we identified is not actually an error.</p>
+
+        <p class="govuk-body">If the issue is that we have not identified the contents of your document correctly, please describe the exact issue below.</p>
+
+        <p class="govuk-body">This will allow you to submit in spite of this error, and a case worker will check the document(s) manually.</p>
+        
+        {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+        {{ govukCheckboxes({
+          name: "errorsToBypass",
+          fieldset: {
+            legend: {
+              text: "Which error(s) do you disagree with?",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "Title number AGL500906 does not match any title number provided in the TR1 document.",
+              html: 'Title number AGL500906 does not match any title number provided in the TR1 document. This uses new document analysis, so may be inaccurate. <a class="govuk-link" href="bypass">Tell us if we are wrong</a>'
+            },
+            {
+              value: 'Name "Dave" does not match any name provided in the TR1 document.',
+              html: 'Name "Dave" does not match any name provided in the TR1 document. This uses new document analysis, so may be inaccurate. <a class="govuk-link" href="bypass">Tell us if we are wrong</a>'
+            }
+          ]
+        }) }}
+
+        {% from "govuk/components/input/macro.njk" import govukInput %}
+
+        {{ govukTextarea({
+          label: {
+            text: "Explain what we got wrong",
+            classes: "govuk-label--m"
+          },
+          hint: {
+            text: "This will not be shared with the person processing your application. It is used to help us improve our automated checks"
+          },
+          id: "bypassComment",
+          name: "bypassComment"
+        }) }}
+
+        <div class="govuk-button-group">
+          {% from "govuk/components/button/macro.njk" import govukButton %}
+          {{ govukButton({
+            text: "Confirm error with HMLR data extraction",
+            type: "submit"
+          }) }}
+
+          {% from "govuk/components/button/macro.njk" import govukButton %}
+          {{ govukButton({
+            text: "Cancel",
+            href: "task-list",
+            classes: 'govuk-button--secondary'
+          }) }}
+        </div>
+
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <ul class="govuk-list task-list-side-bar">
+          <li>
+            <strong>Your Reference</strong>
+            <br>
+            HK58210
+          </li>
+          <li>
+            <strong>Title numbers</strong>
+            <br>
+            DV88431
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</form>
+{% endblock %}

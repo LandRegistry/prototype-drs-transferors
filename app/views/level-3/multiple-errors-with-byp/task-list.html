@@ -8,17 +8,13 @@
   {{ super() }}
   {{ govukBackLink({
     text: "Back",
-    href: "javascript:window.history.back()"
+    href: "fix-errors"
   }) }}
 {% endblock %}
 
 {% block content %}
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    {% include "generic-error/_error-banner.html" %}
-  </div>
-</div>
+<form action="review-with-banner" method="post">
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -129,18 +125,6 @@
 
     </div>
 
-    {% from "govuk/components/button/macro.njk" import govukButton %}
-    {{ govukButton({
-      text: "Review application",
-      href: "/generic-error/user-fixable/review-with-banner",
-      classes: "govuk-!-margin-top-6"
-    }) }}
-
-    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-    {{ govukInsetText({
-      text: "To avoid requisitions, attach all relevant documents."
-    }) }}
-
   </div>
 
   <div class="govuk-grid-column-one-third">
@@ -159,8 +143,24 @@
         <a class="govuk-link" href="#">Save application and exit</a>
       </li>
     </ul>
+
+    {% include "level-3/_error-banner.html" %}
   </div>
 
 </div>
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+    {{ govukButton({
+      text: "Review application",
+      type: "submit",
+      classes: "govuk-!-margin-top-6"
+    }) }}
+
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+    {{ govukInsetText({
+      text: "To avoid requisitions, attach all relevant documents."
+    }) }}
+
+</form>
 
 {% endblock %}
