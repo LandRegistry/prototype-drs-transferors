@@ -19,7 +19,7 @@
 
   {% set confirmSubmitHref = "end" %}
   {% set showBanner = "true" %}
-  {% if data.bypassComment %}
+  {% if data.errorsToBypass %}
     {% set bypassPlayback = "true" %}
   {% endif %}
   {% include "level-3/_review-body.html" %}
