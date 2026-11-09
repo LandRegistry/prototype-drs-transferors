@@ -19,16 +19,9 @@
             </h1>
 
             <p class="govuk-body">
-              The status of your applications will be updated every 30 seconds.
+              You can search by reference, title or property address (search term must be 3 characters or more). You can use the filters to refine the search results and ‘Clear all’ to start again. The status of your applications will be updated every 30 seconds.
             </p>
 
-            <!-- {% from "govuk/components/details/macro.njk" import govukDetails %}
-
-            {{ govukDetails({
-              summaryText: "Help with search",
-              text: "You can search using the application reference or title. <br>Saved applications are available for up to 90 days from the date they were created (saved applications are deleted from the system after 90 days)." | safe
-            }) }}
- -->
         </div>
 
     </div> <!-- ./govuk-grid-row -->
@@ -106,7 +99,7 @@
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Status</th>
-                                <th scope="col" class="govuk-table__header">Ref</th>
+                                <th scope="col" class="govuk-table__header">Reference</th>
                                 <th scope="col" class="govuk-table__header">Titles</th>
                                 <th scope="col" class="govuk-table__header">Property</th>
                                 <th scope="col" class="govuk-table__header">Applicants</th>
@@ -409,17 +402,6 @@
 
             <div class="govuk-grid-column-one-half">
                 <p class="govuk-body-s govuk-!-text-align-left text-align-centre-mob total-applications">Showing <strong>1</strong> to <strong>X</strong> of <strong>X</strong> applications</p>
-
-                {% from "govuk/components/pagination/macro.njk" import govukPagination %}
-                {{ govukPagination({
-                    items: [
-                        {
-                            number: 1,
-                            current: true,
-                            href: "#"
-                        }
-                    ]
-                }) }}
 
             </div> <!-- /.govuk-grid-column-one-half -->
 

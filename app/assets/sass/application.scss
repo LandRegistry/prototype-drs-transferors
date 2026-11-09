@@ -243,13 +243,14 @@
     }
 }
 
-/* Font size adjustment for table on larger screens */
+
 @media (min-width: 40.0625em) {
+    /* Font size adjustment for table on larger screens
     .govuk-table {
         font-size: 1rem;
         line-height: 1.3157894737;
-    }
-    /* Align pagination to the right */
+    } */
+    // Align pagination to the right
     .pagination-component-right .govuk-pagination {
         justify-content: flex-end !important;
     }
