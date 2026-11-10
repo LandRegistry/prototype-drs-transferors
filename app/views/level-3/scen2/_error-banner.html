@@ -31,15 +31,15 @@
       items: [
         {
           value: "error1",
-          text: "Document not accepted. The TR1 document uploaded is encrypted and cannot be processed. Please remove the encryption and try again"
+          html: "<strong>Document not accepted.</strong> One of the attached documents is encrypted and cannot be processed. Remove the encryption and send again."
         },
         {
           value: "error2",
-          html: 'Title number AGL500906 does not match any title number provided in the TR1 document. This uses new document analysis, so may be inaccurate. <a class="govuk-link" href="bypass">Tell us if we are wrong</a>'
+          html: '<strong>Transferee name does not match documents.</strong> One or more transferee names do not match any of the names given in the attached documents. This uses new document analysis, so may be inaccurate. <a class="govuk-link" href="bypass">Tell us if you think this is incorrect</a>'
         },
         {
           value: "error3",
-          html: 'Name "Dave" does not match any name provided in the TR1 document. This uses new document analysis, so may be inaccurate. <a class="govuk-link" href="bypass">Tell us if we are wrong</a>'
+          html: '<strong>Witness details do not match documents.</strong> One or more witness details do not match any of the witnesses in the attached documents. This uses new document analysis, so may be inaccurate. <a class="govuk-link" href="bypass">Tell us if we are wrong</a>'
         }
       ]
     }) }}
