@@ -1936,7 +1936,7 @@
     }
 }
 
-@media screen\0 and (min-width: 40.0625em) {
+@media screen and (min-width: 40.0625em) {
     .govuk-details__summary-text {
         margin-bottom:20px
     }
@@ -2388,7 +2388,7 @@
 }
 
 .govuk-footer__copyright-logo:before {
-    background-image: url(assets/images/govuk-crest.svg);
+    background-image: url('/public/images/govuk-crest.svg');
     background-position: 50% 0;
     background-repeat: no-repeat;
     background-size: 125px 102px;
@@ -2403,8 +2403,8 @@
 @supports((-webkit-mask-position: initial) or (mask-position:initial)) {
     .govuk-footer__copyright-logo:before {
         background:currentcolor;
-        -webkit-mask-image: url(assets/images/govuk-crest.svg);
-        mask-image: url(assets/images/govuk-crest.svg);
+        -webkit-mask-image: url('/public/images/govuk-crest.svg');
+        mask-image: url('/public/images/govuk-crest.svg');
         -webkit-mask-position: 50% 0;
         mask-position: 50% 0;
         -webkit-mask-repeat: no-repeat;
@@ -6456,7 +6456,7 @@
 }
 
 .portal-dropdown__toggle:after {
-    background: url(assets/images/icon_govuk_chevrondown--blue.svg) no-repeat 50%;
+    background: url('/public/images/icon_govuk_chevrondown--blue.svg') no-repeat 50%;
     background-position: 50%;
     background-size: cover;
     content: "";
@@ -6688,7 +6688,7 @@
 }
 
 .portal-services__submenu-toggle:after {
-    background: url(assets/images/icon_govuk_chevronright--blue.svg) no-repeat 50%;
+    background: url('/public/images/icon_govuk_chevronright--blue.svg') no-repeat 50%;
     background-position: 50%;
     background-size: cover;
     content: "";
