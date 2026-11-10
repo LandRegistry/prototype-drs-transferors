@@ -1,0 +1,178 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+
+{% block pageTitle %}
+  Documents - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "task-list"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<form action="task-list" method="post">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <span class="govuk-caption-xl">Transfer for value</span>
+        <h1 class="govuk-heading-xl">Attach documents</h1>
+
+        <h2 class="govuk-heading-l">Required</h2>
+
+        <p class="govuk-body">Documents you must attach to avoid requisitions.</p>
+
+        <table class="govuk-table document_summary_table" id="doc_prompts_table_required">
+          <caption class="govuk-table__caption govuk-visually-hidden">Details of required documents are in this table. You can attach or remove the documents in this table.</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Category</th>
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Document type</th>
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Certification</th>
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">File name</th>
+              <th scope="col" class="govuk-table__header">Options</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Legal Deeds</td>
+              <td class="govuk-table__cell">TR1 Registered title(s): whole
+        transfer</td>
+              <td class="govuk-table__cell">Certified</td>
+              <td class="govuk-table__cell">TR1 deed scanned.jpg</td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Remove</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 class="govuk-heading-l">Suggested</h2>
+
+        <p class="govuk-body">Documents you may need to attach if relevant to your application.</p>
+
+        <table class="govuk-table document_summary_table" id="doc_prompts_table_suggested">
+          <caption class="govuk-table__caption govuk-visually-hidden">Details of suggested documents are in this table. You can attach or remove the documents in this table.</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Category</th>
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Document type</th>
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Certification</th>
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">File name</th>
+              <th scope="col" class="govuk-table__header">Options</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Evidence</td>
+              <td class="govuk-table__cell">Company Documentation</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Attach</a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Evidence</td>
+              <td class="govuk-table__cell">Consent</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Attach</a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Evidence</td>
+              <td class="govuk-table__cell">Conveyancer’s Certificate</td>
+              <td class="govuk-table__cell">Certified</td>
+              <td class="govuk-table__cell">Convey cert v2.jpg</td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Remove</a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Evidence</td>
+              <td class="govuk-table__cell">Death Certificate</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Attach</a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Land Transaction Tax</td>
+              <td class="govuk-table__cell">Land Transaction Tax</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Attach</a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Evidence</td>
+              <td class="govuk-table__cell">Marriage/civil partnership
+        certificate</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Attach</a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Evidence</td>
+              <td class="govuk-table__cell">Probate</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Attach</a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Stamp Duty Land Tax</td>
+              <td class="govuk-table__cell">Stamp Duty Land Tax</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Attach</a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Evidence</td>
+              <td class="govuk-table__cell">RXC or Restriction consent
+        certificate</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Attach</a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Evidence</td>
+              <td class="govuk-table__cell">RXC, restriction consent
+        certificate or evidence of
+        discharge</td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"></td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Attach</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="govuk-body">
+          <a href="#" class="govuk-link govuk-link--no-visited-state">Attach another type of document</a>    
+        </p>
+
+        {% from "govuk/components/button/macro.njk" import govukButton %}
+        {{ govukButton({
+          text: "Continue",
+          type: "submit"
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <ul class="govuk-list task-list-side-bar">
+          <li>
+            <strong>Your Reference</strong>
+            <br>
+            HK58210
+          </li>
+          <li>
+            <strong>Title numbers</strong>
+            <br>
+            DV88431
+          </li>
+        </ul>
+
+        {% include "level-3/_error-banner.html" %}
+      </div>
+
+    </div>
+  </div>
+</form>
+{% endblock %}
