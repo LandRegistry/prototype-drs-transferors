@@ -26,11 +26,11 @@
     {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
     {{ govukCheckboxes({
-      name: "errorsFound",
-      values: data.errorsFound,
+      name: "errorsFound1",
+      values: data.errorsFound1,
       items: [
         {
-          value: "error2",
+          value: "errorOnly",
           html: '<strong>Transferee name does not match documents.</strong> One or more transferee names do not match any of the names given in the attached documents. This uses new document analysis, so may be inaccurate. <a class="govuk-link" href="#">Tell us if you think this is incorrect</a>'
         }
       ]
