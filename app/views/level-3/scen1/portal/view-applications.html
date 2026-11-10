@@ -1,0 +1,397 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+
+{% block pageTitle %}
+  Tell us we got comething wrong - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="portal.css">
+
+      <div class="govuk-width-container">
+        <main class="govuk-main-wrapper govuk-!-padding-bottom-0 govuk-!-padding-top-0" id="main-content">
+
+   
+<div class="govuk-grid-row hmlr-grid-row">
+    <div class="govuk-grid-column-one-third sidebar-content">
+<section class="sidebar">
+    <div class="govuk-!-display-none">
+        <a id="viewApplicationsLink" href="#">View Applications Identifier</a>
+    </div>
+    <div class="sidebar__content">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-3">View applications</h1>
+        <a href="#" class="govuk-link govuk-!-font-weight-bold govuk-!-font-size-19">
+            Guidance on this service
+        </a>
+<div id="notifications" class="govuk-!-margin-top-7">
+  <div class="govuk-notification-banner govuk-!-margin-bottom-4" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" data-govuk-notification-banner-init="">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      NEW: Request withdrawal
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <p class="govuk-body">You can now initiate a request to withdraw an application, in its entirety, by using the ‘Request withdrawal’ button.</p>
+      <button id="notificationCloseBtn" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">Close</button>
+  </div>
+</div>
+
+</div>
+<div class="search govuk-!-margin-top-4">
+  <div class="govuk-summary-card govuk-!-margin-bottom-0">
+    <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-2 govuk-!-padding-bottom-2">
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Search by</h2>
+    </div>
+    <div class="govuk-summary-card__content govuk-!-padding-bottom-0">
+      <fieldset class="govuk-fieldset">
+      <div class="govuk-radios govuk-radios--small hmlr-radios govuk-!-margin-bottom-3" data-module="govuk-radios" data-govuk-radios-init="">
+        <div class="govuk-radios__item hmlr-radios__item">
+          <input class="govuk-radios__input js-radio-selector" id="appnSearch" name="searchRadioButton" type="radio" value="search.appn" checked="">
+          <label class="govuk-label govuk-radios__label" for="appnSearch">HMLR reference or Title number</label>
+        </div>
+        <div class="govuk-radios__item hmlr-radios__item">
+          <input class="govuk-radios__input js-radio-selector" id="custSearch" name="searchRadioButton" type="radio" value="search.cust">
+          <label class="govuk-label govuk-radios__label" for="custSearch">Customer reference</label>
+        </div>
+          <div class="govuk-radios__item hmlr-radios__item">
+            <input class="govuk-radios__input js-radio-selector" id="collSearch" name="searchRadioButton" type="radio" value="search.user">
+            <label class="govuk-label govuk-radios__label" for="collSearch">Colleague</label>
+          </div>
+      </div>
+      <div class="search__wrapper" id="application-search">
+        <label class="govuk-visually-hidden" for="searchValue">Search</label>
+        <p id="searchValue-error" class="govuk-error-message search__error-message govuk-!-display-none">
+          Enter 3 characters or more.
+        </p>
+        <div class="search__submit-wrapper">
+          <input class="govuk-input search__input" id="searchValue" name="searchValue" type="text" maxlength="25" title="" value="">
+          <button id="searchBtn" class="govuk-button search__button" title="Search" value="Search">
+            Search
+            <svg class="search__icon" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+              <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+        <div class="search__wrapper colleague-search" id="colleague-search">
+          <div class="colleague-search__wrapper">
+            <label class="govuk-visually-hidden" for="autocomplete">Search by colleague</label>
+            <div class="colleague-search__autocomplete" id="autocomplete-container"><div class="autocomplete__wrapper"><div class="autocomplete__status autocomplete__visually-hidden" style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; margin-bottom: -1px; margin-right: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"><div id="autocomplete__status--A" role="status" aria-atomic="true" aria-live="polite"></div><div id="autocomplete__status--B" role="status" aria-atomic="true" aria-live="polite"></div></div><input aria-describedby="autocomplete__assistiveHint" aria-expanded="false" aria-controls="autocomplete__listbox" aria-autocomplete="list" autocomplete="off" class="autocomplete__input autocomplete__input--show-all-values" id="autocomplete" name="input-autocomplete" placeholder="Search..." type="text" role="combobox"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="autocomplete__dropdown-arrow-down" focusable="false"><g stroke="none" fill="none" fill-rule="evenodd"><polygon fill="#000000" points="0 0 22 0 11 17"></polygon></g></svg><ul aria-labelledby="autocomplete" id="autocomplete__listbox" role="listbox" class="autocomplete__menu autocomplete__menu--overlay autocomplete__menu--hidden"></ul><span id="autocomplete__assistiveHint" style="display: none;">When autocomplete results are available use up and down arrows to review and enter to select.  Touch device users, explore by touch or with swipe gestures.</span></div></div>
+            <button id="autocompleteSearchBtn" class="govuk-button search__button" title="Search" value="Search">
+              Search
+              <svg class="search__icon" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </fieldset>
+    </div>
+  </div>
+
+<div class="govuk-summary-card govuk-!-margin-bottom-0">
+  <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-2 govuk-!-padding-bottom-2">
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Filter by</h2>
+  </div>
+  <div class="govuk-summary-card__content govuk-!-padding-bottom-0">
+    <div class="govuk-form-group govuk-!-margin-bottom-3">
+      <fieldset class="govuk-fieldset" aria-describedby="progress-hint">
+        <legend class="govuk-fieldset__legend govuk-visually-hidden hidden">
+          Filter by requisition
+        </legend>
+        <div id="requisition-hint" class="govuk-hint govuk-visually-hidden">
+          Select all that apply.
+        </div>
+        <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input js-filter-selector" id="filter.requisition.review" name="filter.requisition.review" type="checkbox">
+    <label class="govuk-label govuk-checkboxes__label" for="filter.requisition.review">
+      Requisitions
+    </label>
+  </div>
+          <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input js-filter-selector" id="filter.requisition.warning" name="filter.requisition.warning" type="checkbox">
+    <label class="govuk-label govuk-checkboxes__label" for="filter.requisition.warning">
+      Warning of cancellation
+    </label>
+  </div>
+        </div>
+      </fieldset>
+    </div>
+    <details class="govuk-details govuk-!-margin-bottom-4 hmlr-details js-details-selector" data-module="govuk-details" id="appnProgressDetails">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">Progress</span>
+      </summary>
+      <div class="govuk-details__text">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="progress-hint">
+            <legend class="govuk-fieldset__legend govuk-visually-hidden hidden">
+              Filter by application progress
+            </legend>
+            <div id="progress-hint" class="govuk-hint govuk-visually-hidden">
+              Select all that apply.
+            </div>
+            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input js-filter-selector" id="filter.progress.cancelled" name="filter.progress.cancelled" type="checkbox">
+    <label class="govuk-label govuk-checkboxes__label" for="filter.progress.cancelled">
+      Cancelled
+    </label>
+  </div>
+                <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input js-filter-selector" id="filter.progress.completed" name="filter.progress.completed" type="checkbox">
+    <label class="govuk-label govuk-checkboxes__label" for="filter.progress.completed">
+      Completed
+    </label>
+  </div>
+                <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input js-filter-selector" id="filter.progress.delayed" name="filter.progress.delayed" type="checkbox">
+    <label class="govuk-label govuk-checkboxes__label" for="filter.progress.delayed">
+      Delayed
+    </label>
+  </div>
+                <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input js-filter-selector" id="filter.progress.drs" name="filter.progress.drs" type="checkbox">
+    <label class="govuk-label govuk-checkboxes__label" for="filter.progress.drs">
+      Draft
+    </label>
+  </div>
+                <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input js-filter-selector" id="filter.progress.received" name="filter.progress.received" type="checkbox">
+    <label class="govuk-label govuk-checkboxes__label" for="filter.progress.received">
+      Received
+    </label>
+  </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </details>
+    <details class="govuk-details hmlr-details js-details-selector" data-module="govuk-details" id="appnTypeDetails">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">Type</span>
+      </summary>
+      <div class="govuk-details__text">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="type-hint">
+            <legend class="govuk-fieldset__legend govuk-visually-hidden hidden">
+              Filter by application type
+            </legend>
+            <div id="type-hint" class="govuk-hint govuk-visually-hidden">
+              Select all that apply.
+            </div>
+            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input js-filter-selector" id="filter.type.create" name="filter.type.create" type="checkbox">
+    <label class="govuk-label govuk-checkboxes__label" for="filter.type.create">
+      Register create
+    </label>
+  </div>
+              <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input js-filter-selector" id="filter.type.query" name="filter.type.query" type="checkbox">
+    <label class="govuk-label govuk-checkboxes__label" for="filter.type.query">
+      Register query
+    </label>
+  </div>
+              <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input js-filter-selector" id="filter.type.update" name="filter.type.update" type="checkbox">
+    <label class="govuk-label govuk-checkboxes__label" for="filter.type.update">
+      Register update
+    </label>
+  </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </details>
+  </div>
+</div></div><div class="govuk-summary-card govuk-!-margin-top-0 sidebar-cta__card">
+  <div class="govuk-button-group govuk-!-padding-left-4 govuk-!-padding-top-4 govuk-!-padding-bottom-2">
+    <button class="govuk-button govuk-button--secondary sidebar-cta__action" id="resetSearchLink">Clear search and
+      filters</button>
+    <button class="govuk-button govuk-button--secondary sidebar-cta__action" id="exportApplicationsBtn">Export
+      applications</button>
+
+  </div>
+</div>    </div>
+</section>
+
+    </div>
+    <div class="govuk-grid-column-two-thirds main-content">
+
+<div class="applications">
+  <table class="govuk-table hmlr-table" id="applicationTable" data-currentsort="3D" data-params="'page':'1','search.user':'','filter.progress':'00000','filter.type':'000','filter.requisition':'00','sort':'3D'">
+    <caption class="govuk-visually-hidden">Table showing all of my applications, column headers with buttons are sortable.</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        
+  <th class="govuk-table__header hmlr-table__header hmlr-table__header--sort" id="titleNo">
+    <button type="button" class="js-sort-table hmlr-table__header-button" data-sorttype="sort.title" data-sortorder="DESC">
+      <span class="hmlr-table__header-text">
+        Title number
+        <span class="hmlr-table__header-icon" aria-hidden="true"></span>
+      </span>
+    </button>
+  </th>
+        
+  <th class="govuk-table__header hmlr-table__header hmlr-table__header--sort" id="custRef">
+    <button type="button" class="js-sort-table hmlr-table__header-button" data-sorttype="sort.customer_ref" data-sortorder="DESC">
+      <span class="hmlr-table__header-text">
+        Customer reference
+        <span class="hmlr-table__header-icon" aria-hidden="true"></span>
+      </span>
+    </button>
+  </th>
+        <th class="govuk-table__header hmlr-table__header" id="appnType">Application type</th>
+        
+  <th class="govuk-table__header hmlr-table__header hmlr-table__header--sort" id="received" aria-sort="descending">
+    <button type="button" class="js-sort-table hmlr-table__header-button" data-sorttype="sort.received_date" data-sortorder="ASC">
+      <span class="hmlr-table__header-text">
+        Received by HMLR
+        <span class="hmlr-table__header-icon" aria-hidden="true"></span>
+      </span>
+    </button>
+  </th>
+        <th class="govuk-table__header hmlr-table__header" id="appnProgress">Application progress</th>
+        <th class="govuk-table__header hmlr-table__header" id="estCompletion">
+          Estimated completion date<br>
+          <span class="tooltip-container">
+            <a class="govuk-link link--small" id="ecd-info" target="_blank" rel="noreferrer noopener" href="#" aria-describedby="ecd-link-description" data-tooltip-trigger="">
+              What's this?
+            </a>
+            <span id="ecd-link-description" role="tooltip" class="tooltip tooltip--hidden">Opens in new tab</span>
+          </span>
+        </th>
+        <th class="govuk-table__header hmlr-table__header" id="viewDetails">Show/hide</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+        <tr class="govuk-table__row hmlr-table__row--expandable" data-id="" data-expand="appDetails0" data-is-drs="True">
+          <td class="govuk-table__cell hmlr-table__cell reqn-code" headers="titleNo">
+            <span class="reqn-code__title-no">DU163659</span>
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell" headers="custRef">
+              DU163659
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell" headers="appnType">
+            Register Update
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell" headers="received">
+            
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell" headers="appnProgress">
+            Draft
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell" headers="estCompletion">
+            Not Applicable
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell show-hide-indicator" headers="viewDetails">
+              <details id="showHideIndicatorappDetails0" class="govuk-details hmlr-accordion-details" aria-expanded="false" aria-controls="application-details-0" aria-describedby="show-hide-indicator-0" data-tooltip-trigger="">
+                <summary class="govuk-details__summary hmlr-accordion-summary">
+                  <span class="hmlr-accordion-icon"></span>
+                  <span class="govuk-details__summary-text">Show</span>
+                </summary>
+              </details>
+              <span id="show-hide-indicator-0" role="tooltip" class="tooltip tooltip--hidden">Show / hide details</span>
+          </td>
+        </tr>
+
+<tr class="govuk-table__row hidden" id="appDetails0">
+  <td headers="titleNo" colspan="7" class="govuk-table__cell hmlr-table__cell hmlr-table__cell--expanded govuk-!-padding-right-4" id="application-details-0"> <!-- Start of expanded info -->
+ <!-- End of if statement for non DRS applications -->
+            
+                <div class="applications__expanded applications__spacing-wrapper applications__action-wrapper applications__expanded--full">
+                  
+                  <!-- Actions buttons start -->
+                  <ul class="actions-list govuk-!-padding-top-4 govuk-!-padding-bottom-3">
+
+                    <!-- DRS action buttons start -->
+
+                      <li class="actions-list__item">
+                        <!-- If user is logged_in_user then display 'Open application' button
+                             if user is not logged_in_user display 'Transfer to me' button -->
+                          <a href="#" class="openApplicationBtnClass govuk-button govuk-button--secondary govuk-!-margin-bottom-0 applications__action">
+                            Open application
+                          </a>
+                      </li>
+                    <!-- DRS action buttons end -->
+                     
+                    <!-- Non DRS buttons start -->
+ 
+                  </ul>
+                </div>
+ <!-- Logic for Action buttons section end -->    </td>
+  <!-- End of expanded info -->
+</tr>        <tr class="govuk-table__row hmlr-table__row--expandable" data-id="" data-expand="appDetails1" data-is-drs="True">
+          <td class="govuk-table__cell hmlr-table__cell reqn-code" headers="titleNo">
+            <span class="reqn-code__title-no"></span>
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell" headers="custRef">
+              fghgfd
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell" headers="appnType">
+            Register Update
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell" headers="received">
+            
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell" headers="appnProgress">
+            Draft
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell" headers="estCompletion">
+            Not Applicable
+          </td>
+          <td class="govuk-table__cell hmlr-table__cell show-hide-indicator" headers="viewDetails">
+              <details id="showHideIndicatorappDetails1" class="govuk-details hmlr-accordion-details" aria-expanded="false" aria-controls="application-details-1" aria-describedby="show-hide-indicator-1" data-tooltip-trigger="">
+                <summary class="govuk-details__summary hmlr-accordion-summary">
+                  <span class="hmlr-accordion-icon"></span>
+                  <span class="govuk-details__summary-text">Show</span>
+                </summary>
+              </details>
+              <span id="show-hide-indicator-1" role="tooltip" class="tooltip tooltip--hidden">Show / hide details</span>
+          </td>
+        </tr>
+
+<tr class="govuk-table__row hidden" id="appDetails1">
+  <td headers="titleNo" colspan="7" class="govuk-table__cell hmlr-table__cell hmlr-table__cell--expanded govuk-!-padding-right-4" id="application-details-1"> <!-- Start of expanded info -->
+ <!-- End of if statement for non DRS applications -->
+            
+                <div class="applications__expanded applications__spacing-wrapper applications__action-wrapper applications__expanded--full">
+                  
+                  <!-- Actions buttons start -->
+                  <ul class="actions-list govuk-!-padding-top-4 govuk-!-padding-bottom-3">
+
+                    <!-- DRS action buttons start -->
+
+                      <li class="actions-list__item">
+                        <!-- If user is logged_in_user then display 'Open application' button
+                             if user is not logged_in_user display 'Transfer to me' button -->
+                          <a href="#" class="openApplicationBtnClass govuk-button govuk-button--secondary govuk-!-margin-bottom-0 applications__action">
+                            Open application
+                          </a>
+                      </li>
+                    <!-- DRS action buttons end -->
+                     
+                    <!-- Non DRS buttons start -->
+ 
+                  </ul>
+                </div>
+ <!-- Logic for Action buttons section end -->    </td>
+  <!-- End of expanded info -->
+</tr>    </tbody>
+  </table>
+  <div class="pagination-wrapper">
+
+<p class="govuk-body">Displaying 1 - 2 of 2 applications</p>  </div>
+</div>    </div>
+</div>
+        </main>
+      </div>
+
+{% endblock %}

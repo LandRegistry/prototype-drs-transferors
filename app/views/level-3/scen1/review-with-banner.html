@@ -1,0 +1,27 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+
+{% block pageTitle %}
+  Review your application - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "task-list"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  {% set confirmSubmitHref = "success/validating" %}
+  {% set showBanner = "true" %}
+  {% if data.errorsToBypass %}
+    {% set bypassPlayback = "true" %}
+  {% endif %}
+  {% include "level-3/scen1/_review-body.html" %}
+
+{% endblock %}

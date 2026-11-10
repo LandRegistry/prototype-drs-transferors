@@ -1,0 +1,80 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+
+{% block pageTitle %}
+  Validation errors were found in your application - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to applications",
+    href: "applications-failures"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">Validation errors were found in your application</h1>
+
+      <p class="govuk-body">HMLRs automated back-end validation has found problems with your application that we could not identify before submission. These problems need to be fixed before the application can be submitted.</p>
+
+      <p class="govuk-body"><strong>Due to the nature of these errors, we cannot tell you what you need to do to fix them.</strong></p>
+
+      <p class="govuk-body">For your reference, these error messages will be visible as you edit your application. They will stay on screen until you resubmit your application.</p>
+
+      <p class="govuk-body">Tasks in the application will show as complete even if they contain errors. Check each task carefully before you send for validation.</p>
+
+      <div class="govuk-notification-banner app-notification-banner--error"
+          role="region"
+          aria-labelledby="generic-error-banner-title">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="generic-error-banner-title">
+            Validation errors found in this application
+          </h2>
+        </div>
+        <div class="govuk-notification-banner__content width-max">       
+          <p class="govuk-body"><strong>Transferee name does not match documents.</strong> One or more transferee names do not match any of the names given in the attached documents. This uses new document analysis, so may be inaccurate.</p>
+        </div>
+      </div>
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Edit application",
+        href: "task-list"
+      }) }}
+
+      <p class="govuk-body">If you know these issues mean you will have to start again with a new application, you can delete the application and start again.</p>
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+      {{ govukButton({
+        text: "Delete application",
+        href: "#",
+        classes: 'govuk-button--secondary'
+      }) }}
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <ul class="govuk-list task-list-side-bar">
+        <li>
+          <strong>Your Reference</strong>
+          <br>
+          HK58210
+        </li>
+        <li>
+          <strong>Title numbers</strong>
+          <br>
+          DV88431
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

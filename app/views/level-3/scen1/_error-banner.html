@@ -1,0 +1,51 @@
+{#
+  Prototype-only red error banner for the generic error handling journeys with L3 validation added.
+  Uses GOV.UK notification banner markup with a prototype-specific modifier
+  class (app-notification-banner--error) so the global component is untouched.
+
+  role="region" + aria-labelledby (not role="alert"/data-module) so it does NOT
+  steal focus on every page load, which would be distracting in moderated research.
+#}
+
+<div class="govuk-notification-banner app-notification-banner--error"
+     role="region"
+     aria-labelledby="generic-error-banner-title">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="generic-error-banner-title">
+      Validation problems
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content width-max">
+    <p class="govuk-body">
+      This error message will stay on screen until you resubmit your application. Tasks will show as complete even if they contain errors. Check each task carefully before you resubmit.
+    </p>
+    <p class="govuk-body">
+       <strong>You can mark errors as resolved here for your own reference only.</strong>
+    </p>
+
+    {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+    {{ govukCheckboxes({
+      name: "errorsFound",
+      values: data.errorsFound,
+      items: [
+        {
+          value: "error2",
+          html: '<strong>Transferee name does not match documents.</strong> One or more transferee names do not match any of the names given in the attached documents. This uses new document analysis, so may be inaccurate. <a class="govuk-link" href="#">Tell us if you think this is incorrect</a>'
+        }
+      ]
+    }) }}
+
+  </div>
+</div>
+
+<!-- 
+        {
+          value: "error2",
+          html: "Title number AGL500906 does not match any title number provided in the TR1 document. This uses new document analysis, so may be inaccurate. <a href='bypass'>Tell us if we are wrong</a>"
+        },
+        {
+          value: "error3",
+          html: "Name "Dave" does not match any name provided in the TR1 document. This uses new document analysis, so may be inaccurate. <a href='bypass'>Tell us if we are wrong</a>"
+        }
+-->

@@ -93,7 +93,19 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">Private individual</td>
-              <td class="govuk-table__cell">Emily Johnson</td>
+              <td class="govuk-table__cell">
+                {% if data.private_individual_forenames %}
+                  {{ data.private_individual_forenames }} {{ data.private_individual_surname }}
+                {% else %} 
+                  Peter Josephs
+                {% endif %}
+              </td>
+              <td class="govuk-table__cell">N/A</td>
+              <td class="govuk-table__cell">N/A</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Private individual</td>
+              <td class="govuk-table__cell">Jane Lane Josephs</td>
               <td class="govuk-table__cell">N/A</td>
               <td class="govuk-table__cell">N/A</td>
             </tr>
@@ -115,12 +127,28 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">Transferee</td>
-              <td class="govuk-table__cell">Emily Johnson</td>
+              <td class="govuk-table__cell">
+                {% if data.private_individual_forenames %}
+                  {{ data.private_individual_forenames }} {{ data.private_individual_surname }}
+                {% else %} 
+                  Peter Josephs
+                {% endif %}
+              </td>
+              <td class="govuk-table__cell">Beneficial owner</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Transferee</td>
+              <td class="govuk-table__cell">Jane Lane Josephs</td>
               <td class="govuk-table__cell">Beneficial owner</td>
             </tr>
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">Transferor</td>
-              <td class="govuk-table__cell">Robert Hughes</td>
+              <td class="govuk-table__cell">Sarah Kate Elliot</td>
+              <td class="govuk-table__cell">Registered proprietor</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Transferor</td>
+              <td class="govuk-table__cell">Connor Mark Buchanan</td>
               <td class="govuk-table__cell">Registered proprietor</td>
             </tr>
           </tbody>
