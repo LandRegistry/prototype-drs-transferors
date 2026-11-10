@@ -7339,30 +7339,6 @@
     }(),
     ( () => {
         "use strict";
-        if (!document.cookie.split(";").some(e => e.trim().startsWith("cookies_policy_analytics="))) {
-            const e = document.getElementById("cookie-banner")
-              , t = document.getElementById("default-message")
-              , n = document.getElementById("accepted-message")
-              , r = document.getElementById("rejected-message");
-            document.getElementById("accept-cookies").addEventListener("click", function() {
-                document.cookie = 'cookies_policy_analytics="yes"; max-age=31557600; path=/; secure; samesite=lax',
-                t.hidden = !0,
-                n.hidden = !1
-            }),
-            document.getElementById("reject-cookies").addEventListener("click", function() {
-                document.cookie = 'cookies_policy_analytics="no"; max-age=31557600; path=/; secure; samesite=lax',
-                t.hidden = !0,
-                r.hidden = !1
-            }),
-            document.getElementById("accepted-hide").addEventListener("click", function() {
-                n.hidden = !0,
-                e.hidden = !0
-            }),
-            document.getElementById("rejected-hide").addEventListener("click", function() {
-                r.hidden = !0,
-                e.hidden = !0
-            })
-        }
         function e(e, t={}) {
             var n;
             const r = e.getAttribute("tabindex");
