@@ -17,10 +17,10 @@
   </div>
   <div class="govuk-notification-banner__content width-max">
     <p class="govuk-body">
-      This error message will stay on screen until you resubmit your application. Tasks will show as complete even if they contain errors. Check each task carefully before you resubmit.
+      Some information in your application is missing or incorrect. Application sections will show as complete even if they contain errors. Check each task carefully, and fix any problems that you are able to. This error message will stay on screen until you send your application again. 
     </p>
     <p class="govuk-body">
-       <strong>You can mark errors as resolved here for your own reference only.</strong>
+       <strong>You can use this checklist to mark off resolved issues for your own reference only.</strong>
     </p>
 
     {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
@@ -31,7 +31,7 @@
       items: [
         {
           value: "errorOnly",
-          html: '<strong>Transferee name does not match.</strong> One or more transferee names do not match any of the names given in the attached documents. Automated document analysis can be inaccurate. <a class="govuk-link" href="#">Tell us if you think this is incorrect</a>'
+          html: '<strong>Transferee name does not match.</strong>  One or more transferee names do not match any of the names given in the attached documents. Errors can occur in document scanning. <a class="govuk-link" href="#">Tell us if you think this is incorrect</a>'
         }
       ]
     }) }}

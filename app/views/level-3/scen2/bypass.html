@@ -22,13 +22,13 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
 
-        <h1 class="govuk-heading-xl">Tell us we're wrong</h1>
+        <h1 class="govuk-heading-xl">Tell us which problems are incorrect</h1>
 
-        <p class="govuk-body">You have indicated that one or more of the errors we identified is not actually an error.</p>
+        <p class="govuk-body">Only use this page if you think automatic validation has identified one or more problems incorrectly.</p>
 
-        <p class="govuk-body">If the issue is that we have not identified the contents of your document correctly, please describe the exact issue below.</p>
+        <p class="govuk-body">Select the problems you disagree with and explain why in the box on this page. You can then send your application for validation again.</p>
 
-        <p class="govuk-body">This will allow you to submit in spite of this error, and a case worker will check the document(s) manually.</p>
+        <p class="govuk-body">Problems identified as incorrect may be reviewed by a caseworker. </p>
         
         {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
@@ -43,11 +43,11 @@
           items: [
             {
               value: "Transferee name does not match. One or more transferee names do not match any of the names given in the attached documents.",
-              html: '<strong>Transferee name does not match.</strong> One or more transferee names do not match any of the names given in the attached documents.'
+              html: '<strong>Transferee name does not match.</strong>  One or more transferee names do not match any of the names given in the attached documents.'
             },
             {
-              value: 'Witness details do not match. One or more witness details do not match those in the attached document(s).',
-              html: '<strong>Witness details do not match.</strong> One or more witness details do not match those in the attached document(s).'
+              value: 'Witness details missing or illegible. One or more witness details are not present or cannot be read in an attached document.',
+              html: '<strong>Witness details missing or illegible.</strong> One or more witness details are not present or cannot be read in an attached document.''
             }
           ]
         }) }}
@@ -56,11 +56,11 @@
 
         {{ govukTextarea({
           label: {
-            text: "Explain what we got wrong",
+            text: "Explain what is wrong (optional)",
             classes: "govuk-label--m"
           },
           hint: {
-            text: "This will not be shared with the person processing your application. It is used to help us improve our automated checks"
+            text: "This will not be shared with the person processing your application. It is used to help us improve our automated checks."
           },
           id: "bypassComment",
           name: "bypassComment"
@@ -69,7 +69,7 @@
         <div class="govuk-button-group">
           {% from "govuk/components/button/macro.njk" import govukButton %}
           {{ govukButton({
-            text: "Confirm error with HMLR data extraction",
+            text: "Confirm problem error details",
             type: "submit"
           }) }}
 
@@ -88,12 +88,12 @@
           <li>
             <strong>Your Reference</strong>
             <br>
-            HK58210
+            DU163659
           </li>
           <li>
             <strong>Title numbers</strong>
             <br>
-            DV88431
+            DU163659
           </li>
         </ul>
       </div>

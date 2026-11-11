@@ -215,47 +215,6 @@
           </fieldset>
         </div>
 
-        {% if bypassPlayback == "true" %}
-          <h2 class="govuk-heading-l govuk-!-margin-top-9">Contesting validation errors</h2>
-
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header">Contested error</th>
-                <th scope="col" class="govuk-table__header">Reason</th>
-              </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
-                    {% for l3error in data.errorsToBypass %}
-                      {% if loop.length > 1 %}
-                        {% if loop.first %}
-                          <ul class="govuk-list govuk-list--bullet">
-                            <li class="govuk-body-s">{{ l3error }}</li>
-                        {% elif loop.last %}
-                            <li class="govuk-body-s">{{ l3error }}</li>
-                          </ul>
-                        {% else %}
-                          <li class="govuk-body-s">{{ l3error }}</li>
-                        {% endif %}
-                      {% else %}
-                        {{ l3error }}
-                      {% endif %}
-                    {% endfor %}
-                </td>
-                <td class="govuk-table__cell">
-                  {% if data.bypassComment %}
-                    {{ data.bypassComment }}
-                  {% else %}
-                    <em>No reason given</em>
-                  {% endif %}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        {% endif %}
-
       </div>
 
       {% if showBanner == "true" %}
