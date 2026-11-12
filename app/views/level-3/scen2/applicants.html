@@ -39,7 +39,13 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">Private individual</td>
-              <td class="govuk-table__cell">Peter Josephs</td>
+              <td class="govuk-table__cell">
+                {% if data.private_individual_forenames %}
+                  {{ data.private_individual_forenames }} {{ data.private_individual_surname }}
+                {% else %} 
+                  Peter Josephs
+                {% endif %}
+              </td>
               <td class="govuk-table__cell">N/A</td>
               <td class="govuk-table__cell">N/A</td>
               <td class="govuk-table__cell ddrs-!-table__cell--wordbreak-normal">        
@@ -94,7 +100,7 @@
           <li>
             <strong>Your Reference</strong>
             <br>
-            DU163659
+            Transfer LS8
           </li>
           <li>
             <strong>Title numbers</strong>

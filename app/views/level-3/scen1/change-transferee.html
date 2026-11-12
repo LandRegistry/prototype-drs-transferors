@@ -1,0 +1,485 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+
+{% block pageTitle %}
+  Applicants - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "task-list"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<form action="transferees" method="post">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+
+        <span class="govuk-caption-xl">Transfer for value</span>
+        <h1 class="govuk-heading-xl">Change transferee</h1>
+
+        <p class="govuk-body">Changes you make to a transferee also update the applicant.
+            If you change a transferee's name or other information, you must reconfirm any representation details you have added.
+        </p>
+
+        <div class="govuk-!-margin-bottom-9"></div>
+
+
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="party_type-hint">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-font-size-24">
+                Select transferee type
+              </legend>
+              <div id="party_type-hint" class="govuk-hint">
+                
+              </div>
+              <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios" data-govuk-radios-init="">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="party_type" name="party_type" type="radio" value="private_individual" checked="" aria-controls="conditional-party_type" aria-expanded="true">
+                  <label class="govuk-label govuk-radios__label" for="party_type">
+                    Private individual
+                  </label>
+                </div>
+                <div class="govuk-radios__conditional" id="conditional-party_type">
+                  <div class="govuk-hint">Name must be exactly as it appears on documents lodged with this application</div>
+                      <div class="govuk-form-group">
+              <label class="govuk-label" for="private_individual_forenames">
+                Forenames
+              </label>
+              <input class="govuk-input govuk-input govuk-!-width-one-half" id="private_individual_forenames" name="private_individual_forenames" type="text" value="Peter">
+            </div>
+
+                      <div class="govuk-form-group">
+              <label class="govuk-label" for="private_individual_surname">
+                Surname
+              </label>
+              <input class="govuk-input govuk-input govuk-!-width-one-half" id="private_individual_surname" name="private_individual_surname" type="text" value="Josephs">
+            </div>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="party_type-2" name="party_type" type="radio" value="uk_company" aria-controls="conditional-party_type-2" aria-expanded="false">
+                  <label class="govuk-label govuk-radios__label" for="party_type-2">
+                    UK company or LLP
+                  </label>
+                </div>
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-party_type-2">
+                  <div class="govuk-form-group">
+              <label class="govuk-label" for="uk_company_name">
+                Company name
+              </label>
+              <div id="uk_company_name-hint" class="govuk-hint">
+                Full name registered at Companies House
+              </div>
+              <input class="govuk-input govuk-input govuk-!-width-one-half" id="uk_company_name" name="uk_company_name" type="text" value="" aria-describedby="uk_company_name-hint">
+            </div>
+
+
+                        <div class="govuk-form-group">
+              <label class="govuk-label" for="uk_company_number">
+                Company number
+              </label>
+              <div id="uk_company_number-hint" class="govuk-hint">
+                Companies House registration number, including any prefix
+              </div>
+              <input class="govuk-input govuk-input govuk-!-width-one-half" id="uk_company_number" name="uk_company_number" type="text" value="" aria-describedby="uk_company_number-hint">
+            </div>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="party_type-3" name="party_type" type="radio" value="overseas_company" aria-controls="conditional-party_type-3" aria-expanded="false">
+                  <label class="govuk-label govuk-radios__label" for="party_type-3">
+                    Overseas company
+                  </label>
+                </div>
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-party_type-3">
+                  <div class="govuk-form-group">
+              <label class="govuk-label" for="overseas_company_name">
+                Company name
+              </label>
+              <div id="overseas_company_name-hint" class="govuk-hint">
+                Company name as incorporated in its state of origin
+              </div>
+              <input class="govuk-input govuk-input govuk-!-width-one-half" id="overseas_company_name" name="overseas_company_name" type="text" value="" aria-describedby="overseas_company_name-hint">
+            </div>
+
+
+                        <div class="govuk-form-group">
+              <label class="govuk-label" for="overseas_uk_company_number">
+                UK company number (optional)
+              </label>
+              <div id="overseas_uk_company_number-hint" class="govuk-hint">
+                Number issued, if registered at Companies House, eg FC023966
+              </div>
+              <input class="govuk-input govuk-input govuk-!-width-one-half" id="overseas_uk_company_number" name="overseas_uk_company_number" type="text" value="" aria-describedby="overseas_uk_company_number-hint">
+            </div>
+
+
+                        <div class="govuk-form-group">
+              <label class="govuk-label" for="overseas_territory">
+                Territory of incorporation
+              </label>
+              <div id="overseas_territory-hint" class="govuk-hint">
+                Territory or country where the company was first incorporated, eg 'France' or 'Manitoba, Canada'
+              </div>
+              <select class="govuk-select govuk-input govuk-!-width-full" id="overseas_territory" name="overseas_territory" aria-describedby="overseas_territory-hint">
+                    <option value="">-Select from list-</option>
+                    <option value="afghanistan">Afghanistan</option>
+                    <option value="albania">Albania</option>
+                    <option value="alderney">Alderney</option>
+                    <option value="algeria">Algeria</option>
+                    <option value="andorra">Andorra</option>
+                    <option value="angola">Angola</option>
+                    <option value="anguilla">Anguilla</option>
+                    <option value="antigua and barbuda">Antigua and Barbuda</option>
+                    <option value="argentina">Argentina</option>
+                    <option value="armenia">Armenia</option>
+                    <option value="aruba">Aruba</option>
+                    <option value="australia">Australia</option>
+                    <option value="austria">Austria</option>
+                    <option value="azerbaijan">Azerbaijan</option>
+                    <option value="bahamas">Bahamas</option>
+                    <option value="bahrain">Bahrain</option>
+                    <option value="bangladesh">Bangladesh</option>
+                    <option value="barbados">Barbados</option>
+                    <option value="belarus">Belarus</option>
+                    <option value="belgium">Belgium</option>
+                    <option value="belize">Belize</option>
+                    <option value="benin">Benin</option>
+                    <option value="bermuda">Bermuda</option>
+                    <option value="bhutan">Bhutan</option>
+                    <option value="bolivia">Bolivia</option>
+                    <option value="bosnia and herzegovina">Bosnia and Herzegovina</option>
+                    <option value="botswana">Botswana</option>
+                    <option value="brazil">Brazil</option>
+                    <option value="british virgin islands">British Virgin Islands</option>
+                    <option value="brunei darussalam">Brunei Darussalam</option>
+                    <option value="bulgaria">Bulgaria</option>
+                    <option value="burkina faso">Burkina Faso</option>
+                    <option value="burundi">Burundi</option>
+                    <option value="cambodia">Cambodia</option>
+                    <option value="cameroon">Cameroon</option>
+                    <option value="canada">Canada</option>
+                    <option value="alberta canada">Alberta Canada</option>
+                    <option value="british columbia canada">British Columbia Canada</option>
+                    <option value="manitoba canada">Manitoba Canada</option>
+                    <option value="new brunswick canada">New Brunswick Canada</option>
+                    <option value="newfoundland and labrador canada">Newfoundland and Labrador Canada</option>
+                    <option value="northwest territories canada">Northwest Territories Canada</option>
+                    <option value="nova scotia canada">Nova Scotia Canada</option>
+                    <option value="nunavut canada">Nunavut Canada</option>
+                    <option value="ontario canada">Ontario Canada</option>
+                    <option value="prince edward island canada">Prince Edward Island Canada</option>
+                    <option value="saskatchewan canada">Saskatchewan Canada</option>
+                    <option value="quebec canada">Quebec Canada</option>
+                    <option value="yukon canada">Yukon Canada</option>
+                    <option value="cabo verde">Cabo Verde</option>
+                    <option value="cayman islands">Cayman Islands</option>
+                    <option value="central african republic">Central African Republic</option>
+                    <option value="chad">Chad</option>
+                    <option value="chile">Chile</option>
+                    <option value="china">China</option>
+                    <option value="colombia">Colombia</option>
+                    <option value="comoros">Comoros</option>
+                    <option value="congo democratic republic of the">Congo Democratic Republic of the</option>
+                    <option value="congo">Congo</option>
+                    <option value="cook islands">Cook Islands</option>
+                    <option value="cote d'ivoire">Cote D'Ivoire</option>
+                    <option value="costa rica">Costa Rica</option>
+                    <option value="croatia">Croatia</option>
+                    <option value="cuba">Cuba</option>
+                    <option value="curacao">Curacao</option>
+                    <option value="cyprus">Cyprus</option>
+                    <option value="czech republic">Czech Republic</option>
+                    <option value="denmark">Denmark</option>
+                    <option value="djibouti">Djibouti</option>
+                    <option value="dominica">Dominica</option>
+                    <option value="dominican republic">Dominican Republic</option>
+                    <option value="ecuador">Ecuador</option>
+                    <option value="egypt">Egypt</option>
+                    <option value="el salvador">El Salvador</option>
+                    <option value="equatorial guinea">Equatorial Guinea</option>
+                    <option value="eritrea">Eritrea</option>
+                    <option value="estonia">Estonia</option>
+                    <option value="ethiopia">Ethiopia</option>
+                    <option value="europe under the treaty on european union and the treaty on the functioning of the european union">Europe under the Treaty on European Union and the Treaty on the Functioning of the European Union</option>
+                    <option value="falkland islands">Falkland Islands</option>
+                    <option value="faroe islands">Faroe Islands</option>
+                    <option value="fiji">Fiji</option>
+                    <option value="finland">Finland</option>
+                    <option value="france">France</option>
+                    <option value="gabon">Gabon</option>
+                    <option value="gambia">Gambia</option>
+                    <option value="georgia">Georgia</option>
+                    <option value="germany">Germany</option>
+                    <option value="ghana">Ghana</option>
+                    <option value="gibraltar">Gibraltar</option>
+                    <option value="greece">Greece</option>
+                    <option value="grenada">Grenada</option>
+                    <option value="guatemala">Guatemala</option>
+                    <option value="guernsey">Guernsey</option>
+                    <option value="guinea">Guinea</option>
+                    <option value="guinea-bissau">Guinea-Bissau</option>
+                    <option value="guyana">Guyana</option>
+                    <option value="haiti">Haiti</option>
+                    <option value="honduras">Honduras</option>
+                    <option value="hong kong">Hong Kong</option>
+                    <option value="hungary">Hungary</option>
+                    <option value="iceland">Iceland</option>
+                    <option value="india">India</option>
+                    <option value="indonesia">Indonesia</option>
+                    <option value="iran">Iran</option>
+                    <option value="iraq">Iraq</option>
+                    <option value="ireland">Ireland</option>
+                    <option value="isle of man">Isle of Man</option>
+                    <option value="israel">Israel</option>
+                    <option value="italy">Italy</option>
+                    <option value="jamaica">Jamaica</option>
+                    <option value="japan">Japan</option>
+                    <option value="jersey">Jersey</option>
+                    <option value="jordan">Jordan</option>
+                    <option value="kazakhstan">Kazakhstan</option>
+                    <option value="kenya">Kenya</option>
+                    <option value="kiribati">Kiribati</option>
+                    <option value="korea democratic people's republic of">Korea Democratic People's Republic of</option>
+                    <option value="korea republic of">Korea Republic of</option>
+                    <option value="kuwait">Kuwait</option>
+                    <option value="kyrgyzstan">Kyrgyzstan</option>
+                    <option value="labuan">Labuan</option>
+                    <option value="lao people's democratic republic">Lao People's Democratic Republic</option>
+                    <option value="latvia">Latvia</option>
+                    <option value="lebanon">Lebanon</option>
+                    <option value="lesotho">Lesotho</option>
+                    <option value="liberia">Liberia</option>
+                    <option value="libya">Libya</option>
+                    <option value="liechtenstein">Liechtenstein</option>
+                    <option value="lithuania">Lithuania</option>
+                    <option value="luxembourg">Luxembourg</option>
+                    <option value="macao">Macao</option>
+                    <option value="macedonia">Macedonia</option>
+                    <option value="madagascar">Madagascar</option>
+                    <option value="madeira free trade zone">Madeira Free Trade Zone</option>
+                    <option value="malawi">Malawi</option>
+                    <option value="malaysia">Malaysia</option>
+                    <option value="maldives">Maldives</option>
+                    <option value="mali">Mali</option>
+                    <option value="malta">Malta</option>
+                    <option value="marshall islands">Marshall Islands</option>
+                    <option value="mauritania">Mauritania</option>
+                    <option value="mauritius">Mauritius</option>
+                    <option value="mexico">Mexico</option>
+                    <option value="micronesia federated states of">Micronesia Federated States of</option>
+                    <option value="moldova republic of">Moldova Republic of</option>
+                    <option value="monaco">Monaco</option>
+                    <option value="mongolia">Mongolia</option>
+                    <option value="montenegro">Montenegro</option>
+                    <option value="montserrat">Montserrat</option>
+                    <option value="morocco">Morocco</option>
+                    <option value="mozambique">Mozambique</option>
+                    <option value="myanmar">Myanmar</option>
+                    <option value="namibia">Namibia</option>
+                    <option value="nauru">Nauru</option>
+                    <option value="nepal">Nepal</option>
+                    <option value="netherlands">Netherlands</option>
+                    <option value="nevis">Nevis</option>
+                    <option value="new caledonia">New Caledonia</option>
+                    <option value="new zealand">New Zealand</option>
+                    <option value="nicaragua">Nicaragua</option>
+                    <option value="niger">Niger</option>
+                    <option value="nigeria">Nigeria</option>
+                    <option value="niue">Niue</option>
+                    <option value="norfolk island">Norfolk Island</option>
+                    <option value="norway">Norway</option>
+                    <option value="oman">Oman</option>
+                    <option value="pakistan">Pakistan</option>
+                    <option value="palau">Palau</option>
+                    <option value="palestine">Palestine</option>
+                    <option value="panama">Panama</option>
+                    <option value="papua new guinea">Papua New Guinea</option>
+                    <option value="paraguay">Paraguay</option>
+                    <option value="peru">Peru</option>
+                    <option value="philippines">Philippines</option>
+                    <option value="poland">Poland</option>
+                    <option value="portugal">Portugal</option>
+                    <option value="puerto rico">Puerto Rico</option>
+                    <option value="qatar">Qatar</option>
+                    <option value="romania">Romania</option>
+                    <option value="russian federation">Russian Federation</option>
+                    <option value="rwanda">Rwanda</option>
+                    <option value="saint lucia">Saint Lucia</option>
+                    <option value="saint martin">Saint Martin</option>
+                    <option value="saint vincent and the grenadines">Saint Vincent and the Grenadines</option>
+                    <option value="samoa">Samoa</option>
+                    <option value="san marino">San Marino</option>
+                    <option value="sao tome and principe">Sao Tome and Principe</option>
+                    <option value="saudi arabia">Saudi Arabia</option>
+                    <option value="senegal">Senegal</option>
+                    <option value="serbia">Serbia</option>
+                    <option value="seychelles">Seychelles</option>
+                    <option value="sierra leone">Sierra Leone</option>
+                    <option value="singapore">Singapore</option>
+                    <option value="slovakia">Slovakia</option>
+                    <option value="slovenia">Slovenia</option>
+                    <option value="solomon islands">Solomon Islands</option>
+                    <option value="somalia">Somalia</option>
+                    <option value="south africa">South Africa</option>
+                    <option value="spain">Spain</option>
+                    <option value="sri lanka">Sri Lanka</option>
+                    <option value="sudan">Sudan</option>
+                    <option value="suriname">Suriname</option>
+                    <option value="swaziland">Swaziland</option>
+                    <option value="sweden">Sweden</option>
+                    <option value="switzerland">Switzerland</option>
+                    <option value="syrian arab republic">Syrian Arab Republic</option>
+                    <option value="taiwan province of china">Taiwan Province of China</option>
+                    <option value="tajikistan">Tajikistan</option>
+                    <option value="tanzania united republic of">Tanzania United Republic of</option>
+                    <option value="tasmania">Tasmania</option>
+                    <option value="thailand">Thailand</option>
+                    <option value="timor-leste">Timor-Leste</option>
+                    <option value="togo">Togo</option>
+                    <option value="tonga">Tonga</option>
+                    <option value="trinidad and tobago">Trinidad and Tobago</option>
+                    <option value="tunisia">Tunisia</option>
+                    <option value="turkey">Turkey</option>
+                    <option value="turkmenistan">Turkmenistan</option>
+                    <option value="turks and caicos islands">Turks and Caicos Islands</option>
+                    <option value="tuvalu">Tuvalu</option>
+                    <option value="uganda">Uganda</option>
+                    <option value="ukraine">Ukraine</option>
+                    <option value="united arab emirates">United Arab Emirates</option>
+                    <option value="abu dhabi united arab emirates">Abu Dhabi United Arab Emirates</option>
+                    <option value="ajman united arab emirates">Ajman United Arab Emirates</option>
+                    <option value="ajman free zone united arab emirates">Ajman Free Zone United Arab Emirates</option>
+                    <option value="dubai united arab emirates">Dubai United Arab Emirates</option>
+                    <option value="fujairah united arab emirates">Fujairah United Arab Emirates</option>
+                    <option value="ras al khaimah united arab emirates">Ras Al Khaimah United Arab Emirates</option>
+                    <option value="sharjah united arab emirates">Sharjah United Arab Emirates</option>
+                    <option value="umm al quwain united arab emirates">Umm Al Quwain United Arab Emirates</option>
+                    <option value="jebel ali free zone united arab emirates">Jebel Ali Free Zone United Arab Emirates</option>
+                    <option value="fujairah media free zone united arab emirates">Fujairah Media Free Zone United Arab Emirates</option>
+                    <option value="ras al khaimah free trade zone united arab emirates">Ras Al Khaimah Free Trade Zone United Arab Emirates</option>
+                    <option value="dubai international financial centre united arab emirates">Dubai International Financial Centre United Arab Emirates</option>
+                    <option value="dubai silicon oasis united arab emirates">Dubai Silicon Oasis United Arab Emirates</option>
+                    <option value="united states of america">United States of America</option>
+                    <option value="alabama united states of america">Alabama United States of America</option>
+                    <option value="alaska united states of america">Alaska United States of America</option>
+                    <option value="arizona united states of america">Arizona United States of America</option>
+                    <option value="arkansas united states of america">Arkansas United States of America</option>
+                    <option value="california united states of america">California United States of America</option>
+                    <option value="colorado united states of america">Colorado United States of America</option>
+                    <option value="connecticut united states of america">Connecticut United States of America</option>
+                    <option value="delaware united states of america">Delaware United States of America</option>
+                    <option value="florida united states of america">Florida United States of America</option>
+                    <option value="georgia united states of america">Georgia United States of America</option>
+                    <option value="hawaii united states of america">Hawaii United States of America</option>
+                    <option value="idaho united states of america">Idaho United States of America</option>
+                    <option value="indiana united states of america">Indiana United States of America</option>
+                    <option value="illinois united states of america">Illinois United States of America</option>
+                    <option value="iowa united states of america">Iowa United States of America</option>
+                    <option value="kansas united states of america">Kansas United States of America</option>
+                    <option value="kentucky united states of america">Kentucky United States of America</option>
+                    <option value="louisiana united states of america">Louisiana United States of America</option>
+                    <option value="maine united states of america">Maine United States of America</option>
+                    <option value="maryland united states of america">Maryland United States of America</option>
+                    <option value="massachusetts united states of america">Massachusetts United States of America</option>
+                    <option value="michigan united states of america">Michigan United States of America</option>
+                    <option value="minnesota united states of america">Minnesota United States of America</option>
+                    <option value="mississippi united states of america">Mississippi United States of America</option>
+                    <option value="missouri united states of america">Missouri United States of America</option>
+                    <option value="montana united states of america">Montana United States of America</option>
+                    <option value="nebraska united states of america">Nebraska United States of America</option>
+                    <option value="nevada united states of america">Nevada United States of America</option>
+                    <option value="new hampshire united states of america">New Hampshire United States of America</option>
+                    <option value="new jersey united states of america">New Jersey United States of America</option>
+                    <option value="new mexico united states of america">New Mexico United States of America</option>
+                    <option value="new york united states of america">New York United States of America</option>
+                    <option value="north carolina united states of america">North Carolina United States of America</option>
+                    <option value="north dakota united states of america">North Dakota United States of America</option>
+                    <option value="ohio united states of america">Ohio United States of America</option>
+                    <option value="oklahoma united states of america">Oklahoma United States of America</option>
+                    <option value="oregon united states of america">Oregon United States of America</option>
+                    <option value="pennsylvania united states of america">Pennsylvania United States of America</option>
+                    <option value="rhode island united states of america">Rhode Island United States of America</option>
+                    <option value="south carolina united states of america">South Carolina United States of America</option>
+                    <option value="south dakota united states of america">South Dakota United States of America</option>
+                    <option value="tennessee united states of america">Tennessee United States of America</option>
+                    <option value="texas united states of america">Texas United States of America</option>
+                    <option value="utah united states of america">Utah United States of America</option>
+                    <option value="vermont united states of america">Vermont United States of America</option>
+                    <option value="virginia united states of america">Virginia United States of America</option>
+                    <option value="washington united states of america">Washington United States of America</option>
+                    <option value="west virginia united states of america">West Virginia United States of America</option>
+                    <option value="wisconsin united states of america">Wisconsin United States of America</option>
+                    <option value="wyoming united states of america">Wyoming United States of America</option>
+                    <option value="uruguay">Uruguay</option>
+                    <option value="uzbekistan">Uzbekistan</option>
+                    <option value="vanuatu">Vanuatu</option>
+                    <option value="venezuela bolivarian republic of">Venezuela Bolivarian Republic of</option>
+                    <option value="vietnam">Vietnam</option>
+                    <option value="yemen">Yemen</option>
+                    <option value="zambia">Zambia</option>
+                    <option value="zimbabwe">Zimbabwe</option>
+              </select>
+            </div>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="party_type-4" name="party_type" type="radio" value="other" aria-controls="conditional-party_type-4" aria-expanded="false">
+                  <label class="govuk-label govuk-radios__label" for="party_type-4">
+                    Other organisation like charity, council, government department
+                  </label>
+                </div>
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-party_type-4">
+                  <div class="govuk-form-group">
+              <label class="govuk-label" for="other_organisation_name">
+                Name of organisation
+              </label>
+              <input class="govuk-input govuk-input govuk-!-width-one-half" id="other_organisation_name" name="other_organisation_name" type="text" value="">
+            </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+
+          <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-visually-hidden">Warning</span>
+              Naming errors lead to requisitions. By selecting 'Continue' you confirm the name is correct and consistent with supporting documents. If it isn't consistent, you must attach evidence of a name change.
+            </strong>
+          </div>
+
+        {% from "govuk/components/button/macro.njk" import govukButton %}
+        {{ govukButton({
+          text: "Continue",
+          type: "submit"
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <ul class="govuk-list task-list-side-bar">
+          <li>
+            <strong>Your Reference</strong>
+            <br>
+            Transfer LS8
+          </li>
+          <li>
+            <strong>Title numbers</strong>
+            <br>
+            DU163659
+          </li>
+        </ul>
+
+        {% include "level-3/scen1/_error-banner.html" %}
+      </div>
+
+    </div>
+  </div>
+</form>
+{% endblock %}

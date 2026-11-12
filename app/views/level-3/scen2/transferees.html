@@ -1,0 +1,157 @@
+{% extends "layouts/main.html" %}
+
+{% set showPhaseBanner = true %}
+{% set showBackLink = false %}
+
+{% block pageTitle %}
+  Applicants - {{ serviceName }} - GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: "Return to application",
+    href: "task-list"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<form action="task-list" method="post">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+
+        <span class="govuk-caption-xl">Transfer for value</span>
+        <h1 class="govuk-heading-xl">Transferees</h1>
+        <p class="govuk-body">You can add, change or remove transferees.  Select 'Continue' when the list is complete.</p>
+
+        <h2 class="govuk-heading-l">Transferees added</h2>
+
+
+        <table class="govuk-table ddrs-party-table govuk-!-margin-bottom-2" id="transferee_summary_table">
+          <caption class="govuk-table__caption govuk-visually-hidden">Transferee details are displayed in this table. You can amend the data in this table when at least one Transferee is listed.</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Transferee type</th>
+              <th scope="col" class="govuk-table__header">Full name</th>
+              <th scope="col" class="govuk-table__header">Company number</th>
+              <th scope="col" class="govuk-table__header">Territory of incorporation</th>
+              <th scope="col" class="govuk-table__header">Options</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Private individual</td>
+              <td class="govuk-table__cell">
+                {% if data.private_individual_forenames %}
+                  {{ data.private_individual_forenames }} {{ data.private_individual_surname }}
+                {% else %} 
+                  Peter Josephs
+                {% endif %}
+              </td>
+              <td class="govuk-table__cell">N/A</td>
+              <td class="govuk-table__cell">N/A</td>
+              <td class="govuk-table__cell ddrs-!-table__cell--wordbreak-normal">        <ul class="govuk-list govuk-!-margin-bottom-0">
+
+                      <li class="govuk-!-display-inline govuk-!-margin-right-3">
+        <a href="change-transferee" class="govuk-link govuk-link--no-visited-state">Change</a>              </li>
+
+
+
+                    <li class="govuk-!-display-inline govuk-!-margin-right-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state">Remove</a>            </li>
+
+                </ul>
+        </td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Private individual</td>
+              <td class="govuk-table__cell">Jane Lane Josephs</td>
+              <td class="govuk-table__cell">N/A</td>
+              <td class="govuk-table__cell">N/A</td>
+              <td class="govuk-table__cell ddrs-!-table__cell--wordbreak-normal">        <ul class="govuk-list govuk-!-margin-bottom-0">
+
+                      <li class="govuk-!-display-inline govuk-!-margin-right-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state">Change</a>              </li>
+
+
+
+                    <li class="govuk-!-display-inline govuk-!-margin-right-3">
+        <a href="#" class="govuk-link govuk-link--no-visited-state">Remove</a>            </li>
+
+                </ul>
+        </td>
+            </tr>
+          </tbody>
+        </table>
+
+
+
+
+
+        <p class="govuk-body govuk-!-margin-bottom-6">
+          <a href="#" class="govuk-link">Add transferee</a>   
+        </p>
+
+
+        <h2 class="govuk-heading-m govuk-!-margin-top-6">Power of attorney (optional)</h2>
+        <p class="govuk-body">You can add up to 4 attorneys per donor.</p>
+
+
+        <table class="govuk-table" id="poa_table">
+          <caption class="govuk-table__caption govuk-visually-hidden">Table showing power of attorney data. You can add or remove attorney in the table.</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Donor</th>
+              <th scope="col" class="govuk-table__header">Attorneys</th>
+              <th scope="col" class="govuk-table__header">Options</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                {% if data.private_individual_forenames %}
+                  {{ data.private_individual_forenames }} {{ data.private_individual_surname }}
+                {% else %} 
+                  Peter Josephs
+                {% endif %}
+              </td>
+              <td class="govuk-table__cell">- No attorneys added -</td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Add an attorney</a></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">Jane Lane Josephs</td>
+              <td class="govuk-table__cell">- No attorneys added -</td>
+              <td class="govuk-table__cell"><a href="#" class="govuk-link govuk-link--no-visited-state">Add an attorney</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        {% from "govuk/components/button/macro.njk" import govukButton %}
+        {{ govukButton({
+          text: "Continue",
+          type: "submit"
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <ul class="govuk-list task-list-side-bar">
+          <li>
+            <strong>Your Reference</strong>
+            <br>
+            Transfer LS8
+          </li>
+          <li>
+            <strong>Title numbers</strong>
+            <br>
+            DU163659
+          </li>
+        </ul>
+
+        {% include "level-3/scen2/_error-banner.html" %}
+      </div>
+
+    </div>
+  </div>
+</form>
+{% endblock %}
